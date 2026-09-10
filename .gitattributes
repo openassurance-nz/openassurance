@@ -1,0 +1,13 @@
+# Line endings are LF everywhere: in the repository and in every working tree,
+# on every platform. Contributors on Windows will see LF in their editor.
+* text=auto eol=lf
+
+# Documents in this repository are Markdown. Stated explicitly so the rule
+# survives any future change to the catch-all above.
+*.md text eol=lf
+
+# Binary assets, should any be added, must never be line-ending converted.
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
