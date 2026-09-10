@@ -4,13 +4,13 @@
 
 OpenAssurance is an open initiative to reduce duplication, platform lock-in, and repeated data entry in workplace assurance.
 
-It is designed around a simple principle:
+It is based on a simple principle:
 
 > **Assurance information should be portable, independently verifiable, and exchangeable without requiring every organisation to use the same software platform.**
 
-OpenAssurance is not intended to replace competency-management, prequalification, contractor-management, training, or assurance platforms.
+OpenAssurance is not intended to replace competency management, prequalification, contractor management, training, assessment, or assurance platforms.
 
-Those products can continue to compete on workflow, management, assessment, reporting, automation, and user experience.
+Those products and services can continue to compete on workflow, management, assessment, reporting, automation, and user experience.
 
 The exchange layer should be open.
 
@@ -34,58 +34,61 @@ New Zealand organisations increasingly rely on digital systems to manage:
 * organisational capability;
 * supporting evidence.
 
-These systems provide useful services, but assurance information is often trapped within the platform in which it was entered.
+These systems provide useful services, but assurance information is often confined to the platform in which it was entered.
 
 This creates duplication.
 
-A contractor may already hold verified competency information for its workers but still need to recreate those workers and their records in a customer's required competency platform.
+A contractor may already hold verified competency information for its workers but still be required to recreate those workers and their records in a customer's nominated system.
 
-The same organisation may separately maintain similar prequalification information in:
+An organisation may also be required to provide substantially the same prequalification and assurance information repeatedly to:
 
-* SiteWise;
-* Tōtika;
-* IMPAC PREQUAL;
-* customer portals;
+* assessment providers;
+* customers;
+* principal contractors;
 * procurement systems;
-* internal systems.
+* contractor portals;
+* tender processes.
 
 The underlying information is often substantially the same.
 
-Open data schemas alone do not solve this problem if organisations still need:
+Open data schemas alone do not solve this problem if organisations still require:
 
 * an enterprise licence;
 * membership of a specific platform;
 * an account with the receiving platform;
 * duplicate worker or company records;
-* bilateral integrations between every software provider.
+* bilateral integrations between software providers.
 
 OpenAssurance exists to address that interoperability problem.
 
 ---
 
-## The Goal
+# The Goal
 
 OpenAssurance aims to make this possible:
 
 ```text
 Organisation A
-    │
-    │ OpenAssurance
-    ▼
+      │
+      │ OpenAssurance
+      ▼
 Organisation B
 ```
 
-without requiring:
+regardless of which systems either organisation uses.
+
+It should not require:
 
 ```text
 Organisation A
-    │
-    ▼
-Organisation B's software platform
-    │
-    ▼
-Duplicate account
+      │
+      ▼
+Recipient's nominated platform
+      │
+      ▼
+New account
 Duplicate records
+Duplicate evidence
 Duplicate administration
 ```
 
@@ -107,7 +110,7 @@ The receiving organisation remains responsible for deciding whether it accepts t
 
 OpenAssurance is the umbrella initiative.
 
-The initial profiles are:
+Its initial profiles are:
 
 ## OpenCompetency
 
@@ -130,18 +133,18 @@ OpenCompetency covers assurance information about people, including:
 Example:
 
 ```text
-McLeod Cranes
-      │
-      │ issues / holds
-      ▼
-Worker competency records
-      │
-      │ OpenCompetency
-      ▼
-Customer's chosen system
+Employer
+   │
+   │ issues or holds
+   ▼
+Worker competency evidence
+   │
+   │ OpenCompetency
+   ▼
+Receiving organisation
 ```
 
-The customer does not need to use the same competency-management platform as the employer.
+The receiving organisation does not need to use the same competency management system as the employer.
 
 ---
 
@@ -153,7 +156,7 @@ OpenPrequal covers assurance information about organisations, including:
 
 * prequalification assessments;
 * health and safety systems;
-* risk-management capability;
+* risk management capability;
 * insurance;
 * plant and equipment systems;
 * training and competency systems;
@@ -168,10 +171,10 @@ Example:
 ```text
 Supplier
    │
-   ├── SiteWise assessment
-   ├── Tōtika assessment
+   ├── Assessment records
    ├── Insurance
    ├── Policies
+   ├── Declarations
    └── Supporting evidence
             │
             │ OpenPrequal
@@ -262,7 +265,7 @@ The source of an assertion must remain visible.
 Examples:
 
 ```text
-NZQA / Training Provider
+Qualification Authority
         │
         ▼
 Qualification
@@ -295,35 +298,26 @@ A system sharing a credential does not become its issuer.
 
 ## 7. Open Exchange
 
-OpenAssurance should support organisation-to-organisation exchange.
+OpenAssurance should support direct organisation-to-organisation exchange.
 
 For example:
 
 ```text
-Pulse
-  │
-  │ OpenAssurance
-  ▼
-JNCTN
+Organisation A system
+        │
+        │ OpenAssurance
+        ▼
+Organisation B system
 ```
 
 or:
 
 ```text
-Risk3y
-  │
-  │ OpenAssurance
-  ▼
-SAP
-```
-
-or:
-
-```text
-Hosted OpenAssurance service
-          │
-          ▼
-     Customer system
+Hosted assurance service
+        │
+        │ OpenAssurance
+        ▼
+Receiving organisation
 ```
 
 No bilateral proprietary integration should be required where both systems support the open protocol.
@@ -334,13 +328,13 @@ No bilateral proprietary integration should be required where both systems suppo
 
 OpenAssurance must not assume every organisation has:
 
-* an HRIS;
+* an HR system;
 * a competency database;
 * an API;
 * an IT department;
 * specialist assurance software.
 
-A small business should be able to use a hosted OpenAssurance-compatible service while participating in exactly the same exchange ecosystem as a large organisation with its own systems.
+A small business should be able to use a hosted OpenAssurance-compatible service while participating in the same exchange ecosystem as a large organisation with its own systems.
 
 Hosting must remain separate from ownership of the assurance record.
 
@@ -355,7 +349,7 @@ This includes alignment with:
 * W3C Verifiable Credentials;
 * established digital credential standards;
 * New Zealand digital identity infrastructure;
-* existing New Zealand credential schemas such as `credentialschema.nz`;
+* existing New Zealand credential schemas;
 * recognised qualification and assessment systems.
 
 OpenAssurance should define new schemas only where there is a genuine workplace assurance gap.
@@ -373,11 +367,9 @@ OpenAssurance is not intended to be:
 * an accreditation authority;
 * an assessment company;
 * a central issuer registry;
-* a replacement for NZQA;
-* a replacement for SiteWise;
-* a replacement for Tōtika;
-* a replacement for IMPAC PREQUAL;
-* a replacement for JNCTN;
+* a replacement for qualification authorities;
+* a replacement for existing assessment schemes;
+* a replacement for competency management platforms;
 * a replacement for commercial assurance software.
 
 Existing providers should be able to implement OpenAssurance while retaining their own products, workflows, commercial models, and intellectual property.
@@ -409,19 +401,19 @@ This means trust can remain decentralised.
 Example:
 
 ```text
-McLeod Cranes
-      │
-      │ issues crane operator competency
-      ▼
+Employer
+   │
+   │ issues competency evidence
+   ▼
 Worker
-      │
-      ▼
-Client
-      │
-      └── "We recognise McLeod for this purpose."
+   │
+   ▼
+Receiving organisation
+   │
+   └── "We recognise this issuer for this purpose."
 ```
 
-An industry body may also endorse an issuer, but no OpenAssurance central authority is required to do so.
+An industry body may also endorse an issuer, but no central OpenAssurance authority is required to do so.
 
 ---
 
@@ -431,19 +423,19 @@ OpenAssurance recognises that workplace competence is not represented only by fo
 
 An employer, supervisor, assessor, or other suitable person may need to attest that:
 
-> Jim performed X.
+> A person performed or demonstrated a particular activity.
 
 Example:
 
 ```text
 Subject:
-Jim Smith
+Worker
 
 Assertion:
-Operated Liebherr LTM 1230-5.1 under normal working conditions.
+Operated specified equipment under normal working conditions.
 
 Period:
-March 2025 - August 2026
+Defined period of experience
 
 Basis:
 Direct supervision
@@ -477,7 +469,7 @@ Requires:
 - site induction where required
 ```
 
-Another company may legitimately define different requirements.
+Another organisation may legitimately define different requirements.
 
 OpenAssurance provides a common way to describe and evaluate those requirements.
 
@@ -498,21 +490,21 @@ A platform cannot meaningfully claim OpenAssurance compatibility if receiving a 
 Today:
 
 ```text
-Employer already manages Jim
-        │
-        ▼
-Customer mandates Platform X
-        │
-        ▼
-Employer joins Platform X
-        │
-        ▼
-Jim recreated
-        │
-        ▼
+Employer already manages worker competency
+                │
+                ▼
+Customer requires another platform
+                │
+                ▼
+Employer joins that platform
+                │
+                ▼
+Worker recreated
+                │
+                ▼
 Evidence recreated
-        │
-        ▼
+                │
+                ▼
 Duplicate administration
 ```
 
@@ -526,7 +518,8 @@ Employer system
 Customer system
       │
       ▼
-Customer applies its own requirements
+Customer applies
+its own requirements
 ```
 
 ---
@@ -536,9 +529,9 @@ Customer applies its own requirements
 Today:
 
 ```text
-Company evidence
-   ├── Prequal system A
-   ├── Prequal system B
+Company assurance evidence
+   ├── Assessment process A
+   ├── Assessment process B
    ├── Buyer portal C
    └── Buyer questionnaire D
 ```
@@ -557,7 +550,40 @@ Company assurance information
        A    B    C
 ```
 
-The evidence can be reused while each buyer retains control over its acceptance criteria.
+The evidence can be reused while each buyer retains control over its own acceptance criteria.
+
+---
+
+# Separation of Evidence and Assessment
+
+OpenAssurance distinguishes between the underlying evidence and an assessment of that evidence.
+
+For example:
+
+```text
+Organisation evidence
+       │
+       ├── policies
+       ├── procedures
+       ├── insurance
+       ├── competency systems
+       ├── incident information
+       └── other evidence
+               │
+        ┌──────┼──────┐
+        ▼      ▼      ▼
+    Assessor Assessor Assessor
+       A       B       C
+        │      │      │
+        ▼      ▼      ▼
+    Assessment credentials
+```
+
+An assessment provider owns its assessment or opinion.
+
+The organisation retains the ability to hold and share its underlying assurance information.
+
+This allows multiple assessment approaches without requiring the information to be recreated each time.
 
 ---
 
@@ -565,9 +591,10 @@ The evidence can be reused while each buyer retains control over its acceptance 
 
 The first OpenAssurance specification is expected to focus on:
 
-### Common
+## Common
 
 * organisation identity;
+* person identity references;
 * issuer identity;
 * assurance record structure;
 * evidence references;
@@ -581,7 +608,7 @@ The first OpenAssurance specification is expected to focus on:
 * recipient requirements;
 * issuer recognition.
 
-### OpenCompetency
+## OpenCompetency
 
 * qualification;
 * licence;
@@ -593,7 +620,7 @@ The first OpenAssurance specification is expected to focus on:
 * induction;
 * experience.
 
-### OpenPrequal
+## OpenPrequal
 
 * organisation assurance profile;
 * prequalification assessment;
@@ -609,8 +636,8 @@ The first OpenAssurance specification is expected to focus on:
 
 The initial project will not attempt to build:
 
-* learning-management software;
-* contractor-management software;
+* learning management software;
+* contractor management software;
 * workforce scheduling;
 * payroll;
 * recruitment;
@@ -694,7 +721,7 @@ OpenAssurance is currently an early-stage New Zealand open standards initiative.
 The immediate priorities are:
 
 1. define the problem clearly;
-2. validate the need with suppliers, buyers, regulators, industry bodies, and existing platform providers;
+2. validate the need with suppliers, buyers, regulators, industry bodies, and existing service providers;
 3. map existing New Zealand and international standards;
 4. define the minimum open exchange protocol;
 5. build small reference examples;
@@ -717,4 +744,3 @@ The project should be shaped with industry rather than presenting a completed so
 > **OpenAssurance exists to prevent assurance information from becoming captive to a single platform.**
 
 > **Define locally. Issue anywhere. Share anywhere. Verify anywhere.**
-
