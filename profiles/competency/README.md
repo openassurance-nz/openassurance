@@ -100,17 +100,16 @@ Example:
 
 ```text
 Role:
-Mobile Crane Operator
+Registered Electrical Worker
 
 Requires:
-- recognised crane qualification
-- practical competency
+- current practising licence
+- recognised qualification
 - current employer authorisation
-- applicable driver licence
 - site induction where required
 ```
 
-OpenCompetency should not define a universal answer to what makes someone a competent mobile crane operator.
+OpenCompetency should not define a universal answer to what makes someone a competent electrical worker.
 
 It should provide a common way to express and test the receiving organisation's requirements.
 

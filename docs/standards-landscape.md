@@ -134,12 +134,12 @@ Examples:
 
 ### Worker requirement
 
-A mobile crane operator may require:
+A registered nurse working across multiple client sites may require:
 
+- a current practising certificate;
 - a recognised qualification;
-- practical competency;
 - employer authorisation;
-- a driver licence;
+- a driver licence where travel between sites is required;
 - site induction.
 
 ### Supplier requirement

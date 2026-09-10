@@ -34,14 +34,14 @@ Example:
 
 ```text
 Purpose:
-Verify eligibility to undertake mobile crane operations
-for Contract ABC
+Verify eligibility to undertake forestry harvesting
+operations for Contract ABC
 
 Recipient:
 Organisation X
 
 Presented:
-- crane qualification
+- harvesting machine qualification
 - practical competency
 - employer authorisation
 ```
