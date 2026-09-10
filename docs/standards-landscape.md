@@ -1,0 +1,196 @@
+# OpenAssurance Standards Landscape
+
+**Status:** First draft
+
+## 1. Purpose
+
+OpenAssurance should build on existing standards rather than create parallel mechanisms.
+
+This document identifies standards and New Zealand initiatives that should be considered when defining OpenAssurance.
+
+It is a starting point and requires further technical and legal review.
+
+## 2. W3C Verifiable Credentials
+
+W3C Verifiable Credentials provide a general model for cryptographically verifiable claims.
+
+They provide concepts that are directly relevant to OpenAssurance, including:
+
+- issuer;
+- subject;
+- holder;
+- verifier;
+- credential;
+- presentation;
+- proof;
+- credential status.
+
+OpenAssurance should align with W3C Verifiable Credentials unless a specific workplace assurance requirement requires a different representation.
+
+## 3. Credential Status and Revocation
+
+Portable records require a mechanism for determining whether an issuer has:
+
+- revoked;
+- suspended;
+- replaced;
+- expired
+
+a credential.
+
+OpenAssurance should adopt established W3C-compatible status mechanisms instead of defining a proprietary revocation protocol.
+
+## 4. OpenID Credential Protocols
+
+Existing OpenID specifications support digital credential issuance and presentation.
+
+These standards should be evaluated for:
+
+- issuing credentials to a holder;
+- presenting credentials to a verifier;
+- interoperating with digital wallets;
+- supporting future New Zealand government credential infrastructure.
+
+OpenAssurance should avoid creating equivalent proprietary issuance and presentation protocols.
+
+## 5. Open Badges
+
+Open Badges provides an established model for representing achievements and related evidence.
+
+It may be useful for:
+
+- learning achievements;
+- competency;
+- assessment;
+- evidence;
+- endorsements.
+
+OpenAssurance should determine where Open Badges can be reused directly and where a workplace-specific profile is required.
+
+## 6. New Zealand Credential Schemas
+
+New Zealand already has published credential schemas, including material available through:
+
+https://credentialschema.nz
+
+These schemas include areas such as:
+
+- qualifications;
+- licences;
+- courses;
+- assessments;
+- inductions.
+
+OpenAssurance should prefer compatible existing New Zealand schemas where they adequately represent the required information.
+
+OpenAssurance should not create a duplicate schema solely for branding or namespace ownership.
+
+## 7. New Zealand Digital Identity Infrastructure
+
+New Zealand government digital identity standards and credential infrastructure should be treated as an important compatibility target.
+
+OpenAssurance should align with established approaches to:
+
+- credential issuance;
+- verification;
+- digital wallets;
+- relying-party decisions;
+- issuer trust;
+- credential status.
+
+The project should remain usable outside government-operated systems and should not depend on a central government wallet or registry.
+
+## 8. Qualification Records
+
+Formal qualifications and standards already have authoritative sources and established processes.
+
+OpenAssurance should:
+
+- preserve the original issuer;
+- allow organisations to hold and present verified qualification evidence;
+- avoid recreating authoritative qualification systems;
+- provide mappings where required for exchange.
+
+## 9. Workplace Attestations
+
+A likely gap is a simple interoperable model for workplace attestations.
+
+Examples include:
+
+- employer confirmation of experience;
+- supervisor confirmation of observed work;
+- practical competency evidence;
+- internal authorisation;
+- equipment-specific competency;
+- employer declarations.
+
+OpenAssurance may need to define a workplace attestation profile where existing standards do not provide sufficient shared semantics.
+
+## 10. Requirement Profiles
+
+Another likely gap is a common machine-readable model for organisations to describe what they require.
+
+Examples:
+
+### Worker requirement
+
+A mobile crane operator may require:
+
+- a recognised qualification;
+- practical competency;
+- employer authorisation;
+- a driver licence;
+- site induction.
+
+### Supplier requirement
+
+A supplier may require:
+
+- current prequalification;
+- specified insurance;
+- critical-risk controls;
+- competency-management evidence.
+
+OpenAssurance should investigate whether an existing standards model can be reused before defining its own.
+
+## 11. Endorsement and Recognition
+
+OpenAssurance should distinguish:
+
+- a credential being authentic;
+- an issuer being recognised;
+- an assertion being sufficient for a particular purpose.
+
+Existing standards for endorsement should be reused where practical.
+
+OpenAssurance may need to define how endorsement scope is expressed for workplace use.
+
+## 12. Standards Principle
+
+The project should adopt the following rule:
+
+> **OpenAssurance must prefer an established open standard or schema over defining a new OpenAssurance-specific mechanism where the established standard can represent the requirement without loss of meaning.**
+
+## 13. Independence Principle
+
+Compatibility with an existing schema or standard must not create a dependency on a particular commercial platform.
+
+> **OpenAssurance compatibility must not require use of a particular credential issuer, registry, wallet, host, or commercial platform.**
+
+## 14. Next Research
+
+The following should be examined in greater detail before OpenAssurance v0.1 is finalised:
+
+- W3C Verifiable Credentials 2.0;
+- VC JSON Schema;
+- credential status standards;
+- OpenID4VCI;
+- OpenID4VP;
+- Open Badges 3.0;
+- CredentialSchema.nz;
+- New Zealand Digital Identity Services Trust Framework;
+- New Zealand government credential wallet implementation;
+- NZQA digital qualification and Record of Achievement mechanisms;
+- existing competency and prequalification data models.
+
+The purpose of this work is to identify the smallest genuinely new layer OpenAssurance needs to define.

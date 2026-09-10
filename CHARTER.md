@@ -1,0 +1,173 @@
+# OpenAssurance Charter
+
+**Status:** First draft
+
+## 1. Purpose
+
+OpenAssurance exists to prevent workplace assurance information from becoming captive to a single software platform.
+
+Organisations increasingly depend on digital systems to manage worker competency, qualifications, contractor prequalification, organisational assurance, and supporting evidence. These systems provide value, but the exchange of assurance information is often tied to platform membership, licensing, tenancy, or proprietary integrations.
+
+Open schemas alone are not sufficient if organisations still need to buy access to a particular platform or duplicate records into that platform before information can be shared.
+
+OpenAssurance seeks to establish an open, vendor-neutral exchange layer for workplace assurance.
+
+## 2. Mission
+
+OpenAssurance aims to make assurance records portable, independently verifiable, and exchangeable between organisations regardless of which software, service provider, or hosting arrangement each party uses.
+
+The project will focus on interoperability.
+
+It will not determine who is competent, which contractor is acceptable, or which issuer another organisation must trust.
+
+## 3. Founding Principles
+
+### 3.1 No mandatory platform
+
+No conforming OpenAssurance exchange should require all participants to subscribe to the same commercial platform.
+
+### 3.2 No mandatory central registry
+
+OpenAssurance must not become a compulsory central database of people, organisations, issuers, or assurance records.
+
+A conforming record should not depend on OpenAssurance.nz remaining available in order to establish the authenticity of the original assertion.
+
+### 3.3 Portability
+
+Assurance records should remain portable between compatible systems and service providers.
+
+A change of software or host should not invalidate an assurance record.
+
+### 3.4 Independent verification
+
+A recipient should be able to establish who issued a record, whether it has been altered, and whether it remains current without needing a subscription to the original issuing platform.
+
+### 3.5 Local acceptance
+
+The organisation relying on information decides:
+
+- which issuers it recognises;
+- which evidence it accepts;
+- what requirements apply;
+- whether a person or organisation meets those requirements.
+
+OpenAssurance provides information and verification mechanisms. It does not make the final acceptance decision.
+
+### 3.6 Issuer provenance
+
+The original source of an assertion must remain clear.
+
+A system that stores, forwards, or presents a credential does not become the issuer of that credential.
+
+### 3.7 Open participation
+
+Organisations of different sizes should be able to participate.
+
+A small business should be able to use a hosted OpenAssurance-compatible service, while a larger organisation may implement the protocol directly in its own systems.
+
+Both should participate in the same exchange ecosystem.
+
+### 3.8 Open exchange
+
+A conforming sender should be able to provide a conforming assurance record to a conforming recipient without first becoming a tenant or customer of the recipient's platform provider.
+
+### 3.9 Reuse before reinvention
+
+OpenAssurance should prefer established open standards where they can represent the required information without loss of meaning.
+
+The project should avoid creating new identity, credential, signature, wallet, or status mechanisms where suitable standards already exist.
+
+### 3.10 Vendor neutrality
+
+Commercial services are expected and encouraged to compete on:
+
+- user experience;
+- assessment;
+- workflow;
+- reporting;
+- automation;
+- compliance management;
+- contractor management;
+- competency management;
+- integrations;
+- analytics.
+
+The exchange layer should remain open.
+
+> **Compete on assurance management. Cooperate on assurance exchange.**
+
+## 4. Initial Profiles
+
+### OpenCompetency
+
+OpenCompetency applies OpenAssurance principles to people and workplace competency, including qualifications, licences, training, assessments, practical competency, employer attestations, experience, inductions, and authorisations.
+
+### OpenPrequal
+
+OpenPrequal applies OpenAssurance principles to organisations and prequalification, including organisational assurance evidence, health and safety systems, insurance, assessments, declarations, and buyer requirements.
+
+## 5. What OpenAssurance Will Govern
+
+OpenAssurance may define and maintain:
+
+- technical specifications;
+- assurance record profiles;
+- schemas;
+- exchange conventions;
+- interoperability requirements;
+- conformance tests;
+- versioning;
+- shared technical vocabulary;
+- reference examples;
+- open-source reference implementations.
+
+## 6. What OpenAssurance Will Not Govern
+
+OpenAssurance should not become responsible for:
+
+- deciding who is competent;
+- deciding which business is safe or suitable;
+- accrediting all issuers;
+- approving all assessors;
+- requiring use of a particular assessment scheme;
+- requiring use of a particular software product;
+- maintaining a compulsory worker or supplier register;
+- setting universal role requirements.
+
+These decisions remain with regulators, qualification authorities, industry bodies, employers, PCBUs, asset owners, buyers, assessment providers, and other organisations with the relevant responsibility.
+
+## 7. Open Exchange Requirement
+
+The following principle is foundational:
+
+> **A conforming assurance record must be capable of being exported, transmitted, received, and independently verified without requiring the issuer, subject, holder, sender, and verifier to subscribe to the same commercial platform.**
+
+An implementation should not claim OpenAssurance compatibility where interoperability exists only between customers of its own service.
+
+## 8. Development Approach
+
+OpenAssurance should be developed openly.
+
+Proposals should be testable against real workplace use cases and should prefer the smallest practical standard that solves the interoperability problem.
+
+The project should seek participation from:
+
+- employers;
+- workers;
+- buyers;
+- suppliers;
+- regulators;
+- qualification organisations;
+- industry bodies;
+- assessment providers;
+- technology providers;
+- small businesses;
+- large organisations.
+
+## 9. Long-Term Test
+
+OpenAssurance should continue to satisfy this question:
+
+> **Can two organisations exchange and verify assurance information even when neither organisation is a customer of the other's software provider?**
+
+If the answer becomes no, the project has departed from its founding purpose.
