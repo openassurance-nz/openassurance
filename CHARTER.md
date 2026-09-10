@@ -96,6 +96,45 @@ The exchange layer should remain open.
 
 > **Compete on assurance management. Cooperate on assurance exchange.**
 
+### 3.11 Privacy by design
+
+OpenAssurance should reduce unnecessary replication of personal information.
+
+Personal assurance information should be private by default and exchanged only where there is a defined purpose, an appropriate basis for sharing, and a legitimate recipient.
+
+### 3.12 Minimum disclosure
+
+OpenAssurance should support presentation of only the information required for a particular assurance purpose.
+
+A request to verify one competency should not require disclosure of a person's complete competency, employment, training, or qualification history.
+
+### 3.13 Purpose-bound exchange
+
+Where personal information is exchanged, the presentation should be capable of identifying:
+
+- the intended recipient;
+- the purpose of the exchange;
+- the records or claims being presented;
+- any appropriate expiry or access limitation.
+
+### 3.14 No universal person identifier
+
+OpenAssurance should not create a universal worker identifier that enables unnecessary tracking of an individual across unrelated organisations and systems.
+
+Implementations should support scoped, pairwise, issuer-specific, or otherwise privacy-preserving identifiers where practical.
+
+### 3.15 Access, correction, and supersession
+
+Implementations should support appropriate access and correction processes.
+
+Where signed assurance records require correction, implementations should preserve cryptographic integrity by supporting revocation, supersession, replacement, or linked correction statements rather than silently altering previously issued records.
+
+### 3.16 Limited retention and onward sharing
+
+Receiving an assurance record does not create an unrestricted right to retain or redistribute personal information indefinitely.
+
+Implementations should support proportionate retention and controls on onward sharing consistent with the purpose for which information was received.
+
 ## 4. Initial Profiles
 
 ### OpenCompetency

@@ -62,7 +62,10 @@ This can create:
 - mobilisation delays;
 - additional privacy exposure;
 - increased chance of stale information;
+- more copies of personal information requiring separate access control and retention;
 - dependency on a particular vendor ecosystem.
+
+The privacy problem is structural as well as administrative. Recreating the same worker record across multiple systems increases the number of places where personal information can become stale, be retained unnecessarily, or be exposed through a security incident.
 
 An open data schema does not fully solve the problem if sending or receiving the record still requires enterprise licensing, platform membership, or tenant setup.
 
@@ -176,6 +179,18 @@ Buyer applies its own requirements
 The receiving organisation remains responsible for acceptance.
 
 OpenAssurance only makes the information portable, attributable, and verifiable.
+
+For personal information, the preferred model is a purpose-specific presentation rather than unrestricted sharing of an individual's entire assurance history.
+
+```text
+Authoritative assurance records
+          |
+          v
+Purpose-specific presentation
+          |
+          v
+Required recipient
+```
 
 ## 7. What Should Remain Local
 

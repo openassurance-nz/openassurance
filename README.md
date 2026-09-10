@@ -85,6 +85,8 @@ A conforming assurance record should be capable of moving between different syst
 
 The receiving organisation remains responsible for deciding whether it accepts that information.
 
+For personal assurance information, OpenAssurance should support purpose-specific presentation rather than unnecessary disclosure of a person's complete record.
+
 ## Project Structure
 
 OpenAssurance is the umbrella initiative.
@@ -122,6 +124,8 @@ Website: https://openprequal.nz
 7. **Open exchange** - Conforming systems should exchange assurance records without bilateral proprietary integrations.
 8. **Small organisations can participate** - A business should not need specialist software or its own database to use the standard.
 9. **Reuse existing standards first** - OpenAssurance should align with established international and New Zealand standards wherever practical.
+10. **Privacy by design** - Personal assurance information should be private by default, purpose-bound, and limited to the minimum information required.
+11. **No universal worker identifier** - OpenAssurance should avoid identifiers that enable unnecessary tracking of individuals across organisations.
 
 ## What OpenAssurance Is Not
 
@@ -160,7 +164,8 @@ The immediate priorities are:
 3. map existing New Zealand and international standards;
 4. define the minimum open exchange protocol;
 5. build small reference examples;
-6. establish appropriate industry governance.
+6. establish appropriate industry governance;
+7. complete a Privacy Impact Assessment before the first stable specification is finalised.
 
 ## Domains
 

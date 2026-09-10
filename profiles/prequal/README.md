@@ -164,7 +164,33 @@ A hosted compatible service may allow the supplier to:
 
 The supplier should be able to move to another compatible service without recreating the underlying assurance information.
 
-## 9. Desired Outcome
+
+## 9. Organisation Information and Personal Information
+
+OpenPrequal primarily concerns organisations, but prequalification evidence can still contain personal information.
+
+Organisation-level information may include:
+
+- insurance;
+- policies;
+- systems;
+- assessment results;
+- organisational declarations.
+
+Personal information may include:
+
+- named contacts;
+- directors or officers;
+- identifiable employees;
+- CVs;
+- assessor details;
+- identifiable incident information.
+
+OpenPrequal should prefer organisation-level evidence where it is sufficient and should avoid collecting or sharing personal information unnecessarily.
+
+Where personal information is required, the general OpenAssurance privacy principles apply, including purpose limitation, minimum disclosure, appropriate retention, and controlled onward sharing.
+
+## 10. Desired Outcome
 
 The aim is:
 
@@ -174,7 +200,7 @@ This does not mean every buyer must accept every assessment.
 
 It means a valid assessment or evidence item should be capable of being presented anywhere without forcing the supplier to join the recipient's platform or re-enter the same information.
 
-## 10. Non-Goals
+## 11. Non-Goals
 
 OpenPrequal is not intended to:
 
@@ -185,7 +211,7 @@ OpenPrequal is not intended to:
 - replace procurement platforms;
 - replace contractor-management systems.
 
-## 11. Core Test
+## 12. Core Test
 
 > **Can a supplier present valid prequalification information to a buyer without both parties being customers of the same prequalification platform?**
 

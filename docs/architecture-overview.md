@@ -87,6 +87,20 @@ The holder may be:
 
 Holding or presenting a record does not make the holder its issuer.
 
+### Presentation
+
+A purpose-specific package of assurance information shared with a verifier or relying organisation.
+
+A presentation may contain one or more credentials, attestations, assessments, or derived claims, but it should disclose only what is required for the stated assurance purpose.
+
+A presentation should be capable of identifying:
+
+- intended recipient;
+- purpose;
+- included records or claims;
+- issue time;
+- expiry or access period where appropriate.
+
 ### Host
 
 A technical service that stores or facilitates records.
@@ -221,7 +235,22 @@ The copies remain the same assertion.
 
 OpenAssurance should not create a public searchable database of worker or supplier assurance information by default.
 
-The architecture should support selective presentation and sharing.
+The architecture should support selective, purpose-bound presentation and sharing.
+
+```text
+Credential or attestation
+          |
+          v
+        Holder
+          |
+          v
+Purpose-specific presentation
+          |
+          v
+       Verifier
+```
+
+A holder may possess many assurance records while presenting only the records or claims required for a particular purpose.
 
 Public information may include:
 
@@ -229,7 +258,7 @@ Public information may include:
 - public verification information;
 - public schemas;
 - public endorsements where intended;
-- status mechanisms.
+- privacy-preserving status mechanisms.
 
 Private information may include:
 
@@ -238,6 +267,12 @@ Private information may include:
 - assessments;
 - employment information;
 - detailed supplier documentation.
+
+OpenAssurance should avoid a universal person identifier. Implementations should prefer scoped, pairwise, issuer-specific, or otherwise privacy-preserving identifiers where practical.
+
+Receiving systems should not retain personal information indefinitely merely because it was once presented.
+
+Where a signed record is inaccurate, correction should normally occur through revocation, supersession, replacement, or a linked correction statement rather than alteration of the original signed object.
 
 ## 10. Existing Standards
 

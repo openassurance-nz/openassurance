@@ -154,7 +154,39 @@ That service should provide simple functions such as:
 
 The organisation should be able to change service provider without invalidating existing credentials.
 
-## 9. Non-Goals
+
+## 9. Privacy and Worker Information
+
+OpenCompetency handles personal information and should be designed accordingly.
+
+The profile should:
+
+- keep worker assurance information private by default;
+- support selective and purpose-specific presentation;
+- identify the intended recipient and purpose of a presentation where practical;
+- avoid disclosing unrelated competencies, qualifications, medical information, or employment information;
+- avoid a universal OpenCompetency worker number;
+- support scoped or privacy-preserving subject identifiers;
+- provide practical access and correction mechanisms;
+- support revocation, supersession, replacement, and linked correction statements;
+- support proportionate retention;
+- avoid uncontrolled onward sharing.
+
+OpenCompetency should not require worker consent as the only possible basis for sharing. Employers and other organisations may have other lawful bases for collecting or disclosing assurance information. The participating organisation remains responsible for determining and documenting its legal basis.
+
+A worker may hold many credentials while presenting only those required for a specific purpose.
+
+```text
+Worker assurance records
+          |
+          v
+Purpose-specific presentation
+          |
+          v
+Customer or verifier
+```
+
+## 10. Non-Goals
 
 OpenCompetency is not intended to:
 
@@ -166,7 +198,7 @@ OpenCompetency is not intended to:
 - become a compulsory worker database;
 - force workers to maintain a particular passport application.
 
-## 10. Core Test
+## 11. Core Test
 
 > **Can an employer provide valid competency evidence to a customer without both organisations being customers of the same competency platform?**
 

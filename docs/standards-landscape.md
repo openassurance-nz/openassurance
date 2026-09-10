@@ -177,7 +177,50 @@ Compatibility with an existing schema or standard must not create a dependency o
 
 > **OpenAssurance compatibility must not require use of a particular credential issuer, registry, wallet, host, or commercial platform.**
 
-## 14. Next Research
+
+## 14. New Zealand Privacy Act 2020
+
+OpenAssurance will process personal information when assurance records relate to identifiable individuals.
+
+The design should therefore consider the Information Privacy Principles under the Privacy Act 2020, including:
+
+- IPP 1 - purpose of collection and necessity;
+- IPP 2 - source of personal information;
+- IPP 3 and IPP 3A - transparency, including indirect collection;
+- IPP 5 - storage and security;
+- IPP 6 - access;
+- IPP 7 - correction;
+- IPP 9 - retention;
+- IPP 11 - disclosure;
+- IPP 12 - overseas disclosure;
+- IPP 13 - unique identifiers.
+
+OpenAssurance should support privacy compliance without assuming that consent is the only lawful basis for employer-to-customer assurance exchange.
+
+The legal basis for collecting, using, and disclosing information remains the responsibility of participating organisations.
+
+## 15. Privacy Impact Assessment
+
+A formal Privacy Impact Assessment should be completed before the first stable OpenAssurance specification is finalised.
+
+The assessment should examine:
+
+- competency and qualification data flows;
+- employer-to-customer sharing;
+- indirect collection;
+- hosted services;
+- overseas hosting and disclosure;
+- identity and identifier design;
+- selective disclosure;
+- retention;
+- correction and supersession;
+- revocation;
+- onward sharing;
+- audit and security requirements.
+
+Privacy should be treated as an architectural requirement rather than an implementation appendix.
+
+## 16. Next Research
 
 The following should be examined in greater detail before OpenAssurance v0.1 is finalised:
 
