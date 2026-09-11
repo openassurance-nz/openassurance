@@ -122,10 +122,13 @@ Website: https://openprequal.nz
 5. **Local acceptance** - The receiving organisation decides what evidence and issuers it accepts.
 6. **Issuer provenance** - A system sharing a credential does not become its issuer.
 7. **Open exchange** - Conforming systems should exchange assurance records without bilateral proprietary integrations.
-8. **Small organisations can participate** - A business should not need specialist software or its own database to use the standard.
-9. **Reuse existing standards first** - OpenAssurance should align with established international and New Zealand standards wherever practical.
-10. **Privacy by design** - Personal assurance information should be private by default, purpose-bound, and limited to the minimum information required.
-11. **No universal worker identifier** - OpenAssurance should avoid identifiers that enable unnecessary tracking of individuals across organisations.
+8. **Privacy by design** - Personal assurance information should be private by default, purpose-bound, and limited to the minimum information required.
+9. **No universal worker identifier** - OpenAssurance should avoid identifiers that enable unnecessary tracking of individuals across organisations.
+10. **Small organisations can participate** - A business should not need specialist software or its own database to use the standard.
+11. **Reuse existing standards first** - OpenAssurance should align with established international and New Zealand standards wherever practical.
+12. **Vendor neutrality** - Commercial providers remain free to compete on services around the open exchange layer.
+
+These summarise the principles set out in `CHARTER.md`, which remains the authoritative statement.
 
 ## What OpenAssurance Is Not
 
