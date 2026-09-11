@@ -85,6 +85,14 @@ OpenAssurance should prefer compatible existing New Zealand schemas where they a
 
 OpenAssurance should not create a duplicate schema solely for branding or namespace ownership.
 
+Reuse assessment should distinguish two separate questions.
+
+The first is whether a schema is openly published and may be implemented by anyone.
+
+The second is whether the tooling around it — issuing, presentation, status, and verification — is available on open terms, or only to licensees of a particular service.
+
+A schema that anyone may read, implemented through tooling only licensees may use, does not by itself satisfy the open exchange requirement. Both questions should be answered before a schema is adopted.
+
 ## 7. New Zealand Digital Identity Infrastructure
 
 New Zealand government digital identity standards and credential infrastructure should be treated as an important compatibility target.

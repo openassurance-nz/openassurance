@@ -190,21 +190,21 @@ A supplier should not necessarily need to adopt the buyer's management software 
 
 ## 4. Open Does Not Only Mean an Open Schema
 
-New Zealand already has examples of open credential schemas.
+New Zealand already has openly published credential schemas, including for qualifications, licences, courses, assessments, and inductions, expressed using the W3C Verifiable Credentials data model.
 
-`credentialschema.nz`, for example, publishes schemas for qualifications, licences, courses, assessments, and inductions using the W3C Verifiable Credentials data model.[^7]
-
-This is useful infrastructure.
+This is useful infrastructure, and OpenAssurance should build on it rather than duplicate it.
 
 However, an open data structure alone does not necessarily create open exchange.
 
-A schema can be public while the operational pathway for sending or receiving the information still requires:
+A schema can be published openly while the operational pathway for issuing, sending, receiving, or verifying the information still requires:
 
 - platform membership;
 - enterprise licensing;
 - tenant setup;
 - proprietary integrations;
 - duplicate records.
+
+The distinction that matters is between a schema being readable and the exchange being usable. A specification anyone may read, implemented through tooling only licensees may use, leaves the interoperability problem where it was.
 
 OpenAssurance therefore proposes a stronger interoperability test:
 
@@ -780,8 +780,6 @@ And:
 [^5]: WorkSafe New Zealand, "Managing health and safety through the contracting chain". https://www.worksafe.govt.nz/dmsdocument/71748-part-a-managing-health-and-safety-through-the-contracting-chain/latest/
 
 [^6]: WorkSafe New Zealand, "PCBUs working together: advice when contracting". https://www.worksafe.govt.nz/managing-health-and-safety/getting-started/understanding-the-law/overlapping-duties/pcbus-working-together-advice-when-contracting/
-
-[^7]: credentialschema.nz. https://credentialschema.nz
 
 All sources were accessed on 11 September 2026.
 
