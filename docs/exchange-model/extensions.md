@@ -57,6 +57,10 @@ Each requirement SHOULD carry guidance, and examples of evidence that may demons
 
 Evidence examples are not exclusive unless the requirement expressly says so.
 
+Accepting equivalent evidence is the normal posture for any requirement that is assessed on evidence.
+
+A requirement states an outcome that is expected, and not a document that is requested.
+
 A supplier is not asked to put a particular document in a particular box: it presents the evidence it has, and an assessor decides whether that evidence demonstrates the requirement.
 
 A requirement MAY also carry objective criteria, which are the parts a system can check without judgement:
@@ -70,6 +74,14 @@ A requirement MAY also carry objective criteria, which are the parts a system ca
 An objective criterion is a named type, such as a minimum insurance limit, a lookback period, or a declarant's capacity, and not an expression in a general language of paths, operators, and nested logic.
 
 The list of types grows only where a genuinely objective test recurs.
+
+A condition that only one source can satisfy, such as a practising licence issued by the Electrical Workers Registration Board, is a condition on who issued the evidence.
+
+It MUST be written as an objective criterion, and never as an example of evidence.
+
+That discipline is what stops a list of examples of acceptable evidence from quietly becoming the only files a portal accepts.
+
+A conforming system MUST NOT reject a presentation, or report a requirement as not met, because the evidence presented is of a kind that is not listed among the examples.
 
 A requirement record MAY be used to derive a DCQL query that helps a holder's system identify candidate records in an interactive exchange.
 
@@ -85,7 +97,7 @@ Terms that match the CTDL condition profile exactly are borrowed from it, and th
 
 Publishing a requirement is optional, and a relying organisation MAY keep its requirements private.
 
-`examples.md` section 3.1 shows a whole requirement record as JSON, and the outline below shows the shape of a single requirement.
+`examples.md` section 3.1 shows how to read a requirement and how to write a good one, followed by a whole requirement record as JSON, and the outline below shows the shape of a single requirement.
 
 An example, in outline and with every detail illustrative:
 

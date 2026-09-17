@@ -105,6 +105,62 @@ Tidewater has a durable requirement set for this kind of work, which it issues a
 
 The record's `id` identifies this immutable version, the subject's `id` identifies the set from one version to the next, and R1 to R4 identify the requirements within it.
 
+**How to read a requirement.**
+
+R1 is the one to read closely, because it calls for judgement.
+
+The requirement is an outcome: the contractor manages the health and safety risks of industrial refrigeration work, including work on ammonia plant.
+
+It is followed by examples of evidence that may demonstrate that outcome.
+
+- an assessment by an assessor the buyer recognises;
+- a management-system certification from an accredited certifier;
+- the contractor's own health and safety procedures, supported by records and examples showing how they are applied;
+- other evidence that demonstrates equivalent arrangements.
+
+These are examples and not prescribed documents.
+
+A contractor does not need to hold all of them, and evidence that is not listed may still demonstrate the requirement.
+
+One contractor might present a recognised third-party assessment.
+
+Another might present its own risk-management procedure, worker training records, inspection records, and examples from completed ammonia work.
+
+The assessor considers whether the evidence as a whole demonstrates the requirement.
+
+So the statement describes the outcome the buyer expects, and the evidence guidance helps a supplier understand what could demonstrate it.
+
+The objective criteria are a different kind of thing.
+
+Where Tidewater says that an assessment relied on must be current and must have included a site visit, those are facts a system can check.
+
+Passing those checks does not establish that the contractor meets R1, and the assessment of health and safety capability still takes a person.
+
+**An objective requirement, by contrast.**
+
+R2 is different.
+
+Tidewater requires at least NZD 10 million of current public liability cover.
+
+A certificate of currency is an example of evidence, but what is required is the cover itself.
+
+The amount and the dates are objective facts that a system can check.
+
+The buyer still decides what provenance it accepts for that evidence, whether a record issued by the insurer, a broker's certificate, or a certificate the supplier holds.
+
+That is why evidence guidance and objective criteria are kept apart.
+
+**What this comes to.**
+
+- a requirement states an expected outcome, and not a requested document;
+- evidence examples are guidance, and not the kinds of file a system will accept;
+- equivalent evidence is valid unless the requirement expressly excludes it;
+- one piece of evidence, or several together, may demonstrate a requirement;
+- objective criteria are facts a system can check, and never the whole assessment;
+- the assessor's judgement stays explicit.
+
+**The record.**
+
 ```json
 {
   "@context": [

@@ -135,6 +135,10 @@ OpenPrequal should carry exactly that, and should not recreate the pattern in wh
 
 Evidence examples in a requirement are guidance, and are not exclusive unless the requirement expressly says so.
 
+A requirement states an outcome that is expected, and not a document that is requested.
+
+Where a buyer genuinely needs evidence from a particular source, it says so as an objective criterion, and does not disguise a mandatory condition as an example.
+
 Some parts of a requirement are objective, such as an insurance limit, that evidence is current, the period a declaration covers, or that a director made it, and those parts can be checked by a system.
 
 The judgement stays with the assessor wherever judgement is what is needed.
