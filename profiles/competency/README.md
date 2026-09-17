@@ -186,6 +186,9 @@ Authority:
 Authorisation issued by Harbour Beverages Limited designating
 T. Ngata as workplace assessor for packaging line equipment
 
+Approval:
+Asserted by the issuer, and bound to this exact statement
+
 Validity:
 Until 30 June 2028, subject to status
 ```

@@ -42,10 +42,16 @@ Prequalification that works states a requirement clearly, shows what acceptable 
 
 A requirement record MAY hold one requirement or a numbered set, and each requirement MUST carry:
 
-- an identifier that stays the same between versions, and a version;
+- an identifier that stays the same between versions;
 - what it applies to, such as a role, an activity, a contract, or a supplier category;
 - the statement of what is expected, in words a person can assess against;
 - whether it is mandatory or informational.
+
+Three identifiers keep the history intelligible.
+
+The `id` of the record identifies one immutable issued version, the `id` of its subject identifies the requirement set from one version to the next, and each requirement within the set has a short identifier of its own.
+
+An assessment can then say exactly which requirement, in which version of which set, it was made against, and a later version that changes one requirement leaves the history of the others readable.
 
 Each requirement SHOULD carry guidance, and examples of evidence that may demonstrate it.
 
@@ -61,7 +67,13 @@ A requirement MAY also carry objective criteria, which are the parts a system ca
 - a capacity, such as a declaration made by a director;
 - an accepted issuer or endorsement, or one of several alternatives.
 
-Only objective criteria are intended to be translatable into a DCQL query for use in an interactive exchange.
+An objective criterion is a named type, such as a minimum insurance limit, a lookback period, or a declarant's capacity, and not an expression in a general language of paths, operators, and nested logic.
+
+The list of types grows only where a genuinely objective test recurs.
+
+A requirement record MAY be used to derive a DCQL query that helps a holder's system identify candidate records in an interactive exchange.
+
+A DCQL match does not mean that a requirement is met.
 
 Everything else is for a person, and a conforming system MUST NOT report a requirement as met on the strength of its objective criteria alone where the requirement also calls for judgement.
 
@@ -72,6 +84,8 @@ A requirement MAY name a category from a published set of topics, such as the tw
 Terms that match the CTDL condition profile exactly are borrowed from it, and the rest are defined by OpenAssurance.
 
 Publishing a requirement is optional, and a relying organisation MAY keep its requirements private.
+
+`examples.md` section 3.1 shows a whole requirement record as JSON, and the outline below shows the shape of a single requirement.
 
 An example, in outline and with every detail illustrative:
 
@@ -124,44 +138,142 @@ The record format, the behaviour of an HTTPS inbox, and whether a well-known add
 
 ## 5. Request and Response
 
+**Working assumption, decision D12.**
+
 The floor lets a holder send a presentation unprompted.
 
-The other pattern is a relying organisation asking for one.
+The other pattern is a relying organisation asking for one, and that needs a transaction layer between a durable requirement and a supplier's presentation.
 
-A request is a signed object sent to the inbox that the holder's discovery record gives.
+Four objects are involved, and each has one job.
 
-It MUST carry:
+```text
+Requirement record      durable policy: what the relying organisation expects
+        |
+        v
+Request                 this requester asking this recipient, now, for this engagement
+        |
+        v
+Presentation            the holder's response, and the evidence it chooses to disclose
+        |
+        v
+Assessment record       the determination of the relying organisation or its assessor
+        |
+        +--> Corrective action request, where one is required
+```
 
-- the requester's identifier, so that the holder can check the requester's issuer binding as `exchange-model.md` section 7.5 describes;
-- who the request is about, by claims such as a name and the job or contract concerned;
-- what is needed, as a reference to a requirement record or as a list of record types and claims;
-- the purpose;
-- the period for which the records are needed;
-- the address to reply to, an expiry, and a nonce.
+A requirement record says what an organisation requires of anyone.
 
-The holder decides.
+A request says that one organisation is asking another to respond to particular requirements for a particular engagement.
 
-It works out who the request concerns, decides whether it has a lawful basis and a proper purpose to disclose, selects the minimum records, and replies with a presentation that names the requester as recipient and carries the stated purpose, the nonce, and an expiry no later than the end of the period it has approved.
+That is a passing message and not an enduring assertion, so a request is not a verifiable credential.
+
+| Object | Meaning | Form |
+|---|---|---|
+| Requirement | What the relying organisation expects | Requirement record, a verifiable credential |
+| Request | Please respond to these requirements for this engagement | Signed JSON, a JSON Web Signature |
+| Query | Which held records may be relevant | DCQL, derived, interactive exchange only |
+| Presentation | The evidence the holder chooses to disclose | Verifiable presentation |
+| Assessment | Whether the evidence demonstrates the requirement | Assessment record, a verifiable credential |
+| Corrective action | A specific deficiency to be put right | Corrective action request, a verifiable credential |
+
+The genuinely new pieces are small: the requirement vocabulary, the request, and the map between requirement identifiers and the records presented.
+
+Everything cryptographic, and most of the interactive exchange, is an existing standard.
+
+### 5.1 The request
+
+A request is a JSON object that MUST carry:
+
+- `iss`, the requester's issuer identifier;
+- `aud`, the recipient's issuer identifier, so that a request cannot be passed to another organisation as though it were addressed to it;
+- `iat` and `exp`, so that an old request does not stay actionable;
+- `jti`, an identifier for the transaction that every later record can refer to;
+- `nonce`, which the presentation made in response carries back;
+- the subject the request is about;
+- the purpose, and the use the requester proposes to make of what it receives;
+- the address to reply to.
+
+It SHOULD carry the engagement that gives rise to it, such as a contract reference, an activity, a start date, and the period for which the records are needed, because that is what tells the recipient why these requirements apply and for how long.
+
+The subject is either the recipient organisation itself, or a person whose records the recipient holds, identified by claims such as a name and the job concerned, and never by an identifier the requester was not given by the holder.
+
+Where requirements apply, the request MUST reference each requirement record by its `id` and by a digest, and MAY select particular requirements from it by identifier.
+
+The request does not restate the requirements.
+
+The digest is computed over the secured form of the requirement record, which is the exact content of its file, so that no canonical form of JSON is needed and there can be no later doubt about what was asked.
+
+A conforming exchange MUST NOT depend on fetching a requirement record from anywhere: the record accompanies the request, or the recipient already holds it.
+
+A request MAY carry a DCQL query derived from the requirement records, as section 5.5 describes.
+
+### 5.2 Securing the request
+
+A request MUST be secured as a JSON Web Signature, signed with a key that the requester's controller document lists under the authentication relationship and that the `kid` header names.
+
+**Proposed.**
+
+The `typ` header is `oa-request+jwt`, and a conforming recipient MUST support ES256.
+
+### 5.3 Verifying a request
+
+A recipient checks the following, in this order, before it considers disclosing anything.
+
+1. The signature, against the requester's controller document.
+2. The requester's issuer binding, as `exchange-model.md` section 7.5 describes.
+3. That `aud` names the recipient.
+4. That the request has not expired, and that its `jti` has not been seen before.
+5. The signature of each requirement record referenced.
+6. That each requirement record matches the digest in the request.
+
+The holder then decides.
+
+It works out who or what the request concerns, decides whether it has a lawful basis and a proper purpose to disclose, and selects the minimum records.
 
 A holder MUST NOT confirm or deny that it holds records about a person to a requester whose signature or issuer binding it cannot verify.
 
 A holder MAY decline any request without giving a reason.
 
+### 5.4 The response
+
+A presentation made in response to a request MUST name the requester in `aud`, carry the request's `nonce`, refer to the request by its `jti`, and carry its own expiry and the holder's own terms of use.
+
+The use a requester proposes is a proposal, and the terms that govern a presentation are the holder's.
+
+The presentation SHOULD carry a submission map, which lists, for each requirement, the records the holder presents against it.
+
+A submission map is an index and not a claim.
+
+It says that the holder presents these records for the requester to consider against that requirement, and it MUST NOT be read as the holder asserting that the requirement is met.
+
+A requirement for which the holder presents nothing is simply absent from the map.
+
+### 5.5 Interactive exchange
+
+Where both systems support OpenID for Verifiable Presentations, the same transaction is translated into it, and no second requirement model is defined.
+
+- the nonce maps directly;
+- candidate records are requested with a `dcql_query` derived from the requirement records;
+- the requester is identified as that protocol requires, and the response is returned in its `vp_token`.
+
+The request in section 5.1 is not an OpenID authorization request, because that format carries fields that belong to an OAuth exchange and mean nothing in a message that may travel by email.
+
+A DCQL query helps a holder's system find candidate records.
+
+A match does not mean that a requirement is met.
+
+### 5.6 The file floor
+
+Two files attached to an email are enough.
+
 ```text
-Requester                               Holder
-   |  look up the holder's discovery record
-   |  signed request: who is asking, about whom,
-   |  what is needed, why, for how long, reply-to, nonce  ->
-   |                                     check the requester's binding
-   |                                     identify the subject, check basis,
-   |                                     select the minimum
-   |  <-  presentation: recipient, purpose, nonce, expiry
-   verify, then apply own recognition and requirement
+prequalification-request.jwt                 the signed request
+tidewater-ammonia-requirements-v3.vc.jwt     the requirement record it refers to
 ```
 
-Where possible the request reuses the claims of the OpenID for Verifiable Presentations request object, which already carries a nonce, a query, and a response address.
+No portal is involved, and neither party joins anything.
 
-That protocol assumes the person using the wallet is the subject, so a way to say whom a request is about is the one genuinely new element, and it is an open point in section 11.
+`examples.md` section 3 works through a whole transaction, from the requirement to the assessment that closes it.
 
 ## 6. Approval for a Period
 
@@ -194,6 +306,8 @@ A grant is a disclosure like any other, so it appears in the list a subject can 
 Existing event formats, in particular the IETF security event token with its push and poll delivery, should be evaluated for the change notice before anything new is defined.
 
 ## 7. Interactive Exchange
+
+Section 5.5 says how a request is translated when an exchange is interactive, and this section covers issuance and presentation in general.
 
 Where both parties run systems that support them, records SHOULD be issued using OpenID for Verifiable Credential Issuance 1.0 and presented using OpenID for Verifiable Presentations 1.0, with requests expressed in DCQL.
 
@@ -324,7 +438,8 @@ Effect on any determination: none
 
 These are unresolved in the extensions, and none of them holds up the core.
 
-- **The request object.** Section 5 reuses the claims of the OpenID request object where it can, and how a request says whom it is about, and how it is signed and delivered to an email inbox, are undecided;
+- **Requests.** Section 5 leaves open how one request is addressed to many recipients, as in a tender, how long a recipient remembers the identifiers it has seen, and how a request about a person names them without disclosing more than the requester was given;
+- **The submission map and the terms of a response.** Section 5.4 needs term names, and a decision on where in a presentation they sit;
 - **Corrective action terms.** Section 10 needs term names, and a decision on whether a closure is an assessment as drafted or a record type of its own;
 - **Grants and change notices.** Section 6 describes a standing grant and a content-free change notice, and neither has a format, so existing event formats need evaluating first;
 - **The discovery record.** Section 4 proposes a DNS record, and its format, the behaviour of an HTTPS inbox, and a well-known address as an alternative are undecided;

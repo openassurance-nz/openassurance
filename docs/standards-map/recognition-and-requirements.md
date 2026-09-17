@@ -181,9 +181,9 @@ A Requirement record therefore needs to say, for a named role, activity, contrac
 
 It should be publishable, signable as an ordinary credential whose subject is the requirement itself, and readable by a person.
 
-Only the objective criteria translate into a DCQL query for use at transaction time, and the rest is judged by an assessor, whose determination is carried in an Assessment record.
+A DCQL query can be derived from it to find candidate records at transaction time, and a match never means that a requirement is met: the judgement is an assessor's, and the determination is carried in an Assessment record.
 
-The design, and the corrective action record that follows from it, are decision D11 in `decisions.md`.
+The design, and the corrective action record that follows from it, are decision D11 in `decisions.md`, and the signed request that carries a requirement to a supplier is decision D12.
 
 This is the largest genuinely new item in the map, and it is still small.
 

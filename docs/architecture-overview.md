@@ -314,6 +314,8 @@ A first working draft of what v0.1 should define is in `exchange-model.md`.
 
 That draft divides the list above into a core proposed for v0.1 and extensions, and places requirement expression and endorsement scope among the extensions, which are drafted in `exchange-model/extensions.md`.
 
+The extensions also draft a corrective action record and a signed request, and neither changes the record types in section 4.
+
 ## 12. Design Test
 
 Any proposed architecture should pass this test:

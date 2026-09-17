@@ -65,7 +65,7 @@ This would change if 1EdTech added workplace attestation and authorisation seman
 
 Status: open.
 
-Applied as a working assumption in `exchange-model.md` sections 6.1 to 6.3 and 8.1.
+Applied as a working assumption in `exchange-model.md` sections 6.1 and 8.1, with the attestation and authorisation types it leaves outside Open Badges defined in `exchange-model.md` sections 6.2 and 6.3.
 
 ### D5. New Zealand credential schemas
 
@@ -109,7 +109,7 @@ The question is whether to borrow condition-profile terms for the Requirement re
 
 Likely path: borrow the CTDL terms that match exactly, such as those for alternative conditions, target credentials, target competencies, and years of experience, define the rest, and depend on the vocabulary alone rather than on the registry around it.
 
-This would change if the borrowed terms proved to carry meaning that does not survive translation to a DCQL query, in which case OpenAssurance would define its own and record the mapping.
+This would change if the borrowed terms proved to describe the conditions for gaining a credential so closely that they do not fit a requirement written as guidance for an assessor's judgement, in which case OpenAssurance would define its own and record the mapping.
 
 Status: open.
 
@@ -150,6 +150,18 @@ This would change if buyers and assessors, asked during Phase 1, wanted requirem
 Status: open.
 
 Applied as a working assumption in `exchange-model.md` section 6.4, and in `exchange-model/extensions.md` sections 3 and 10.
+
+### D12. Request object and response binding
+
+The question is how a relying organisation asks another organisation for assurance records without making an interactive protocol, a portal, or a shared platform a precondition.
+
+Likely path: a small signed JSON request for the file floor, which identifies the requester and the recipient, carries a unique identifier, a nonce, a purpose, the engagement, and an expiry, and references the exact requirement records that apply by identifier and digest; a presentation made in response refers to the request and its nonce, and may map the records presented to individual requirement identifiers, as an index and never as a claim that a requirement is met; the request is not a verifiable credential; interactive implementations translate the same transaction into OpenID for Verifiable Presentations and DCQL, and no second requirement model is defined.
+
+This would change if implementation showed that the OpenID request object could be used unchanged for a message sent by email, in which case the separate request would be dropped.
+
+Status: open.
+
+Applied as a working assumption in `exchange-model/extensions.md` section 5.
 
 ## 3. Open Questions
 

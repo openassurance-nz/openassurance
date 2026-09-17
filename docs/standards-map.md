@@ -189,7 +189,7 @@ Status is as verified on 16 September 2026.
 | Presentation protocol | OpenID4VP 1.0 | Final, July 2025 | Adopt, profiled |
 | Transaction query | DCQL | Part of OpenID4VP 1.0 | Adopt |
 | Transaction query | DIF Presentation Exchange 2.1.1 | DIF Ratified, not referenced by OpenID4VP 1.0 | Set aside |
-| Request for a presentation | OpenID4VP request object | Final, July 2025 | Profile, extension |
+| Request for records | none for a file sent by email; the OpenID4VP request object when interactive | Final, July 2025 | Define a small signed request, extension, decision D12; translate when interactive |
 | Browser mediation | W3C Digital Credentials API | Working Draft | Evaluate |
 | Online mdoc presentation | ISO/IEC TS 18013-7 | Technical Specification | Reference |
 | Organisation-to-organisation transfer | none | | Define as exchange convention |
@@ -200,7 +200,7 @@ Status is as verified on 16 September 2026.
 | Recognition publishing | ETSI TS 119 612 and TS 119 602 | Technical Specifications | Reference |
 | Recognition source | government trust list, VICAL | Operating, sandbox | Reference |
 | Requirement expression | CTDL ConditionProfile | Stable vocabulary, CC BY | Evaluate |
-| Requirement expression | none publishable and executable | | Define |
+| Requirement expression | none that states an expectation with evidence guidance and objective criteria | | Define, extension, decision D11 |
 | Achievement vocabulary | Open Badges 3.0 | Final, June 2024 | Profile, base for achievements |
 | Achievement record proof format | Open Badges 3.0 JSON Web Token proof format | Final, June 2024 | Accept alongside the common envelope, decision D4 |
 | Many achievements, one person | Comprehensive Learner Record 2.0 | Final, February 2025 | Evaluate for bulk transfer |
@@ -225,9 +225,9 @@ Status is as verified on 16 September 2026.
 | Government wallet and verifier | Govt.nz app, issuance platform, NZ Verify | Operating, mdoc | Reference; optional mdoc acceptance class |
 | Person name, date, address | mandated government data standards | Mandated for departments | Reference |
 
-Fifty-two of the sixty-two rows point at something that already exists.
+Fifty-one of the sixty-two rows point at something that already exists.
 
-Ten say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
+Eleven say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
 
 Section 7 describes what each of those requires.
 
@@ -265,7 +265,9 @@ The July 2025 ministerial statement's observation that "on-the-job experience sh
 
 `standards-map/recognition-and-requirements.md` section 3 found a query language and a descriptive condition vocabulary, and no publishable requirement model that translates into a query.
 
-OpenAssurance should define a Requirement record that states what is expected, gives non-exclusive examples of evidence, and marks the objective criteria a system can check, which are the only part that translates to a DCQL query.
+OpenAssurance should define a Requirement record that states what is expected, gives non-exclusive examples of evidence, and marks the objective criteria a system can check.
+
+A DCQL query derived from it helps find candidate records, and a match never means that a requirement is met.
 
 A requirement is guidance for an assessor's judgement and not a rules engine, which is decision D11.
 
@@ -317,7 +319,7 @@ The register already exists, so nothing new is operated by anyone.
 
 The file floor lets a holder send a presentation, and says nothing about how a sender finds where to send it, how a relying organisation asks for one, or how an approval that lasts for a contract period is kept current.
 
-The exchange model drafts three extensions for these, in `exchange-model/extensions.md`: a DNS record on the pattern DKIM uses, a signed request that reuses the claims of the OpenID presentation request, and a standing grant with a change notice that carries no personal information.
+The exchange model drafts three extensions for these, in `exchange-model/extensions.md`: a DNS record on the pattern DKIM uses, a small signed request that pins the exact requirement records it refers to and is translated into the OpenID presentation request when the exchange is interactive, and a standing grant with a change notice that carries no personal information.
 
 None is proposed for v0.1, and each reuses an existing mechanism before defining anything.
 

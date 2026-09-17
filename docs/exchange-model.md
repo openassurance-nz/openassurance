@@ -63,7 +63,7 @@ A peer review of the first draft found that it was not minimal.
 
 This document is therefore the core only: what the two reference exchanges in Phase 4 need, and what is proposed for v0.1.
 
-The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, discovery, request and response, approval for a period, the interactive protocols, and acceptance of government-issued credentials, are in `exchange-model/extensions.md` and are not proposed for v0.1.
+The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, discovery, request and response, approval for a period, the interactive protocols, acceptance of government-issued credentials, and stronger evidence of a named person's role and approval, are in `exchange-model/extensions.md` and are not proposed for v0.1.
 
 Worked examples are in `exchange-model/examples.md`.
 
@@ -444,6 +444,8 @@ A record MAY additionally be made available secured with a Data Integrity proof.
 
 A conforming verifier MUST verify the JSON Web Signature form, SHOULD verify the selectively disclosable form, and MAY verify the Data Integrity form.
 
+**Working assumption, decision D4.**
+
 An achievement record is the exception.
 
 Open Badges 3.0 defines its own JSON Web Token proof format, which requires RS256 as a minimum, permits a `typ` of `JWT` only, and carries validity in the `nbf` and `exp` claims, and that format differs from the one above.
@@ -465,6 +467,8 @@ This choice follows the algorithm in widest use across the adopted protocols and
 The `kid` header MUST identify a verification method in the issuer's controller document.
 
 That verification method MUST be listed under the assertion relationship for a record, and under the authentication relationship for a presentation.
+
+**Working assumption, decision D9.**
 
 An issuer MUST retain a retired key in its controller document, marked with the time it ceased to be used, and MUST NOT delete it while any record it signed remains within its validity period.
 
@@ -526,7 +530,7 @@ A holder's signature on a presentation says that the holder assembled and sent i
 
 A presentation that contains personal information MUST identify its intended recipient in the `aud` claim and MUST carry an expiry in the `exp` claim.
 
-A presentation made in an interactive exchange MUST carry the verifier's nonce.
+A presentation made in response to a request, or in an interactive exchange, MUST carry the requester's nonce.
 
 The recipient is identified by its issuer identifier where it has one, and otherwise by its domain name.
 
@@ -687,6 +691,8 @@ Three rules apply whatever it is.
 - the vocabulary MUST be specified as named claims independent of any container, so that the same record can be rendered into another credential format without changing its meaning.
 
 The first rule is the Charter's requirement that verification never depends on openassurance.nz being available.
+
+The third rule keeps a rendering into the government's mdoc format possible without changing any record, which is decision D3.
 
 ## 15. Conformance Classes
 

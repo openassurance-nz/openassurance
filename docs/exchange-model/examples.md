@@ -36,6 +36,7 @@ The first example is from food manufacturing, and shows the attestation from sec
   "credentialSubject": {
     "id": "urn:uuid:6f1c2f0e-0000-4000-8000-000000000000",
     "name": "A. Worker",
+    "identityConfirmation": "Photo identification sighted by the issuer",
     "assertion": "Operated the depalletiser on packaging line 2 under normal production conditions, including start-up, jam clearing, and end-of-shift isolation",
     "statementKind": "performed",
     "scope": {
@@ -50,7 +51,16 @@ The first example is from food manufacturing, and shows the attestation from sec
     "attestor": {
       "name": "T. Ngata",
       "role": "Packaging Shift Supervisor",
-      "authority": "https://records.harbourbeverages.example/authorisations/2025-0093"
+      "authorityEvidence": {
+        "type": "AuthorisationRecord",
+        "record": "https://records.harbourbeverages.example/authorisations/2025-0093"
+      },
+      "approvalEvidence": {
+        "method": "authenticated",
+        "authentication": "Signed in to the employer's system with a second factor",
+        "approvedAt": "2026-06-30T15:40:00+12:00",
+        "statementDigest": "sha256-illustrativeDigestValueOnly"
+      }
     }
   },
   "credentialStatus": {
@@ -62,7 +72,9 @@ The first example is from food manufacturing, and shows the attestation from sec
 }
 ```
 
-The subject identifier is scoped to the employer and means nothing to anyone else.
+The subject identifier is scoped to the employer and means nothing to anyone else, and the record says how the employer confirmed who the worker is without recording the document's number.
+
+The attestor's authority is another record, the authorisation that made him a workplace assessor, and his approval is asserted by the employer and bound to a digest of the statement, as `exchange-model.md` section 5.6 describes.
 
 A customer receiving this record in a presentation would see, in the presentation's own claims, that it was addressed to that customer, when it expires, and the purpose for which it was shared.
 
@@ -75,21 +87,214 @@ A customer receiving this record in a presentation would see, in the presentatio
 }
 ```
 
-## 3. OpenPrequal: A Supplier Presenting to a Buyer
+## 3. OpenPrequal: A Buyer Requests Assurance From a Supplier
 
-The second example is from cold-chain logistics, and every organisation in it is fictional.
+The second example is from cold-chain logistics, and every organisation and person in it is fictional.
 
-Ridgeline Refrigeration Limited maintains industrial refrigeration plant.
+Tidewater Cold Storage Limited operates cold stores and is considering engaging Ridgeline Refrigeration Limited to maintain industrial refrigeration plant.
 
-Tidewater Cold Storage Limited operates cold stores and is considering engaging it.
+Fernbank Safety Assessors Limited has already assessed the supplier's health and safety management.
 
-Fernbank Safety Assessors Limited has assessed the supplier's health and safety management.
+The example follows one transaction from start to finish.
 
-The supplier holds three records and presents them together.
+The requirement record, the request, and the corrective action request are extensions drafted in `extensions.md`, and every other record is in the core.
+
+### 3.1 The buyer's requirement record
+
+Tidewater has a durable requirement set for this kind of work, which it issues as a record of its own.
+
+The record's `id` identifies this immutable version, the subject's `id` identifies the set from one version to the next, and R1 to R4 identify the requirements within it.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+  "type": ["VerifiableCredential", "RequirementCredential"],
+  "issuer": {
+    "id": "https://tidewatercoldstorage.example/issuer",
+    "name": "Tidewater Cold Storage Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-09-01T00:00:00+12:00",
+  "credentialSubject": {
+    "id": "https://tidewatercoldstorage.example/requirements/ammonia",
+    "name": "Refrigeration maintenance contractors, ammonia plant",
+    "version": "3",
+    "appliesTo": {
+      "activity": "Industrial refrigeration maintenance",
+      "context": "Ammonia plant"
+    },
+    "requirements": [
+      {
+        "id": "R1",
+        "title": "Health and safety capability",
+        "mandatory": true,
+        "statement": "The contractor manages the health and safety risks of industrial refrigeration work, including work on ammonia plant.",
+        "evidenceGuidance": {
+          "equivalentEvidenceAccepted": true,
+          "examples": [
+            {
+              "description": "An assessment by an assessor the buyer recognises",
+              "recordType": "AssessmentCredential"
+            },
+            {
+              "description": "A management-system certification from an accredited certifier"
+            },
+            {
+              "description": "The contractor's own procedures, records, and examples of practice",
+              "recordType": "EvidenceCredential"
+            }
+          ]
+        },
+        "objectiveCriteria": [
+          { "type": "current" },
+          { "type": "siteVisitIncluded", "appliesTo": "AssessmentCredential" }
+        ]
+      },
+      {
+        "id": "R2",
+        "title": "Public liability insurance",
+        "mandatory": true,
+        "statement": "The contractor holds public liability insurance adequate for the work.",
+        "evidenceGuidance": {
+          "equivalentEvidenceAccepted": true,
+          "examples": [
+            { "description": "A certificate of currency issued by an insurer or broker" }
+          ]
+        },
+        "objectiveCriteria": [
+          { "type": "minimumInsuranceLimit", "amount": 10000000, "currency": "NZD" },
+          { "type": "currentAt", "event": "engagementStart" }
+        ]
+      },
+      {
+        "id": "R3",
+        "title": "Regulator interventions",
+        "mandatory": true,
+        "statement": "The contractor discloses any regulator notices, warnings, or prosecutions in the previous five years.",
+        "evidenceGuidance": {
+          "equivalentEvidenceAccepted": true,
+          "examples": [
+            {
+              "description": "A declaration made by a director",
+              "recordType": "DeclarationCredential"
+            }
+          ]
+        },
+        "objectiveCriteria": [
+          { "type": "lookbackPeriod", "duration": "P5Y" },
+          { "type": "declarantCapacity", "value": "Director" }
+        ]
+      },
+      {
+        "id": "R4",
+        "title": "Worker engagement",
+        "mandatory": false,
+        "statement": "The contractor involves its workers in managing risk.",
+        "evidenceGuidance": {
+          "equivalentEvidenceAccepted": true,
+          "examples": [
+            { "description": "Meeting notes, toolbox talks, or a description of how it is done" }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+Each objective criterion is a named type and not an expression in a general language of paths and operators.
+
+The supplier is not told which document to put in which box.
+
+### 3.2 The buyer's request
+
+The requirement record says what Tidewater requires of anyone.
+
+The request says that Tidewater is asking Ridgeline to respond to it for one engagement.
+
+It is signed JSON and not a record, and its header names the key that signed it.
+
+```json
+{
+  "alg": "ES256",
+  "typ": "oa-request+jwt",
+  "kid": "https://tidewatercoldstorage.example/issuer#key-2026"
+}
+```
+
+```json
+{
+  "iss": "https://tidewatercoldstorage.example/issuer",
+  "aud": "https://ridgelinerefrigeration.example/issuer",
+  "iat": 1789678800,
+  "exp": 1790884800,
+  "jti": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000",
+  "type": "OpenAssuranceRequest",
+  "nonce": "N8g2FQe7YvS1mK4x",
+  "subject": {
+    "type": "Organization",
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative"
+  },
+  "engagement": {
+    "reference": "2026-118",
+    "activity": "Industrial refrigeration maintenance",
+    "context": "Ammonia plant",
+    "starts": "2026-10-01"
+  },
+  "requestedUse": {
+    "purpose": "Prequalification for refrigeration maintenance under contract 2026-118",
+    "onwardSharing": "notExpected",
+    "suggestedRetention": "P12M"
+  },
+  "requirements": [
+    {
+      "id": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "digestSRI": "sha384-illustrativeDigestValueOnly",
+      "items": ["R1", "R2", "R3", "R4"]
+    }
+  ],
+  "replyTo": "mailto:assurance@tidewatercoldstorage.example"
+}
+```
+
+The request does not restate the requirements.
+
+It pins the exact version by identifier and by a digest of the requirement record's file, and that file goes with it.
+
+```text
+prequalification-request.jwt                 the signed request
+tidewater-ammonia-requirements-v3.vc.jwt     the requirement record it refers to
+```
+
+### 3.3 The supplier verifies the request
+
+Ridgeline's system checks the request before anyone considers what to disclose.
+
+```text
+Signature                  verified against Tidewater's controller document
+Requester's binding        confirmed against the NZBN Register
+Audience                   names Ridgeline
+Expiry and identifier      not expired; identifier not seen before
+Requirement record         signature verified
+Requirement digest         matches the request
+```
+
+A person at Ridgeline then decides to respond, and what to respond with.
+
+### 3.4 The supplier finds what it holds
+
+Ridgeline holds three records that bear on the requirements.
 
 **The assessment, issued by the assessor.**
 
 The assessor is the issuer, the supplier is the subject, and the result is carried in the assessor's own terms.
+
+The empty list of corrective action requests is deliberate: it is what lets a reader see that none was raised and none has been left out.
 
 ```json
 {
@@ -124,7 +329,9 @@ The assessor is the issuer, the supplier is the subject, and the result is carri
       "documentsReviewed": true,
       "siteVisit": true
     },
-    "assessmentDate": "2026-05-08"
+    "assessmentDate": "2026-05-08",
+    "recommendations": [],
+    "correctiveActionsRaised": []
   },
   "credentialStatus": {
     "type": "BitstringStatusListEntry",
@@ -179,92 +386,142 @@ The supplier signs the record, the certificate is hash-linked, and the record sa
 
 **The declaration, made by a director.**
 
-The third record is a declaration that the supplier has had no regulator notices, warnings, or prosecutions in the last five years.
-
 Its issuer and its subject are both the supplier, and the supplier's signature shows only that the supplier issued it.
 
 It therefore names the declarant and carries evidence of her role and of her approval separately, as `exchange-model.md` section 5.6 requires.
 
 ```json
 {
-  "declarant": {
-    "name": "R. Hale",
-    "capacity": "Director",
-    "authorityEvidence": {
-      "type": "PublicRegisterRole",
-      "register": "New Zealand Companies Register",
-      "organisationNzbn": "illustrative",
-      "role": "Director",
-      "appointmentDate": "2021-04-15",
-      "checkedAt": "2026-09-17T10:12:00+12:00"
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://records.ridgelinerefrigeration.example/declarations/2026-0044",
+  "type": ["VerifiableCredential", "DeclarationCredential"],
+  "issuer": {
+    "id": "https://ridgelinerefrigeration.example/issuer",
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-09-17T10:20:00+12:00",
+  "validUntil": "2027-09-16T23:59:59+12:00",
+  "credentialSubject": {
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative",
+    "selfDeclaration": true,
+    "statement": {
+      "text": "Ridgeline Refrigeration Limited has received no notices, warnings, or prosecutions from a health and safety regulator in the five years to the date of this declaration.",
+      "periodFrom": "2021-09-17",
+      "periodTo": "2026-09-17"
     },
-    "approvalEvidence": {
-      "method": "authenticated",
-      "authentication": "Signed in to the supplier's system with a second factor",
-      "approvedAt": "2026-09-17T10:14:22+12:00",
-      "statementDigest": "sha256-illustrativeDigestValueOnly"
+    "declarant": {
+      "name": "R. Hale",
+      "capacity": "Director",
+      "authorityEvidence": {
+        "type": "PublicRegisterRole",
+        "register": "New Zealand Companies Register",
+        "organisationNzbn": "illustrative",
+        "role": "Director",
+        "appointmentDate": "2021-04-15",
+        "checkedAt": "2026-09-17T10:12:00+12:00"
+      },
+      "approvalEvidence": {
+        "method": "authenticated",
+        "authentication": "Signed in to the supplier's system with a second factor",
+        "approvedAt": "2026-09-17T10:14:22+12:00",
+        "statementDigest": "sha256-illustrativeDigestValueOnly"
+      }
     }
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "4410",
+    "statusListCredential": "https://ridgelinerefrigeration.example/status/2"
   }
 }
 ```
 
 The register shows that a person of that name was appointed a director of that company in 2021 and had not ceased by the date of the declaration, which anyone can check.
 
-That she approved these exact words rests on the supplier's word, because the method is one the buyer cannot check for itself, and the result below says so.
+That she approved these exact words rests on the supplier's word, because the method is one the buyer cannot check for itself.
 
 It is the only record of the three that contains personal information, so the presentation that carries them meets `exchange-model.md` sections 10.2 and 10.3 because of it.
 
-**The buyer's requirement.**
+### 3.5 The supplier's presentation
 
-The requirement record is an extension, drafted in `extensions.md` section 3, and is shown here in outline.
+The presentation names Tidewater as its recipient, carries the request's nonce and identifier, and sets the holder's own terms.
 
-It states what the buyer expects, gives examples of evidence that may demonstrate it, and keeps what a system checks to the objective criteria.
+Each record travels inside it in its signed form, shortened here.
 
-```text
-Requirements for refrigeration maintenance contractors, ammonia plant
-Issued by Tidewater Cold Storage Limited, version 3
-
-R1  Health and safety capability                          mandatory
-Statement:
-The contractor manages the health and safety risks of industrial
-refrigeration work, including work on ammonia plant.
-Evidence that may demonstrate it, among other things:
-- an assessment by an assessor the buyer recognises
-- a management-system certification from an accredited certifier
-- the contractor's own procedures, records, and examples of practice
-Objective criteria:
-- any assessment or certification relied on is current
-- an assessment relied on included a site visit
-
-R2  Public liability insurance                            mandatory
-Statement:
-The contractor holds public liability insurance adequate for the work.
-Objective criteria:
-- cover of at least NZD 10,000,000
-- current on the date work starts
-
-R3  Regulator interventions                               mandatory
-Statement:
-The contractor discloses any regulator notices, warnings, or
-prosecutions in the previous five years.
-Objective criteria:
-- a declaration covering the previous five years
-- made by a director
-
-R4  Worker engagement                                     informational
-Statement:
-The contractor involves its workers in managing risk.
-Evidence that may demonstrate it, among other things:
-- meeting notes, toolbox talks, or a description of how it is done
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "type": ["VerifiablePresentation"],
+  "holder": "https://ridgelinerefrigeration.example/issuer",
+  "aud": "https://tidewatercoldstorage.example/issuer",
+  "nonce": "N8g2FQe7YvS1mK4x",
+  "iat": 1790044200,
+  "exp": 1798714799,
+  "requestId": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000",
+  "termsOfUse": [
+    {
+      "type": "OpenAssurancePresentationTerms",
+      "purpose": "Prequalification for refrigeration maintenance under contract 2026-118",
+      "onwardSharing": "notExpected",
+      "suggestedRetention": "P12M"
+    }
+  ],
+  "verifiableCredential": [
+    {
+      "@context": "https://www.w3.org/ns/credentials/v2",
+      "type": "EnvelopedVerifiableCredential",
+      "id": "data:application/vc+jwt,eyJhbGciOiJFUzI1NiIs...assessment-2026-1182"
+    },
+    {
+      "@context": "https://www.w3.org/ns/credentials/v2",
+      "type": "EnvelopedVerifiableCredential",
+      "id": "data:application/vc+jwt,eyJhbGciOiJFUzI1NiIs...evidence-2026-0031"
+    },
+    {
+      "@context": "https://www.w3.org/ns/credentials/v2",
+      "type": "EnvelopedVerifiableCredential",
+      "id": "data:application/vc+jwt,eyJhbGciOiJFUzI1NiIs...declaration-2026-0044"
+    }
+  ],
+  "submission": [
+    {
+      "requirement": "R1",
+      "records": ["https://fernbankassessors.example/assessments/2026-1182"]
+    },
+    {
+      "requirement": "R2",
+      "records": ["https://records.ridgelinerefrigeration.example/evidence/2026-0031"]
+    },
+    {
+      "requirement": "R3",
+      "records": ["https://records.ridgelinerefrigeration.example/declarations/2026-0044"]
+    }
+  ]
+}
 ```
 
-The supplier is not told which document to put in which box.
+The submission map does not say that Ridgeline considers R1 met.
 
-It presents what it holds, which here is an assessment, its insurance evidence, and a declaration.
+It says that Ridgeline presents that record for Tidewater to consider against R1.
 
-**What the buyer's system reports.**
+Ridgeline presents nothing against R4, so R4 is simply absent.
+
+### 3.6 The buyer's system verifies the presentation
 
 The system answers what a system can answer, and says plainly where a person is needed.
+
+```text
+Presentation             addressed to Tidewater; nonce and request identifier match; not expired
+```
 
 ```text
 Record                   Signature    Issuer binding   Current      Recognised
@@ -277,22 +534,6 @@ Director's declaration   verified     confirmed        current      self-declara
 ```
 
 ```text
-Requirement   Objective criteria                    Result
-R1            current; site visit included          needs assessment by a person
-R2            limit met; current                    met, on the face of an unsigned document
-R3            period covered; made by a director    met
-R4            none                                  not evaluated; nothing was presented
-```
-
-R1 calls for judgement, so the system does not report it as met.
-
-The buyer's contract manager reads the assessor's result, decides that it demonstrates R1, and records that determination.
-
-The buyer may give the supplier that determination as an assessment record of its own, made against R1 version 3, which the supplier can keep and present elsewhere.
-
-Had the manager found a gap, the outcome would have been a corrective action request under `extensions.md` section 10, and not a fresh questionnaire.
-
-```text
 Director's declaration, the named person
 
 Declarant                  R. Hale, Director
@@ -301,15 +542,144 @@ Approval                   asserted by the issuer; digest matches the statement
 Corroboration              none
 ```
 
-The last line matters most.
-
-However well the role and the approval are evidenced, they show who said it, and never that what was said is true.
+```text
+Requirement   Objective criteria                    Result
+R1            current; site visit included          needs assessment by a person
+R2            limit met; current at start           met, on the face of an unsigned document
+R3            period covered; made by a director    met
+R4            none                                  not evaluated; nothing was presented
+```
 
 The issuer binding column is what lets the buyer treat the names on the records as the organisations they claim to be, and each was confirmed against the NZBN Register.
 
-The buyer sees at once which of the three rests on an independent issuer, which on the supplier's own word, and which on a document it may want to confirm.
+However well the declarant's role and approval are evidenced, they show who said it, and never that what was said is true.
+
+### 3.7 A person assesses
+
+R1 calls for judgement, so the system does not report it as met.
+
+Tidewater's contract manager reads the assessor's result, decides that it demonstrates R1, and telephones the broker to confirm the certificate behind R2.
+
+### 3.8 The buyer's assessment record
+
+Tidewater records its determination as an assessment of its own, made against the exact requirement version it asked about.
+
+Ridgeline can keep it and present it to anyone else.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://tidewatercoldstorage.example/assessments/2026-0209",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "issuer": {
+    "id": "https://tidewatercoldstorage.example/issuer",
+    "name": "Tidewater Cold Storage Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-09-24T11:00:00+12:00",
+  "validUntil": "2027-09-23T23:59:59+12:00",
+  "credentialSubject": {
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative",
+    "assessed": "Prequalification for refrigeration maintenance under contract 2026-118",
+    "assessedAgainst": {
+      "requirementSet": "https://tidewatercoldstorage.example/requirements/ammonia",
+      "version": "3",
+      "record": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    },
+    "request": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000",
+    "assessmentDate": "2026-09-24",
+    "assessor": { "role": "Contract Manager" },
+    "result": { "outcome": "Approved for the engagement" },
+    "determinations": [
+      {
+        "requirement": "R1",
+        "determination": "met",
+        "evidenceReviewed": ["https://fernbankassessors.example/assessments/2026-1182"],
+        "finding": "An independent assessment, current and including a site visit, by an assessor the buyer recognises."
+      },
+      {
+        "requirement": "R2",
+        "determination": "met",
+        "evidenceReviewed": ["https://records.ridgelinerefrigeration.example/evidence/2026-0031"],
+        "finding": "Cover meets the limit and is current at the start of the engagement. The certificate is not signed by its source, and was confirmed with the broker."
+      },
+      {
+        "requirement": "R3",
+        "determination": "met",
+        "evidenceReviewed": ["https://records.ridgelinerefrigeration.example/declarations/2026-0044"]
+      },
+      {
+        "requirement": "R4",
+        "determination": "notAssessed",
+        "finding": "Informational, and nothing was presented."
+      }
+    ],
+    "recommendations": [
+      "Consider presenting a short description of worker engagement arrangements with future responses."
+    ],
+    "correctiveActionsRaised": []
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "7702",
+    "statusListCredential": "https://tidewatercoldstorage.example/status/1"
+  }
+}
+```
+
+The recommendation fails nothing.
+
+### 3.9 If there had been a gap
+
+Had the certificate expired before the engagement started, the outcome would have been a corrective action request, and not a fresh questionnaire.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://tidewatercoldstorage.example/corrective-actions/2026-0031",
+  "type": ["VerifiableCredential", "CorrectiveActionCredential"],
+  "issuer": {
+    "id": "https://tidewatercoldstorage.example/issuer",
+    "name": "Tidewater Cold Storage Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-09-24T11:00:00+12:00",
+  "credentialSubject": {
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative",
+    "requirement": {
+      "requirementSet": "https://tidewatercoldstorage.example/requirements/ammonia",
+      "version": "3",
+      "item": "R2"
+    },
+    "raisedBy": "https://tidewatercoldstorage.example/assessments/2026-0209",
+    "finding": "The certificate of currency presented expires before the engagement starts.",
+    "outcomeRequired": "Evidence of public liability cover of at least NZD 10,000,000 that is current on 1 October 2026.",
+    "due": "2026-09-30"
+  }
+}
+```
+
+The assessment in section 3.8 would then have listed that identifier, and determined R2 as not met.
+
+Ridgeline would present new evidence, Tidewater would issue a closure assessment against the request, and a replacement assessment would record R2 as met, as `extensions.md` section 10 describes.
+
+Ridgeline would hold the whole chain, and the next buyer would see the gap, what was done, and that it was accepted.
+
+### 3.10 What the transaction shows
 
 Nothing has been re-entered, the supplier has joined nothing, and the decision is the buyer's.
+
+Two files went one way and one came back.
 
 If the insurer later issues a signed record, it replaces the evidence record, the first asterisk disappears, and nothing else changes.
 

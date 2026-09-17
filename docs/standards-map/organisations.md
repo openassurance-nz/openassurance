@@ -198,7 +198,8 @@ For organisations, the genuinely new content is a small vocabulary that:
 - separates supplier evidence from an assessor's assessment of it, as the profile already requires;
 - expresses an assessment result with category, status, score, and validity in a scheme-neutral way, and a determination and finding for each requirement assessed;
 - expresses a buyer requirement as a statement of what is expected, with non-exclusive examples of evidence, keeping what a system checks to objective criteria such as accepted assessments, certifications, endorsements, thresholds, and currency;
-- carries a corrective action request and its closure as records the supplier can hold and present, and a recommendation as a note that fails nothing.
+- carries a corrective action request and its closure as records the supplier can hold and present, and a recommendation as a note that fails nothing;
+- lets a buyer ask with a small signed request that pins the exact version of the requirements it refers to, and lets the supplier map what it presents to the requirements it is offered against.
 
 The last of these borrows its terms from established audit practice.
 

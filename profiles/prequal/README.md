@@ -139,6 +139,10 @@ Some parts of a requirement are objective, such as an insurance limit, that evid
 
 The judgement stays with the assessor wherever judgement is what is needed.
 
+A buyer asks for records with a small signed request that names the engagement and pins the exact version of the requirements it refers to, and two files attached to an email are enough to carry it.
+
+The supplier's response maps the records it presents to the requirements they are offered against, as an index for the buyer and never as a claim that a requirement is met.
+
 ```text
 Requirement
      |
@@ -165,7 +169,7 @@ A supplier that receives a corrective action request, fixes the issue, and has i
 
 That stops the same issue being rediscovered and reassessed by each buyer in turn.
 
-The records are drafted in `docs/exchange-model/extensions.md` sections 3 and 10, and the choice is decision D11 in `docs/decisions.md`.
+The records are drafted in `docs/exchange-model/extensions.md` sections 3 and 10, and the request in its section 5, and the choices are decisions D11 and D12 in `docs/decisions.md`.
 
 ## 6. Assessment Schemes
 
