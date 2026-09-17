@@ -212,6 +212,14 @@ OpenAssurance therefore proposes a stronger interoperability test:
 
 If the answer is no, the information may use an open schema, but the exchange remains platform-dependent.
 
+That test is necessary and is not enough, because two systems could exchange conforming records and still make a supplier enter everything again in a new questionnaire.
+
+OpenAssurance therefore adds a second:
+
+> **Can a holder satisfy a new assurance request using assurance it already holds, without recreating substantially the same information in another system?**
+
+Where what the holder has is not enough, the relying organisation should be able to ask only for what is missing.
+
 ---
 
 ## 5. The Proposed Model

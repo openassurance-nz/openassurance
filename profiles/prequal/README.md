@@ -143,7 +143,9 @@ Some parts of a requirement are objective, such as an insurance limit, that evid
 
 The judgement stays with the assessor wherever judgement is what is needed.
 
-A buyer asks for records with a small signed request that names the engagement and pins the exact version of the requirements it refers to, and two files attached to an email are enough to carry it.
+A buyer asks for records with a small signed request that names the engagement and pins the exact version of the requirements it refers to, and it goes from the buyer's system to the supplier's, with nobody filling in a form.
+
+Where either has no system, two files attached to an email are enough to carry it, which is the floor and not the intended experience.
 
 The supplier's response maps the records it presents to the requirements they are offered against, as an index for the buyer and never as a claim that a requirement is met.
 
@@ -205,6 +207,113 @@ It may accept the assessment as evidence and ask for nothing more, or find it re
 
 `docs/exchange-model/examples.md` section 4 works through both outcomes.
 
+### 5.4 Forms and questionnaires
+
+Most prequalification today is a form.
+
+A supplier answers many of them, each with its own questions, and each inside the system of the buyer or scheme that asks.
+
+```text
+Buyer A's form    the supplier enters its information
+Buyer B's form    the supplier enters substantially the same information again
+Buyer C's form    the supplier enters it again
+```
+
+OpenPrequal exchanges assurance records, not completed forms.
+
+> **A user interface may use forms to create, review, or collect assurance records, but forms are not part of the exchange, and no particular form or portal is required for conformance.**
+
+A form bundles four things that are worth keeping apart.
+
+- what the buyer or the scheme needs demonstrated, which today is written as questions;
+- the answering, in which a person types statements and uploads documents;
+- the keeping of the answers;
+- the assessment of them.
+
+The form itself is not the problem.
+
+Someone has to say a thing the first time, and a form is a proper way for a person to do that, particularly in a small organisation with no system of its own.
+
+Where a supplier holds no current declaration about its regulatory history, its own software may show a form in which a director makes one.
+
+What results is a declaration record, the next buyer receives that record, and the director does not answer the same declaration again because the next buyer uses another system.
+
+An insurance certificate is added once in the same way, carried as an evidence record, and reused until it expires or is replaced.
+
+Systems built around forms also do real work in managing, reminding, and assessing, and OpenPrequal expects them to go on doing it.
+
+The difficulty is structural, and it has three parts.
+
+- what a buyer requires exists only as the questions of a form, inside the system that asks them;
+- the answers stay in that system, so the next form starts empty;
+- a record the supplier already holds cannot be given in place of typing.
+
+Each part of a form corresponds to something the exchange model already has, so no new record type is needed.
+
+```text
+In a form today                     In OpenPrequal
+What the questions are after        requirements, which state what must be demonstrated
+A fact held in a public register    checked against the register, and not asked
+A typed answer                      a declaration, made once by a named person
+An uploaded document                an evidence record, or the source's own signed record
+The score or result                 an assessment record, which is the certificate
+Submitting the form                 a presentation, which maps requirements to the records presented
+```
+
+A request is not a questionnaire.
+
+It does not say upload this policy, enter that insurance amount, and upload the training matrix.
+
+It says that these are the requirements that apply to this engagement, and the supplier's system works out which of the records it already holds may be relevant.
+
+A system built around a form can adopt this in three steps, each useful on its own, and none of them requires it to give up its form.
+
+- give back: issue the result as an assessment record the supplier holds, and return what the supplier typed and uploaded in a form the supplier's own system can keep and reuse;
+- take in: accept a record against a requirement, and ask a person only for what no record demonstrates;
+- state the requirements: express what the questions are after as a requirement record that reaches the suppliers who are asked, so that a supplier's system can work out what it already holds before anyone types.
+
+> **The aim is that a thing is entered once, and not that nothing is ever entered.**
+
+Four limits should be stated plainly.
+
+A narrative answer written for one buyer's question seldom fits another's exactly, so reuse is strongest for documents, register facts, and assessments, which is one more reason for a buyer to rely on an assessment by a party it recognises, as section 5.3 describes, and not to ask the narrative questions again.
+
+What a buyer or a scheme requires may be its owner's intellectual property, and OpenPrequal needs only that it reaches the supplier who is asked, as it does on a screen today; it does not require a requirement record to be published, and it does not require a scoring method to be disclosed.
+
+OpenPrequal does not write anyone's requirements, and a common set, such as WorkSafe New Zealand's template, would multiply reuse if its owner expressed it as a requirement record.
+
+If a requirement record became one more form for a person to fill in, OpenPrequal would have failed its own core test, so a supplier's system answers from the records it holds first, and a person is asked only for the remainder.
+
+How an answer typed into another party's form comes back to the supplier as a declaration the supplier issues is unsettled, and it is decision D14 in `docs/decisions.md`.
+
+### 5.5 Only the gaps
+
+A buyer assesses what it was given, requirement by requirement, and asks again only about what remains undemonstrated.
+
+```text
+The buyer has twenty requirements
+
+Existing supplier assurance demonstrates    R1 to R17
+Further assurance is needed for             R18, R19, and R20
+
+The follow-up request covers                R18, R19, and R20 only
+```
+
+These are genuine reasons to ask for something again.
+
+- an existing record has expired;
+- a record has been revoked;
+- the scope of a record does not cover the new work;
+- the buyer's requirement has changed;
+- the existing evidence does not adequately demonstrate the requirement;
+- material new information is needed.
+
+That the buyer uses a different system is not one of them.
+
+Any new record made to close a gap joins what the supplier holds, so the next buyer may need less again, and a supplier becomes easier to assure over time.
+
+`docs/exchange-model/extensions.md` section 5.7 drafts the follow-up request, and `docs/exchange-model/examples.md` section 3.14 works through an example.
+
 ## 6. Assessment Schemes
 
 OpenPrequal should not require different prequalification schemes to be treated as equivalent.
@@ -242,13 +351,17 @@ Supplier
 
 The buyer should be able to identify the original issuer of each record.
 
-The floor for that exchange is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
+The exchange is between systems, so nobody attaches, uploads, or re-enters anything.
+
+The floor, for a party that has no system, is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
 
 The simplest exchange is a single file.
 
-A supplier that passes an assessment is normally given a certificate, and where the assessor issues it as a signed assessment record, the supplier can send it to any buyer that asks, on its own, with a rendering a person can read.
+A supplier that passes an assessment is normally given a certificate, and where the assessor issues it as a signed assessment record, the supplier's system can deliver it to the system of any buyer the supplier approves.
 
-The buyer checks that it is authentic, current, and from an assessor it recognises, and decides for itself.
+Nothing is attached, uploaded, or entered twice, and a renewed certificate follows the first without anyone chasing it.
+
+The buyer's system checks that it is authentic, current, and from an assessor the buyer recognises, and the buyer decides for itself.
 
 `docs/exchange-model/examples.md` section 5 shows that case, and what changes where the assessor still issues only a document.
 
@@ -319,6 +432,8 @@ OpenPrequal is not intended to:
 
 ## 12. Core Test
 
-> **Can a supplier present valid prequalification information to a buyer without both parties being customers of the same prequalification platform?**
+> **Can a supplier meet a buyer's prequalification requirements with assurance it already holds, without both parties being customers of the same prequalification platform, and without recreating that information in the buyer's system?**
 
-If yes, OpenPrequal is serving its purpose.
+> **Where what the supplier holds is not enough, can the buyer ask only for what is missing?**
+
+If yes to both, OpenPrequal is serving its purpose.

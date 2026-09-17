@@ -11,6 +11,12 @@ This document is the first working draft of that model.
 
 It states the least that two systems have to agree on for an assurance record issued in one to be received, verified, and relied on in the other, without either party joining the other's platform.
 
+> **OpenAssurance exchanges assurance, not completed forms.**
+
+Portability exists so that a holder can reuse assurance it already possesses, and does not have to recreate the same information for each relying organisation.
+
+The exchange model therefore separates durable assurance records from the requests and presentations of a single transaction.
+
 It builds directly on `standards-map.md`, which identifies the existing standards OpenAssurance adopts and the small layer it has to define for itself.
 
 Where `decisions.md` states a likely path for an open decision, this draft takes that path as a working assumption and says so.
@@ -21,17 +27,18 @@ No system can claim conformance to it, and no schema, protocol, or conformance s
 
 ### 1.1 Summary
 
-In plain words, the model says five things.
+In plain words, the model says six things.
 
 - a record is a signed statement by an identifiable organisation, in an open format, that anyone can check without asking that organisation's software provider;
 - the organisation is identified by its own domain name, and that domain is tied to its New Zealand Business Number through the public register;
 - a record says whether it is still current, and a withdrawn record shows as withdrawn to anyone who checks;
-- records are shared as a presentation that names the recipient, the purpose, and an expiry, and the floor for sharing is a file that can travel by email;
+- records are shared as a presentation that names the recipient, the purpose, and an expiry;
+- records move from one organisation's system to another's, with nothing attached, uploaded, or entered twice, an organisation says under its own domain where its system receives them, and the floor, for a party that has no system, is a file that can travel by any channel;
 - a system that receives a record reports four things separately: whether it is authentic, whether it is current, whether the receiver recognises the issuer, and whether it meets the receiver's requirement.
 
 The last two of those are always the receiver's own decision.
 
-Everything else in this document is the detail needed to make those five things testable.
+Everything else in this document is the detail needed to make those six things testable.
 
 Extensions drafted for later versions are in `exchange-model/extensions.md`, and worked examples for both profiles are in `exchange-model/examples.md`.
 
@@ -63,7 +70,9 @@ A peer review of the first draft found that it was not minimal.
 
 This document is therefore the core only: what the two reference exchanges in Phase 4 need, and what is proposed for v0.1.
 
-The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, discovery, request and response, approval for a period, the interactive protocols, acceptance of government-issued credentials, and stronger evidence of a named person's role and approval, are in `exchange-model/extensions.md` and are not proposed for v0.1.
+The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, request and response, approval for a period, the interactive protocols, acceptance of government-issued credentials, and stronger evidence of a named person's role and approval, are in `exchange-model/extensions.md` and are not proposed for v0.1.
+
+Discovery and the inbox were first drafted as extensions and were moved into the core, because exchange between systems is the purpose of the model and a core that defined only a file could not move a record between two systems without a person carrying it, which is decision D13.
 
 Worked examples are in `exchange-model/examples.md`.
 
@@ -85,7 +94,7 @@ Such obligations are stated in plain words, without capitals, and are collected 
 - how a record is signed, and how a verifier finds the key;
 - how currency, replacement, and correction are expressed;
 - how records are packaged into a purpose-specific presentation;
-- the floor for moving records between systems;
+- how a file is delivered from one organisation's system to another's, through a discovery record and an inbox, and the floor for a party that has no system;
 - the verification procedure, and the shape of its result;
 - the privacy requirements that apply to all of the above;
 - what each class of conforming system must do.
@@ -457,7 +466,7 @@ It does not prove that the domain belongs to the organisation named in the recor
 
 The binding is made in two directions, using a register that already exists.
 
-- the domain asserts the organisation: the issuer's controller document, or the discovery record drafted in `exchange-model/extensions.md`, states the organisation's New Zealand Business Number;
+- the domain asserts the organisation: the issuer's controller document, or the discovery record in section 11.4, states the organisation's New Zealand Business Number;
 - the organisation asserts the domain: the website recorded against that number in the public NZBN Register is on the same domain.
 
 Where both hold, a verifier reports the issuer binding as confirmed.
@@ -606,6 +615,12 @@ Issuer provenance MUST survive any disclosure control.
 
 ## 11. Exchange
 
+The purpose of the model is exchange between systems: a record leaves one organisation's system and arrives in another's, and nobody attaches, uploads, or re-enters anything.
+
+The floor in section 11.1 exists so that a party with no such system is not shut out, and so that no record is ever stranded in one system.
+
+It is the guarantee, and not the intended experience.
+
 ### 11.1 The floor
 
 The floor for exchange is a file.
@@ -640,11 +655,69 @@ A conforming system MUST NOT require the issuer, the subject, the holder, or the
 
 This is the Charter's open exchange requirement stated as a conformance rule.
 
-### 11.4 Beyond the floor
+A conforming system that has received a record MUST NOT require the claims it carries to be entered again by hand.
 
-Discovery of where to send a presentation, a signed request for one, approval for a period, the interactive protocols, and acceptance of government-issued credentials are extensions, drafted in `exchange-model/extensions.md`.
+**Working assumption, decision D14.**
 
-None of them changes the floor.
+The rule reaches only what a record the system has received already says.
+
+A user interface may use forms to create, review, or collect assurance records, but forms are not part of the exchange, and no particular form or portal is required for conformance.
+
+A form remains a proper way for a person to say something for the first time, what results is a record that can be reused, and section 5.4 of the OpenPrequal profile considers forms and questionnaires with more care.
+
+### 11.4 Discovery
+
+**Working assumption, decision D13.**
+
+Between systems, a sender needs to know where the recipient's system receives files, and the recipient says so under its own domain.
+
+An organisation whose system receives files MUST publish a DNS TXT record at the name `_openassurance` under its domain, giving its issuer identifier, its New Zealand Business Number, and its inbox.
+
+**Proposed.**
+
+```text
+_openassurance.harbourbeverages.example.  TXT  "v=OA1; issuer=https://harbourbeverages.example/issuer; nzbn=(number); inbox=https://harbourbeverages.example/openassurance/inbox"
+```
+
+The pattern is the one DKIM and similar mechanisms use, it is familiar to anyone who has set up email for a domain, and it needs no website.
+
+It lets a sender who knows only an organisation's domain find where to send a file, and it gives the `aud` claim of a presentation a value.
+
+Keys stay in the controller document and are not published in DNS.
+
+A sender takes an inbox address only from the recipient's discovery record, or from a signed message whose signature and issuer binding it has verified, such as the request drafted in `exchange-model/extensions.md` section 5.
+
+`exchange-model/examples.md` section 6 works through an example, with the controller document and the binding check.
+
+### 11.5 The inbox
+
+**Working assumption, decision D13.**
+
+The inbox is an HTTPS address at which an organisation's system receives files, so that a file goes from one system to another with nobody attaching or uploading it.
+
+It SHOULD be under the organisation's own domain, and MAY be an address a host operates for it, because the discovery record, which is under the organisation's domain, is what a sender relies on.
+
+An organisation that changes host changes its discovery record, and nothing changes for anyone who sends to it.
+
+A sender delivers a file by an HTTP POST whose body is the file and whose content type is the file's registered media type, and the inbox answers 202 when it has taken the file.
+
+An inbox MUST NOT require the sender to hold an account, a key, or any prior arrangement with it, which is section 11.3 applied to delivery.
+
+Everything an inbox receives is signed, so the inbox authenticates nothing, and the receiving system verifies what arrives as it would any file.
+
+An answer from an inbox says only that the file was taken, and MUST NOT say whether the recipient holds records about anyone.
+
+An inbox MAY limit the size and the rate of what it accepts.
+
+The pattern is that of W3C Linked Data Notifications, which cannot be used unchanged because it requires a JSON-LD body.
+
+An organisation that has no system MAY give an email address as its inbox, because the floor in section 11.1 is a file that can travel by any channel.
+
+### 11.6 Beyond the core
+
+A signed request, approval for a period, the interactive protocols, and acceptance of government-issued credentials are extensions, drafted in `exchange-model/extensions.md`.
+
+None of them changes the floor, discovery, or the inbox.
 
 ## 12. Verification
 
@@ -754,20 +827,21 @@ A system may conform in one or more classes.
 
 - creates records that meet sections 5 to 9;
 - publishes and maintains the controller document and status lists sections 8 and 9 require;
-- delivers every record it issues to its holder as a file, whatever else it offers;
+- delivers every record it issues to its holder's inbox where the holder has published one, and as a file in any case, whatever else it offers;
 - gives the subject of a record a copy of it as a file, on request.
 
 ### 15.2 Holding system
 
 - stores records without altering them;
 - assembles presentations that meet section 10;
+- receives files at an inbox, and delivers files to a recipient's inbox, as sections 11.4 and 11.5 describe;
 - exports everything it holds, as section 11.1 requires;
 - tells the subject of a record, on request, which presentations have included it, with recipient, purpose, and date;
 - never presents itself as the issuer of a record it holds.
 
 ### 15.3 Verifying system
 
-- imports files as section 11.1 requires;
+- imports files as section 11.1 requires, and receives them at an inbox as section 11.5 describes;
 - carries out the procedure in section 12 and reports the result in its form;
 - meets section 11.3.
 
@@ -777,6 +851,7 @@ A host provides storage or services for another party's records.
 
 - keeps each party's records and keys separate;
 - lets each party leave with its records and, where the host signs for it, with what it needs to keep them verifiable;
+- where it operates an inbox for a party, treats what arrives as that party's, and lets the party point its discovery record elsewhere when it leaves;
 - never becomes the issuer of a record by hosting it.
 
 An optional class for accepting government-issued credentials is an extension.
@@ -804,6 +879,7 @@ Choices between alternatives that the standards map bears on are recorded as dec
 - **Bulk export.** Section 11.1 requires everything to be exportable, and whether that is a set of files, a single presentation, or a Comprehensive Learner Record is undecided;
 - **Replacement and correction terms.** Section 9.3 needs term names, and a decision on whether the link is a claim or a typed related resource;
 - **Algorithm choice.** Section 8.2 is a proposal;
+- **Discovery and the inbox.** Section 11.4 proposes a DNS record, and its format, how an inbox handles abuse beyond limits on size and rate, whether it confirms delivery beyond its answer, and whether a well-known address should be offered as an alternative are undecided;
 - **Assessment result structure.** Section 6.4 lists what schemes commonly report, requires a determination for each requirement, requires a statement of whether any corrective action is outstanding, requires a replacement assessment whenever that changes, and keeps recommendations out of what travels, and each needs testing with buyers, assessors, and scheme operators as `decisions.md` section 3 describes;
 - **Verification over time.** What happens when an issuer ceases to exist remains open as decision D9, and `standards-map/credential-layer.md` section 3.4 describes what the standards offer;
 - **Privacy Impact Assessment.** Section 13 is provisional until it is done.
@@ -822,15 +898,23 @@ It does not require a wallet, and it does not prevent one.
 
 It does not operate a service through which people request records about themselves, and a service that helps them make and authenticate such requests may be built by anyone, as an ordinary participant.
 
+It does not define a questionnaire, a form, or a format for answers, and it defines no record whose purpose is to restate for one relying organisation what other records already say.
+
 It does not replace the management, assessment, and workflow products that organisations already use, and a product that implements it keeps everything that distinguishes it.
 
 It does not replace the duty of organisations with overlapping health and safety duties to consult, cooperate, and coordinate.
 
 ## 19. Design Test
 
-> **Can a record issued by a system its recipient has never heard of be received as a file, verified against the issuer's own published key, checked for currency, and assessed against the recipient's own requirement, without the recipient creating an account anywhere or asking anyone's permission?**
+> **Can a record issued by a system its recipient has never heard of be delivered to the recipient's system, or received as a file where it has none, verified against the issuer's own published key, checked for currency, and assessed against the recipient's own requirement, without the recipient creating an account anywhere or asking anyone's permission?**
 
 If the answer is no for any conforming pair of systems, the model has failed at the thing it exists to do.
+
+Every later feature should also be put to a second question.
+
+> **Does this allow existing assurance to be reused, or does it make the holder recreate information again?**
+
+A design that creates a new answer, profile, form, portal record, or duplicate representation made for one relying organisation, where an existing record could have been presented, should be challenged.
 
 ## 20. Standards Referenced
 
@@ -842,6 +926,8 @@ Assessment, status, and sources for each of these are in `standards-map.md` and 
 - W3C Bitstring Status List 1.0, <https://www.w3.org/TR/vc-bitstring-status-list/>;
 - W3C Controlled Identifiers 1.0, <https://www.w3.org/TR/cid-1.0/>;
 - IETF RFC 9901, Selective Disclosure for JSON Web Tokens, <https://www.rfc-editor.org/rfc/rfc9901.html>;
+- IETF BCP 222, RFC 8552, underscored naming of DNS attribute leaves, <https://www.rfc-editor.org/info/rfc8552>;
+- W3C Linked Data Notifications, for the inbox pattern, <https://www.w3.org/TR/ldn/>;
 - IETF BCP 14, RFC 2119 and RFC 8174, <https://www.rfc-editor.org/info/bcp14>;
 - IETF RFC 3339, Date and Time on the Internet, <https://www.rfc-editor.org/info/rfc3339>;
 - 1EdTech Open Badges 3.0, <https://www.imsglobal.org/spec/ob/v3p0/>.

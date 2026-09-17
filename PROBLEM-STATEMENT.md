@@ -176,6 +176,30 @@ Buyer or assessment provider
 Buyer applies its own requirements
 ```
 
+### Reuse
+
+Today a supplier enters substantially the same information into one buyer's form, then another's, then another's.
+
+OpenAssurance should instead allow this:
+
+```text
+Supplier assurance records
+        |
+        +--> Buyer A requirements
+        |
+        +--> Buyer B requirements
+        |
+        +--> Buyer C requirements
+```
+
+Each buyer applies its own requirements and acceptance criteria, and the supplier does not recreate the underlying assurance because another buyer uses another system.
+
+This is not a universal prequalification scheme.
+
+It is an exchange model that lets assurance created for one legitimate purpose stay portable and reusable for another where it is relevant.
+
+The same applies to an employer and the records of its workers.
+
 The receiving organisation remains responsible for acceptance.
 
 OpenAssurance only makes the information portable, attributable, and verifiable.
@@ -211,7 +235,10 @@ OpenAssurance should instead provide a common way to express:
 - the assessment;
 - the endorsement;
 - the requirement;
-- the resulting match.
+- the assurance a holder presents against a requirement, as a candidate and not as a result;
+- the determination of whoever assesses it.
+
+A system may identify a record as relevant to a requirement, and that does not mean the requirement is met.
 
 ## 8. Small Organisations
 
@@ -230,11 +257,15 @@ The hosting provider should not become the owner of the assurance information or
 
 ## 9. The Core Test
 
-OpenAssurance should be judged against one practical question:
+OpenAssurance should be judged against two practical questions:
 
-> **Can Organisation A send a valid assurance record to Organisation B when neither organisation is a customer of the other's software provider?**
+> **Can Organisation A provide Organisation B with relevant assurance it already holds, without joining Organisation B's software platform or recreating substantially the same information in Organisation B's system?**
 
-If the answer is no, the exchange is still platform-dependent.
+> **Where the existing assurance does not demonstrate a requirement, can Organisation B request only the additional assurance needed to close that gap?**
+
+If the answer to the first is no, the exchange is still platform-dependent, or the holder is still entering what it already holds.
+
+If the answer to the second is no, each new relying organisation still resets the holder to zero.
 
 ## 10. Intended Outcome
 

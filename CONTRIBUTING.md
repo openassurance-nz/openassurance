@@ -82,7 +82,17 @@ A proposal should be able to answer these questions before it is submitted.
 
 > Are we reducing the amount of personal information organisations need to duplicate and disclose, or are we creating another place to copy it?
 
-### Reuse
+### Reuse before recreation
+
+> Does this allow existing assurance to be reused, or does it make the holder recreate information again?
+
+> Can a holder satisfy a new assurance request using assurance it already holds, without recreating substantially the same information in another system?
+
+> Where existing assurance is insufficient, does the exchange allow the relying organisation to ask only for the additional assurance needed to address the genuine gap?
+
+A proposal that creates a new answer, profile, form, portal record, or duplicate representation made for one relying organisation, where an existing assurance record could have been presented, should be challenged.
+
+### Existing standards
 
 > Can an established open standard represent this without loss of meaning?
 

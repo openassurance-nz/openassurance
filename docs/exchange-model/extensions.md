@@ -38,6 +38,14 @@ A requirement record is a signed statement by a relying organisation describing 
 
 It is not a rules engine.
 
+A requirement record is not a questionnaire.
+
+It says what must be demonstrated, and it does not ask for a particular document to be uploaded or a particular field to be filled in.
+
+An organisation whose requirements exist today only as the questions of a form expresses what those questions are after as requirements of this kind, as section 5.4 of the OpenPrequal profile describes.
+
+A requirement record need not be published, and it needs only to reach the party that is asked.
+
 Prequalification that works states a requirement clearly, shows what acceptable evidence looks like, allows equivalent evidence, and leaves the judgement to an assessor, and a requirement record is built to carry exactly that.
 
 A requirement record MAY hold one requirement or a numbered set, and each requirement MUST carry:
@@ -126,27 +134,13 @@ Objective criteria:
 - any licence relied on is current at the date of assessment
 ```
 
-## 4. Discovery
+## 4. Discovery and the Inbox
 
-**Proposed.**
+Discovery and the inbox were first drafted here, and they are now part of the core, in `exchange-model.md` sections 11.4 and 11.5.
 
-An organisation SHOULD publish a DNS TXT record at the name `_openassurance` under its domain, giving its issuer identifier, its New Zealand Business Number, and the address at which it receives presentations and requests.
+Exchange between systems is the purpose of the model, and a core that defined only a file could not move a record between two systems without a person carrying it, which is decision D13.
 
-```text
-_openassurance.harbourbeverages.example.  TXT  "v=OA1; issuer=https://harbourbeverages.example/issuer; nzbn=(number); inbox=mailto:assurance@harbourbeverages.example"
-```
-
-The pattern is the one DKIM and similar mechanisms use, it is familiar to anyone who has set up email for a domain, and it needs no website.
-
-It lets a sender who knows only an organisation's domain find where to send a presentation, and it gives the `aud` claim of a presentation a value.
-
-The inbox MAY be an email address, because the floor in `exchange-model.md` section 11.1 is a file that can travel by any channel, or an HTTPS address that accepts such a file.
-
-Keys stay in the controller document and are not published in DNS.
-
-`examples.md` section 6 works through an example, with the controller document and the binding check.
-
-The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 11.
+This section is kept so that the numbers of the other extensions do not change.
 
 ## 5. Request and Response
 
@@ -176,6 +170,8 @@ Assessment record       the determination of the relying organisation or its ass
 A requirement record says what an organisation requires of anyone.
 
 A request says that one organisation is asking another to respond to particular requirements for a particular engagement.
+
+A request is not a questionnaire: it states the requirements that apply, and the holder's system works out which of the records it already holds may be relevant.
 
 That is a passing message and not an enduring assertion, so a request is not a verifiable credential.
 
@@ -262,6 +258,12 @@ It says that the holder presents these records for the requester to consider aga
 
 A requirement for which the holder presents nothing is simply absent from the map.
 
+The records presented stay independently reusable, and a response adds nothing to them but the map.
+
+No record type is defined for a response, and a conforming exchange MUST NOT require a holder to restate, as answers or in any other structure made for one requester, what a record it presents already says.
+
+That would reproduce, inside the standard, the duplication the standard exists to remove.
+
 ### 5.5 Interactive exchange
 
 Where both systems support OpenID for Verifiable Presentations, the same transaction is translated into it, and no second requirement model is defined.
@@ -276,18 +278,67 @@ A DCQL query helps a holder's system find candidate records.
 
 A match does not mean that a requirement is met.
 
-### 5.6 The file floor
+### 5.6 Delivery
 
-Two files attached to an email are enough.
+Between systems, the requester posts the request, with the requirement records it refers to, to the recipient's inbox, as `exchange-model.md` section 11.5 describes, and the response is posted to the address in `replyTo`.
 
 ```text
 prequalification-request.jwt                 the signed request
 tidewater-ammonia-requirements-v3.vc.jwt     the requirement record it refers to
 ```
 
-No portal is involved, and neither party joins anything.
+No portal is involved, nobody fills in a form, and neither party joins anything.
+
+Where either party has no system, the same two files attached to an email are enough, which is the floor.
 
 `examples.md` section 3 works through a whole transaction, from the requirement to the assessment that closes it.
+
+### 5.7 Follow-up: only the gaps
+
+A relying organisation assesses what it was given, requirement by requirement.
+
+Where existing assurance demonstrates a requirement, nothing more is asked about it.
+
+```text
+Initial request
+      |
+      v
+Existing assurance selected by the holder
+      |
+      v
+Presentation
+      |
+      v
+Assessment
+      |
+      v
+Requirements not yet demonstrated are identified
+      |
+      v
+Targeted follow-up request
+      |
+      v
+Additional assurance, which the holder keeps and can reuse
+```
+
+A follow-up request refers to the earlier request by its `jti`, selects the requirements that remain undemonstrated, and SHOULD say for each what further assurance is sought.
+
+It SHOULD NOT select a requirement that the relying organisation has already determined to be met.
+
+These are genuine reasons to ask for something again.
+
+- an existing record has expired;
+- a record has been revoked;
+- the scope of a record does not cover the new work;
+- the relying organisation's requirement has changed;
+- the existing evidence does not adequately demonstrate the requirement;
+- material new information is needed.
+
+That the relying organisation uses a different system is not one of them.
+
+A record made to close a gap is an ordinary record, which the holder keeps and can present again, so a holder becomes easier to assure over time.
+
+`examples.md` section 3.14 works through a set of twenty requirements in which three are followed up.
 
 ## 6. Approval for a Period
 
@@ -574,7 +625,6 @@ These are unresolved in the extensions, and none of them holds up the core.
 - **Corrective action terms.** Section 10 needs term names, a decision on whether a closure is an assessment as drafted or a record type of its own, a test of whether a count of unresolved requests without their identifiers is enough for a relying organisation, and a decision on whether a recommendation needs a record form of its own;
 - **Reuse of an assessment.** `examples.md` section 4 shows a buyer's assessment reused by a second buyer, and whether an assessor may state terms for reliance by others, and whether a supplier may always pass on the requirement record it was assessed against, are undecided;
 - **Grants and change notices.** Section 6 describes a standing grant and a content-free change notice, and neither has a format, so existing event formats need evaluating first;
-- **The discovery record.** Section 4 proposes a DNS record, and its format, the behaviour of an HTTPS inbox, and a well-known address as an alternative are undecided;
 - **Format identifier in the interactive protocols.** How the OpenID format identifiers for W3C credentials apply to a record secured under `exchange-model.md` section 8.1 needs confirming by implementation;
 - **An mdoc rendering.** `exchange-model.md` section 14 keeps it possible, and whether to define one is decision D3, which depends on answers from the Government Digital Delivery Agency.
 
@@ -582,7 +632,6 @@ These are unresolved in the extensions, and none of them holds up the core.
 
 Assessment, status, and sources for each of these are in `standards-map.md` and its parts, and the standards the core relies on are listed in `exchange-model.md` section 20.
 
-- IETF BCP 222, RFC 8552, underscored naming of DNS attribute leaves, <https://www.rfc-editor.org/info/rfc8552>;
 - IETF RFC 8417, Security Event Token, with RFC 8935 and RFC 8936 for push and poll delivery, <https://www.rfc-editor.org/info/rfc8417>;
 - OpenID for Verifiable Credential Issuance 1.0, <https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html>;
 - OpenID for Verifiable Presentations 1.0, <https://openid.net/specs/openid-4-verifiable-presentations-1_0-final.html>;

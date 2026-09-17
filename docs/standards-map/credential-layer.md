@@ -238,7 +238,7 @@ A valid signature proves control of a domain, and not that the domain belongs to
 
 The exchange model closes that gap with a two-way check against a register that already exists: the domain asserts the organisation's New Zealand Business Number, and the website recorded against that number in the public NZBN Register is on the same domain.[^nzbnact]
 
-It also proposes a DNS record, on the pattern DKIM uses, for discovering an organisation's issuer identifier and the address at which it receives presentations.
+It also defines, in its core, a DNS record on the pattern DKIM uses, for discovering an organisation's issuer identifier and the inbox at which its system receives files.
 
 ### 4.2 People
 
@@ -441,7 +441,13 @@ The genuinely new content is the conformance rule that every conforming system m
 
 That rule is what makes the Charter's open exchange requirement testable.
 
-The exchange model also drafts, as extensions, a discovery record, a signed request, and approval for a period, none of which changes the floor.
+Between two systems that do not both run the OpenID protocols, the file still has to get from one to the other without a person carrying it.
+
+W3C Linked Data Notifications, a Recommendation of May 2017, defines an inbox to which a sender delivers a notification by an HTTP POST, answered with 201 or 202, with no account required.[^ldn]
+
+It cannot be used unchanged, because it requires the body to be JSON-LD and a signed record is a JSON Web Signature, so the pattern is borrowed and the body is the file.
+
+The exchange model puts a discovery record that names an HTTPS inbox in its core, and drafts a signed request and approval for a period as extensions, none of which changes the floor, and delivery between systems is decision D13 in `decisions.md`.
 
 ### 6.5 Digital Credentials API
 
@@ -490,6 +496,8 @@ References to external organisations, schemes, and government publications are p
 [^dciptech]: Government Digital Delivery Agency, "Digital Credentials Technical Guide" and "DCIP Onboarding Guide", Digital Credential Issuance Platform. https://github.com/NZ-Digital-Public-Infrastructure/nz-digital-credential-issuance-platform
 
 [^vcrelres]: W3C, "Verifiable Credentials Data Model v2.0", section 5.3, Integrity of Related Resources. https://www.w3.org/TR/vc-data-model-2.0/#integrity-of-related-resources
+
+[^ldn]: W3C, "Linked Data Notifications", W3C Recommendation, 2 May 2017. https://www.w3.org/TR/ldn/
 
 [^vcjose]: W3C, "Securing Verifiable Credentials using JOSE and COSE", W3C Recommendation, 15 May 2025. https://www.w3.org/TR/vc-jose-cose/
 

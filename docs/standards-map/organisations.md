@@ -122,13 +122,16 @@ The information categories that recur across all of them are:
 - health and safety performance history and regulator interventions;
 - declarations.
 
-Three modelling conventions also recur.
+Four modelling conventions also recur.
 
+- the questions are presented, and the answers are collected, as a form inside the system of the scheme or buyer that asks;
 - assessment results are expressed as a percentage score and a tier;
 - validity periods are tiered by score or by category, from six months to two years;
 - sharing of a result with more than one client is offered within a scheme's own platform.
 
-The last convention is the structural problem the Charter describes, and it is stated here without attribution because every scheme reviewed shares it.
+The first and the last are the structural problem the Charter describes, and they are stated here without attribution because every scheme reviewed shares them.
+
+A form is a proper way for a person to say something the first time, and the position taken is that a thing should be entered once, which is decision D14 in `decisions.md`.
 
 ## 5. Certifications and accreditations buyers already accept
 
@@ -200,9 +203,10 @@ For organisations, the genuinely new content is a small vocabulary that:
 - expresses a buyer requirement as a statement of what is expected, with non-exclusive examples of evidence, keeping what a system checks to objective criteria such as accepted assessments, certifications, endorsements, thresholds, and currency;
 - carries a corrective action request and its closure as records the supplier can hold and present, and a recommendation as a note that fails nothing and does not travel;
 - lets a supplier present an assessor's current conclusion to another buyer without the history behind it, with any outstanding corrective action stated inside the record the assessor signed;
-- lets a buyer ask with a small signed request that pins the exact version of the requirements it refers to, and lets the supplier map what it presents to the requirements it is offered against.
+- lets a buyer ask with a small signed request that pins the exact version of the requirements it refers to, and lets the supplier map what it presents to the requirements it is offered against;
+- lets what a buyer's questions are after be stated as requirements that reach the supplier, lets a requirement be demonstrated with a record the supplier already holds, and lets a follow-up ask only about what remains undemonstrated.
 
-The last of these borrows its terms from established audit practice.
+The corrective action terms are borrowed from established audit practice.
 
 Guidance on auditing management systems records findings of conformity and nonconformity and notes opportunities for improvement, the occupational health and safety management standard requires a nonconformity to be answered with corrective action, and the requirements for certification bodies distinguish major from minor nonconformities.[^iso19011][^iso45001][^iso17021]
 

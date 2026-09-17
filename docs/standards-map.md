@@ -178,7 +178,7 @@ Status is as verified on 16 September 2026.
 | Organisation identifiers | Legal Entity Identifier, ISO 17442 | International Standard, open data | Adopt as alternative |
 | Organisation identifiers | ISO/IEC 6523 and GS1 Global Location Number | International Standard | Reference |
 | Binding an issuer to an organisation | website recorded in the public NZBN Register | Statutory register, public interface | Define the check; Reference the register |
-| Discovery of an issuer and its inbox | DNS TXT record at an underscored name, the DKIM pattern | Best Current Practice | Define, extension |
+| Discovery of an issuer and its inbox | DNS TXT record at an underscored name, the DKIM pattern | Best Current Practice | Define, core, decision D13 |
 | Validity period | `validFrom`, `validUntil`, RFC 3339 | Recommendation, RFC | Adopt |
 | Revocation and suspension | W3C Bitstring Status List 1.0 | Recommendation | Adopt |
 | Revocation for mdoc | IETF Token Status List | Internet-Draft, used by government platform | Reference, for the optional mdoc class |
@@ -189,10 +189,10 @@ Status is as verified on 16 September 2026.
 | Presentation protocol | OpenID4VP 1.0 | Final, July 2025 | Adopt, profiled |
 | Transaction query | DCQL | Part of OpenID4VP 1.0 | Adopt |
 | Transaction query | DIF Presentation Exchange 2.1.1 | DIF Ratified, not referenced by OpenID4VP 1.0 | Set aside |
-| Request for records | none for a file sent by email; the OpenID4VP request object when interactive | Final, July 2025 | Define a small signed request, extension, decision D12; translate when interactive |
+| Request for records | none for a request delivered to an inbox or sent as a file; the OpenID4VP request object when interactive | Final, July 2025 | Define a small signed request, extension, decision D12; translate when interactive |
 | Browser mediation | W3C Digital Credentials API | Working Draft | Evaluate |
 | Online mdoc presentation | ISO/IEC TS 18013-7 | Technical Specification | Reference |
-| Organisation-to-organisation transfer | none | | Define as exchange convention |
+| Organisation-to-organisation transfer | W3C Linked Data Notifications for the inbox pattern; none for the file convention | Recommendation, May 2017 | Define as exchange convention, borrowing the inbox pattern, decision D13 |
 | Change notices during an approved period | IETF Security Event Token, RFC 8417 | RFC | Evaluate, extension |
 | Endorsement | Open Badges 3.0 EndorsementCredential | Final, June 2024 | Profile with scope |
 | Recognition publishing | OpenID Federation 1.0 | Final, February 2026 | Evaluate |
@@ -321,9 +321,11 @@ The register already exists, so nothing new is operated by anyone.
 
 The file floor lets a holder send a presentation, and says nothing about how a sender finds where to send it, how a relying organisation asks for one, or how an approval that lasts for a contract period is kept current.
 
-The exchange model drafts three extensions for these, in `exchange-model/extensions.md`: a DNS record on the pattern DKIM uses, a small signed request that pins the exact requirement records it refers to and is translated into the OpenID presentation request when the exchange is interactive, and a standing grant with a change notice that carries no personal information.
+The exchange model puts the first in its core, as a DNS record on the pattern DKIM uses that names an HTTPS inbox, because exchange between systems is the purpose of the model, which is decision D13.
 
-None is proposed for v0.1, and each reuses an existing mechanism before defining anything.
+It drafts two extensions for the others, in `exchange-model/extensions.md`: a small signed request that pins the exact requirement records it refers to and is translated into the OpenID presentation request when the exchange is interactive, and a standing grant with a change notice that carries no personal information.
+
+Neither extension is proposed for v0.1, and each of the three reuses an existing mechanism before defining anything.
 
 ### 7.10 What depends on another party
 

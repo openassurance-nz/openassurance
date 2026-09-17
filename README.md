@@ -6,7 +6,7 @@ OpenAssurance is an open initiative to reduce duplication, platform lock-in, and
 
 It is based on a simple principle:
 
-> **Assurance information should be portable, independently verifiable, and exchangeable without requiring every organisation to use the same software platform.**
+> **Assurance information should be portable, independently verifiable, reusable, and exchangeable without requiring every organisation to use the same software platform.**
 
 OpenAssurance is not intended to replace competency management, prequalification, contractor management, training, assessment, or assurance platforms.
 
@@ -85,6 +85,18 @@ A conforming assurance record should be capable of moving between different syst
 
 The receiving organisation remains responsible for deciding whether it accepts that information.
 
+Portability matters because of what it allows.
+
+> **Do not recreate assurance you already hold.**
+
+A relying organisation states what it needs demonstrated, the holder presents the records it already holds, the relying organisation assesses whether they are sufficient, and only a genuine gap leads to a further request.
+
+Any new record made to close a gap is reusable in turn, so a holder becomes easier to assure over time and a new relying organisation does not reset it to zero.
+
+OpenAssurance is not intended to make repeated questionnaires easier to complete.
+
+It is intended to make repeated questionnaires progressively unnecessary.
+
 For personal assurance information, OpenAssurance should support purpose-specific presentation rather than unnecessary disclosure of a person's complete record.
 
 ## Project Structure
@@ -109,6 +121,8 @@ The aim is:
 
 > **Assess once. Share anywhere.**
 
+An assessment is one kind of reusable record, and the same holds for evidence, declarations, achievements, authorisations, attestations, and insurance records.
+
 OpenPrequal does not require buyers to treat different assessment schemes as equivalent. Each buyer remains free to determine what it requires and accepts.
 
 Website: https://openprequal.nz
@@ -118,15 +132,16 @@ Website: https://openprequal.nz
 1. **No mandatory platform** - OpenAssurance compatibility must not require both parties to subscribe to the same commercial service.
 2. **No mandatory central registry** - OpenAssurance must not become a compulsory central database of workers or organisations.
 3. **Portable records** - Changing software provider must not invalidate an assurance record.
-4. **Independent verification** - Verification should not require a subscription to the platform that created the record.
-5. **Local acceptance** - The receiving organisation decides what evidence and issuers it accepts.
-6. **Issuer provenance** - A system sharing a credential does not become its issuer.
-7. **Open exchange** - Conforming systems should exchange assurance records without bilateral proprietary integrations.
-8. **Privacy by design** - Personal assurance information should be private by default, purpose-bound, and limited to the minimum information required.
-9. **No universal worker identifier** - OpenAssurance should avoid identifiers that enable unnecessary tracking of individuals across organisations.
-10. **Small organisations can participate** - A business should not need specialist software or its own database to use the standard.
-11. **Reuse existing standards first** - OpenAssurance should align with established international and New Zealand standards wherever practical.
-12. **Vendor neutrality** - Commercial providers remain free to compete on services around the open exchange layer.
+4. **Reuse existing assurance** - A holder should not have to recreate information it already holds merely because another relying organisation uses a different system.
+5. **Independent verification** - Verification should not require a subscription to the platform that created the record.
+6. **Local acceptance** - The receiving organisation decides what evidence and issuers it accepts.
+7. **Issuer provenance** - A system sharing a credential does not become its issuer.
+8. **Open exchange** - Conforming systems should exchange assurance records without bilateral proprietary integrations.
+9. **Privacy by design** - Personal assurance information should be private by default, purpose-bound, and limited to the minimum information required.
+10. **No universal worker identifier** - OpenAssurance should avoid identifiers that enable unnecessary tracking of individuals across organisations.
+11. **Small organisations can participate** - A business should not need specialist software or its own database to use the standard.
+12. **Reuse existing standards first** - OpenAssurance should align with established international and New Zealand standards wherever practical.
+13. **Vendor neutrality** - Commercial providers remain free to compete on services around the open exchange layer.
 
 These summarise the principles set out in `CHARTER.md`, which remains the authoritative statement.
 
@@ -183,5 +198,7 @@ The minimum exchange model in priority 4 has a first working draft in `docs/exch
 ## Core Proposition
 
 > **OpenAssurance exists to prevent assurance information from becoming captive to a single platform.**
+
+> **Do not recreate assurance you already hold.**
 
 > **Define locally. Issue anywhere. Share anywhere. Verify anywhere.**

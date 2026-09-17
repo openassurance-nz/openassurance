@@ -14,7 +14,9 @@ OpenAssurance seeks to establish an open, vendor-neutral exchange layer for work
 
 ## 2. Mission
 
-OpenAssurance aims to make assurance records portable, independently verifiable, and exchangeable between organisations regardless of which software, service provider, or hosting arrangement each party uses.
+OpenAssurance aims to make assurance records portable, independently verifiable, reusable, and exchangeable between organisations regardless of which software, service provider, or hosting arrangement each party uses.
+
+A holder should be able to meet a new request with assurance it already holds, and should not have to recreate it because another organisation uses another system.
 
 The project will focus on interoperability.
 
@@ -38,11 +40,29 @@ Assurance records should remain portable between compatible systems and service 
 
 A change of software or host should not invalidate an assurance record.
 
-### 3.4 Independent verification
+### 3.4 Reuse before recreation
+
+OpenAssurance exchanges assurance records, not completed forms.
+
+A relying organisation states what it needs demonstrated.
+
+Where a holder already possesses assurance records relevant to those requirements, those records should be capable of being presented directly, without recreating their contents as answers in the relying organisation's system.
+
+The relying organisation assesses whether they are sufficient.
+
+Additional information should be requested only where existing assurance is insufficient, no longer current, or does not cover the applicable requirement or scope.
+
+Any new assurance record created to address a genuine gap should remain reusable for later assurance requests.
+
+Forms may be used by software as an interface for creating, reviewing, or collecting records, but forms are not the interoperability model.
+
+A new relying organisation should not reset a holder to zero.
+
+### 3.5 Independent verification
 
 A recipient should be able to establish who issued a record, whether it has been altered, and whether it remains current without needing a subscription to the original issuing platform.
 
-### 3.5 Local acceptance
+### 3.6 Local acceptance
 
 The organisation relying on information decides:
 
@@ -53,13 +73,13 @@ The organisation relying on information decides:
 
 OpenAssurance provides information and verification mechanisms. It does not make the final acceptance decision.
 
-### 3.6 Issuer provenance
+### 3.7 Issuer provenance
 
 The original source of an assertion must remain clear.
 
 A system that stores, forwards, or presents a credential does not become the issuer of that credential.
 
-### 3.7 Open participation
+### 3.8 Open participation
 
 Organisations of different sizes should be able to participate.
 
@@ -67,17 +87,17 @@ A small business should be able to use a hosted OpenAssurance-compatible service
 
 Both should participate in the same exchange ecosystem.
 
-### 3.8 Open exchange
+### 3.9 Open exchange
 
 A conforming sender should be able to provide a conforming assurance record to a conforming recipient without first becoming a tenant or customer of the recipient's platform provider.
 
-### 3.9 Reuse before reinvention
+### 3.10 Reuse existing standards first
 
 OpenAssurance should prefer established open standards where they can represent the required information without loss of meaning.
 
 The project should avoid creating new identity, credential, signature, wallet, or status mechanisms where suitable standards already exist.
 
-### 3.10 Vendor neutrality
+### 3.11 Vendor neutrality
 
 Commercial services are expected and encouraged to compete on:
 
@@ -96,19 +116,19 @@ The exchange layer should remain open.
 
 > **Compete on assurance management. Cooperate on assurance exchange.**
 
-### 3.11 Privacy by design
+### 3.12 Privacy by design
 
 OpenAssurance should reduce unnecessary replication of personal information.
 
 Personal assurance information should be private by default and exchanged only where there is a defined purpose, an appropriate basis for sharing, and a legitimate recipient.
 
-### 3.12 Minimum disclosure
+### 3.13 Minimum disclosure
 
 OpenAssurance should support presentation of only the information required for a particular assurance purpose.
 
 A request to verify one competency should not require disclosure of a person's complete competency, employment, training, or qualification history.
 
-### 3.13 Purpose-bound exchange
+### 3.14 Purpose-bound exchange
 
 Where personal information is exchanged, the presentation should be capable of identifying:
 
@@ -117,19 +137,19 @@ Where personal information is exchanged, the presentation should be capable of i
 - the records or claims being presented;
 - any appropriate expiry or access limitation.
 
-### 3.14 No universal person identifier
+### 3.15 No universal person identifier
 
 OpenAssurance should not create a universal worker identifier that enables unnecessary tracking of an individual across unrelated organisations and systems.
 
 Implementations should support scoped, pairwise, issuer-specific, or otherwise privacy-preserving identifiers where practical.
 
-### 3.15 Access, correction, and supersession
+### 3.16 Access, correction, and supersession
 
 Implementations should support appropriate access and correction processes.
 
 Where signed assurance records require correction, implementations should preserve cryptographic integrity by supporting revocation, supersession, replacement, or linked correction statements rather than silently altering previously issued records.
 
-### 3.16 Limited retention and onward sharing
+### 3.17 Limited retention and onward sharing
 
 Receiving an assurance record does not create an unrestricted right to retain or redistribute personal information indefinitely.
 
@@ -205,8 +225,14 @@ The project should seek participation from:
 
 ## 9. Long-Term Test
 
-OpenAssurance should continue to satisfy this question:
+OpenAssurance should continue to satisfy these questions:
 
 > **Can two organisations exchange and verify assurance information even when neither organisation is a customer of the other's software provider?**
 
-If the answer becomes no, the project has departed from its founding purpose.
+> **Can a holder satisfy a new assurance request using assurance it already holds, without recreating substantially the same information in another system?**
+
+> **Where existing assurance is insufficient, does the exchange allow the relying organisation to ask only for the additional assurance needed to address the genuine gap?**
+
+The first is necessary and is not enough, because a system could exchange conforming records and still make a supplier enter everything again in a new questionnaire.
+
+If any answer becomes no, the project has departed from its founding purpose.

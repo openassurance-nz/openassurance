@@ -12,7 +12,7 @@ Every name, address, and identifier in them is fictional, the context address is
 
 One example is given for each profile, because Phase 4 calls for a reference exchange in each, a third shows the prequalification assessment reused by a second buyer, a fourth shows a certificate shared on its own, and a fifth shows discovery, keys, and issuer binding.
 
-The requirements they illustrate are in `exchange-model.md`, and the fifth example also uses the discovery record drafted in `extensions.md`.
+The requirements they illustrate are in `exchange-model.md`, and the fifth example shows the discovery record of `exchange-model.md` section 11.4.
 
 A reader who wants the simplest case first should start with section 5.
 
@@ -352,7 +352,7 @@ It is signed JSON and not a record, and its header names the key that signed it.
       "items": ["R1", "R2", "R3", "R4"]
     }
   ],
-  "replyTo": "mailto:assurance@tidewatercoldstorage.example"
+  "replyTo": "https://tidewatercoldstorage.example/openassurance/inbox"
 }
 ```
 
@@ -364,6 +364,10 @@ It pins the exact version by identifier and by a digest of the requirement recor
 prequalification-request.jwt                 the signed request
 tidewater-ammonia-requirements-v3.vc.jwt     the requirement record it refers to
 ```
+
+Tidewater's system finds Ridgeline's inbox through its discovery record, which section 6 shows, and posts both files to it.
+
+Nobody at Tidewater attaches anything, and nobody at Ridgeline fills in a form.
 
 ### 3.3 The supplier verifies the request
 
@@ -617,6 +621,8 @@ The submission map does not say that Ridgeline considers R1 met.
 It says that Ridgeline presents that record for Tidewater to consider against R1.
 
 Ridgeline presents nothing against R4, so R4 is simply absent.
+
+A person at Ridgeline approves the disclosure, and Ridgeline's system posts the presentation to the address in the request's `replyTo`.
 
 ### 3.6 The buyer's system verifies the presentation
 
@@ -1115,11 +1121,99 @@ Ridgeline and Tidewater hold the whole chain, and anyone Ridgeline chooses to sh
 
 Of that chain, what Ridgeline normally presents is A3 alone, as section 4 shows, so the same issue is not rediscovered by each buyer in turn, and it does not follow Ridgeline around either.
 
-### 3.14 What the transaction shows
+### 3.14 A larger requirement set: only the gaps
+
+Tidewater's set has four requirements so that every record could be shown in full.
+
+A real set is larger, and what happens at that size is the point of the model.
+
+Suppose a later version of Tidewater's set had twenty requirements.
+
+```text
+Tidewater's requirements                      R1 to R20
+
+Ridgeline's system finds records it holds     against all twenty
+A person at Ridgeline types                   nothing
+
+Tidewater assesses                            R1 to R17 demonstrated
+
+Gaps
+R18   the insurance evidence held has expired, and the renewed certificate has not been added
+R19   the evidence of subcontractor management is relevant, and not enough to decide
+R20   the declaration does not cover the period required
+
+Follow-up request                             R18, R19, and R20 only
+```
+
+The request stated requirements, and asked no questions.
+
+It did not say upload this policy, enter that amount, and upload the training matrix.
+
+Ridgeline's system worked out which of the records it already holds may be relevant, a person at Ridgeline approved the disclosure, and nobody completed a form.
+
+Each of the three gaps is a genuine one: a record that is no longer current, evidence that does not adequately demonstrate the requirement, and a record whose scope does not cover what is needed.
+
+That Tidewater uses a different system from the last buyer is not a gap.
+
+None of the three is a finding that Ridgeline falls short, so none is a corrective action request.
+
+The follow-up refers to the first request and selects three requirements, and only the fields that differ from a first request are shown.
+
+```json
+{
+  "iss": "https://tidewatercoldstorage.example/issuer",
+  "aud": "https://ridgelinerefrigeration.example/issuer",
+  "jti": "urn:uuid:ea7b55e0-0000-4000-8000-000000000003",
+  "type": "OpenAssuranceRequest",
+  "follows": "urn:uuid:ea7b55e0-0000-4000-8000-000000000002",
+  "requirements": [
+    {
+      "id": "https://tidewatercoldstorage.example/requirements/ammonia/versions/4",
+      "digestSRI": "sha384-illustrativeDigestValueOnly",
+      "items": ["R18", "R19", "R20"],
+      "furtherEvidence": [
+        { "item": "R18", "sought": "Evidence of public liability cover that is current at the start of the engagement." },
+        { "item": "R19", "sought": "Evidence of how subcontractors are selected and monitored, such as a procedure with records showing its use." },
+        { "item": "R20", "sought": "A declaration covering the five years to the date it is made." }
+      ]
+    }
+  ]
+}
+```
+
+Ridgeline is not asked about the other seventeen again.
+
+What Ridgeline does next creates records, and not answers.
+
+```text
+R18   the broker's new certificate is added once, as an evidence record
+R19   the subcontractor procedure and two completed reviews are added, as an evidence record
+R20   a director makes a new declaration, in a form shown by Ridgeline's own software,
+      and what results is a declaration record
+```
+
+The form in the last line is an interface inside Ridgeline's own system, and what leaves that system is the record.
+
+All three records join what Ridgeline holds.
+
+```text
+Before Tidewater's request    records relevant to seventeen of Tidewater's twenty requirements
+After it                      records relevant to all twenty, and Tidewater's assessment as well
+```
+
+The next buyer's requirements will differ, and Ridgeline will start further along than it did this time.
+
+The director does not make the same declaration again because the next buyer uses another system, and makes a new one only when the period it covers no longer reaches far enough.
+
+That is the compounding value of the model: a supplier becomes easier to assure over time, and does not start again with every new buyer.
+
+### 3.15 What the transaction shows
 
 Nothing has been re-entered, the supplier has joined nothing, and the decision is the buyer's.
 
-Two files went one way, one came back, and the supplier kept the buyer's actual decision, any corrective action, and the evidence that it was accepted as closed.
+Tidewater stated requirements and asked no questions, Ridgeline presented records it already held, and what Tidewater created in turn is one more record Ridgeline can reuse.
+
+Two files went from one system to the other, one came back, and the supplier kept the buyer's actual decision, any corrective action, and the evidence that it was accepted as closed.
 
 The exchange does not stop when documents have moved.
 
@@ -1525,7 +1619,7 @@ In the main path of section 3, Ridgeline holds Fernbank's assessment, and that r
 
 Hollowford Estate Wines Limited, which is fictional, runs glycol refrigeration for its fermentation tanks, and asks its contractors whether they are prequalified and whether it may see the certificate.
 
-There is no request, no requirement record, and no presentation.
+There is no request, no requirement record, and no presentation, and nothing is attached, uploaded, or typed into a form.
 
 ```text
 Assessor issues the certificate, once
@@ -1550,9 +1644,82 @@ ridgeline-assessment-2026-1182.vc.jwt    the certificate, as a signed assessment
 ridgeline-assessment-2026-1182.pdf       a rendering a person can read
 ```
 
-The record is the one shown in full in section 3.4.
+The first file is a JSON Web Signature, and it has three parts.
 
-It is a certificate in the sense people already use the word: it states a conclusion, a scope, and a period, and it leaves out the findings, the recommendations, and the working papers behind them.
+Its header names the key that signed it.
+
+```json
+{
+  "alg": "ES256",
+  "typ": "vc+jwt",
+  "kid": "https://fernbankassessors.example/issuer#key-2026"
+}
+```
+
+Its payload is the record, and it is the same record that Ridgeline presents to Tidewater in section 3.4.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://fernbankassessors.example/assessments/2026-1182",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "issuer": {
+    "id": "https://fernbankassessors.example/issuer",
+    "name": "Fernbank Safety Assessors Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-05-12T00:00:00+12:00",
+  "validUntil": "2027-05-11T23:59:59+12:00",
+  "credentialSubject": {
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "scope": {
+      "activity": "Health and safety management for industrial refrigeration maintenance"
+    },
+    "criteria": {
+      "name": "Fernbank contractor assessment criteria",
+      "version": "4.2"
+    },
+    "result": {
+      "outcome": "Meets criteria",
+      "score": 86,
+      "scale": "percent"
+    },
+    "supplierCategory": "Medium-sized, higher-risk activities",
+    "evidenceScope": {
+      "documentsReviewed": true,
+      "siteVisit": true
+    },
+    "assessmentDate": "2026-05-08",
+    "correctiveActionState": { "outstanding": false }
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "20311",
+    "statusListCredential": "https://fernbankassessors.example/status/1"
+  }
+}
+```
+
+Its third part is Fernbank's signature over the other two.
+
+In the file the three parts are encoded and joined by full stops, so the file is one long line of text, shortened here.
+
+```text
+eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK2p3dCIsImtpZCI6Imh0dHBzOi8vZmVybmJhbmth...    the header
+.eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiLCJo...   the record
+.illustrativeSignatureValueOnly...                                            the signature
+```
+
+A system reads that file, and the rendering is for people.
+
+The record is a certificate in the sense people already use the word: it states a conclusion, a scope, and a period, and it leaves out the findings, the recommendations, and the working papers behind them.
 
 That is the current assurance state and nothing else, which is what `extensions.md` section 10 says should travel.
 
@@ -1579,19 +1746,42 @@ and any conforming verifier can check it.
 
 ### 5.2 What the supplier sends
 
-Ridgeline attaches both files to an email.
+Ridgeline does not attach anything, upload anything, or fill in a form.
+
+Someone at Ridgeline chooses the certificate, enters Hollowford's domain name, and approves the sharing.
+
+Ridgeline's system looks up Hollowford's discovery record, finds its inbox, and posts the file to it.
+
+```text
+$ dig +short TXT _openassurance.hollowfordestate.example
+"v=OA1; " "issuer=https://hollowfordestate.example/issuer; " "nzbn=(illustrative); " "inbox=https://hollowfordestate.example/openassurance/inbox"
+```
+
+```text
+POST /openassurance/inbox HTTP/1.1
+Host: hollowfordestate.example
+Content-Type: application/vc+jwt
+
+eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK2p3dCIsImtpZCI6Imh0dHBzOi8vZmVybmJhbmth...
+
+HTTP/1.1 202 Accepted
+```
+
+Ridgeline needs no account with Hollowford and no key from it, and Hollowford's inbox says only that the file was taken.
+
+There is no covering message in any OpenAssurance format, because none is needed: the record already says who issued it, which organisation it is about, and how long it stands.
 
 The record carries no personal information, so it travels on its own, without a presentation, as `exchange-model.md` section 11.1 allows.
 
-Ridgeline sends the same two files to every buyer that asks, and enters nothing into anyone's system.
-
 The file can be forwarded by anyone, and that does no harm, because the record says which organisation it is about and cannot be passed off as another's.
 
-### 5.3 What the buyer sees
+Fernbank delivered the certificate to Ridgeline's inbox in the same way when it issued it, so nobody at Ridgeline downloaded or filed it either.
 
-A person at Hollowford who has only an email client opens the rendering, as they would today.
+Discovery and the inbox are in `exchange-model.md` sections 11.4 and 11.5, and section 6 shows a discovery record in full.
 
-A system that can verify reads the other file, and answers what a system can answer.
+### 5.3 What the buyer's system does
+
+Hollowford's system verifies the file when it arrives, and files the result against the supplier, which it already knows by its New Zealand Business Number.
 
 ```text
 Record                   Signature    Issuer binding   Current      Recognised
@@ -1609,13 +1799,15 @@ Superseded              no; this is the assessor's current assessment
 Requirement             not evaluated; Hollowford has configured none
 ```
 
+Nobody at Hollowford opened an attachment, typed in an expiry date, or filed a document.
+
 Hollowford's rule is the one it has always used, which is a current certificate from an assessor on its own list.
 
-With a PDF, that the certificate is genuine, that it came from the assessor named, and that it has not been withdrawn are assumed.
+With a document, that the certificate is genuine, that it came from the assessor named, and that it has not been withdrawn are assumed.
 
 Here each is checked, and the decision is still a person's.
 
-Current means more than the dates, because the status entry shows a certificate that has been withdrawn or replaced at Hollowford's next check, and Fernbank does not learn who checked.
+Current means more than the dates, because Hollowford's system checks the status entry again on its own schedule, a certificate that has been withdrawn or replaced shows at the next check, and Fernbank does not learn who checked.
 
 Hollowford is not a customer of Fernbank, holds no account with it, and did not need one, which is `exchange-model.md` section 11.3.
 
@@ -1625,7 +1817,27 @@ Whether Fernbank is on Hollowford's list is Hollowford's decision, and the model
 
 A buyer that needs more than a certificate asks for it with a request, as Tidewater does in section 3, and the certificate is then one piece of evidence among others.
 
-### 5.4 Where the assessor issues only a document
+### 5.4 When the certificate is renewed
+
+Fernbank assesses Ridgeline again the following May, and posts a new record, which replaces this one, to Ridgeline's inbox.
+
+Ridgeline approved sharing with Hollowford for the length of the engagement, as `extensions.md` section 6 describes, so its system sends the replacement to Hollowford's inbox without anyone remembering to.
+
+Hollowford's system shows the old record as superseded and the new one as current.
+
+Nobody chases anybody for a renewed certificate.
+
+### 5.5 Where a party has no system
+
+The floor is for a party that has no such system yet.
+
+Had Hollowford nothing but an email client, Ridgeline would send the same file as an attachment, together with the rendering.
+
+A person at Hollowford reads the rendering, and can check the file with any conforming verifier.
+
+That is the floor in `exchange-model.md` section 11.1, which exists so that no party is shut out, and it is not the intended experience.
+
+### 5.6 Where the assessor issues only a document
 
 An assessor that does not yet issue signed records still issues a certificate, and the supplier still holds it.
 
@@ -1645,23 +1857,22 @@ Nothing is lost compared with today, and the digest fixes the supplier's copy.
 
 When the assessor later issues a signed record, it replaces the evidence record and nothing else changes, as `exchange-model.md` section 6.5 describes.
 
-### 5.5 What the certificate case shows
-
-Everything in this example is in the core, and no extension is used.
+### 5.7 What the certificate case shows
 
 - the assessor issues one record, once;
-- the supplier keeps it, and sends it as many times as it likes;
-- each buyer verifies it without joining anything, and decides for itself.
+- the supplier's system holds it, and delivers it to as many buyers as the supplier approves;
+- each buyer's system verifies it without joining anything, and the buyer decides for itself;
+- nothing is attached, uploaded, or entered twice.
 
-It is also the smallest useful step for each party.
+Everything in this example is in the core, apart from the approval for a period in section 5.4, which is an extension.
 
-An assessor that does nothing more than issue its certificate as a signed record has made its result portable, a supplier needs only to keep two files, and a buyer needs only a verifier.
+It is also the smallest useful step for an assessor, which makes its result portable by doing nothing more than issuing its certificate as a signed record.
 
 ## 6. Discovery, Keys, and Issuer Binding
 
 The fifth example follows the buyer in section 3 as it checks that the supplier's records come from the supplier.
 
-Issuer binding in `exchange-model.md` section 7.5 is part of the core, and the discovery record in `extensions.md` section 4 is an extension, so the record format shown is a proposal.
+Issuer binding in `exchange-model.md` section 7.5 and the discovery record in its section 11.4 are both part of the core, and the format of the record is a proposal.
 
 **The supplier's discovery record.**
 
@@ -1672,14 +1883,14 @@ _openassurance.ridgelinerefrigeration.example.  3600  IN  TXT  (
     "v=OA1; "
     "issuer=https://ridgelinerefrigeration.example/issuer; "
     "nzbn=(illustrative); "
-    "inbox=mailto:assurance@ridgelinerefrigeration.example" )
+    "inbox=https://ridgelinerefrigeration.example/openassurance/inbox" )
 ```
 
 Anyone who knows the supplier's domain can look it up, with no account and no intermediary.
 
 ```text
 $ dig +short TXT _openassurance.ridgelinerefrigeration.example
-"v=OA1; " "issuer=https://ridgelinerefrigeration.example/issuer; " "nzbn=(illustrative); " "inbox=mailto:assurance@ridgelinerefrigeration.example"
+"v=OA1; " "issuer=https://ridgelinerefrigeration.example/issuer; " "nzbn=(illustrative); " "inbox=https://ridgelinerefrigeration.example/openassurance/inbox"
 ```
 
 The record says where the supplier's keys are, which organisation it claims to be, and where a request or a presentation for it should be sent.
@@ -1777,6 +1988,8 @@ It also carries the buyer's determination, a corrective action request, and its 
 
 The reuse example shows the supplier presenting only the assessor's current assessment to a second buyer, who decides for itself what it demonstrates.
 
-The certificate example needs nothing but the core: one signed record, sent as a file to any buyer that asks.
+The certificate example is one signed record, delivered from the supplier's system to any buyer's system the supplier approves.
+
+In every example the records move between systems, and a file carried by a person is the floor for a party that has none.
 
 Phase 4 should demonstrate both exchanges between systems that share nothing but this model.

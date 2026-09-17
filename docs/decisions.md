@@ -159,13 +159,41 @@ Applied as a working assumption in `exchange-model.md` section 6.4, and in `exch
 
 The question is how a relying organisation asks another organisation for assurance records without making an interactive protocol, a portal, or a shared platform a precondition.
 
-Likely path: a small signed JSON request for the file floor, which identifies the requester and the recipient, carries a unique identifier, a nonce, a purpose, the engagement, and an expiry, and references the exact requirement records that apply by identifier and digest; a presentation made in response refers to the request and its nonce, and may map the records presented to individual requirement identifiers, as an index and never as a claim that a requirement is met; the request is not a verifiable credential; interactive implementations translate the same transaction into OpenID for Verifiable Presentations and DCQL, and no second requirement model is defined.
+Likely path: a small signed JSON request, delivered to the recipient's inbox or sent as a file, which states requirements and is never a questionnaire, identifies the requester and the recipient, carries a unique identifier, a nonce, a purpose, the engagement, and an expiry, and references the exact requirement records that apply by identifier and digest; a presentation made in response carries records the holder already holds, refers to the request and its nonce, and may map the records presented to individual requirement identifiers, as an index and never as a claim that a requirement is met; a response never restates the contents of those records in a structure made for one requester, so no response record type is defined; the relying organisation assesses what it was given, and a follow-up request refers to the earlier request, selects only the requirements that remain undemonstrated, and says what further assurance is sought; the request is not a verifiable credential; interactive implementations translate the same transaction into OpenID for Verifiable Presentations and DCQL, and no second requirement model is defined.
 
-This would change if implementation showed that the OpenID request object could be used unchanged for a message sent by email, in which case the separate request would be dropped.
+This would change if implementation showed that the OpenID request object could be used unchanged for a message delivered outside an OAuth exchange, in which case the separate request would be dropped.
 
 Status: open.
 
-Applied as a working assumption in `exchange-model/extensions.md` section 5.
+Applied as a working assumption in `exchange-model/extensions.md` section 5, with the follow-up request in its section 5.7.
+
+### D13. Delivery between systems
+
+The question is how a record, a presentation, or a request gets from one organisation's system to another's without a person attaching, uploading, or re-entering anything, and without a hub that both must join.
+
+Likely path: each organisation names an HTTPS inbox in a discovery record under its own domain; a sender posts the signed file to it with its registered media type, needs no account, key, or prior arrangement, and is told only that the file was taken; everything an inbox receives is signed, so the inbox authenticates nothing and the receiving system verifies what arrives as it would any file; the pattern is borrowed from W3C Linked Data Notifications, which cannot be used unchanged because it requires a JSON-LD body; a file sent by any other channel remains the floor for a party that has no system, and such a party may give an email address as its inbox.
+
+Discovery and the inbox are part of the v0.1 core, because exchange between systems is the purpose of the model and a core that defined only a file could not move a record between two systems without a person carrying it; the signed request, approval for a period, and the interactive protocols remain extensions.
+
+This would change if open inboxes proved unmanageable without knowing the sender, in which case an inbox would accept a file only with a signed request or presentation whose signature it had verified.
+
+Status: open.
+
+Applied as a working assumption in `exchange-model.md` sections 11.4 and 11.5, and in `exchange-model/extensions.md` section 5.6.
+
+### D14. Forms and questionnaires
+
+The question is how OpenAssurance relates to the forms through which most prequalification information is collected today, each with its own questions, inside the system of the buyer or scheme that asks.
+
+Likely path: OpenAssurance exchanges assurance records and not completed forms, as `CHARTER.md` section 3.4 says; a user interface may use forms to create, review, or collect records, forms are not part of the exchange, and no particular form or portal is required for conformance; a form is treated as four separable things, which are what the asker needs demonstrated, the answering, the keeping of the answers, and the assessment; what the questions are after is expressed as requirements, a typed answer is a declaration made once by a named person, an uploaded document is an evidence record, and the result is an assessment record, so no new record type is needed; a request states requirements and is never a questionnaire; the aim is that a thing is entered once and not that nothing is ever entered; a system built around a form adopts the model in three steps, each useful alone, which are giving back what was typed and the result as records, taking in records against requirements, and stating its requirements as a requirement record that reaches the suppliers who are asked; a requirement record need not be published and a scoring method need not be disclosed; a conforming system does not require what a record it has received already says to be entered again.
+
+What is unsettled is how an answer typed into another party's form comes back to the supplier as a declaration the supplier issues, since the supplier and not the system that collected it is the party making the statement.
+
+This would change if scheme operators and buyers, asked during Phase 1, would not state their requirements to the suppliers they ask in a form another system can read, in which case the first two steps would stand alone and a supplier would map its records to each form by hand.
+
+Status: open.
+
+Applied as a working assumption in `exchange-model.md` section 11.3, in `exchange-model/extensions.md` sections 3 and 5.7, and in section 5.4 of the OpenPrequal profile.
 
 ## 3. Open Questions
 
@@ -180,6 +208,7 @@ These could not be settled from published material and should be put to the part
 - to insurers and brokers: whether a verifiable certificate of currency is feasible;
 - to buyers and relying organisations: what an assessment result must carry for them to accept it without access to the scheme that produced it, and which of those things they cannot get today;
 - to the operators of existing prequalification schemes: whether they would issue their assessment result as a signed record the supplier holds, what it would carry, and on what commercial terms;
+- to the operators of existing prequalification schemes and to buyers that use their own forms: whether they would state what their questions are after as requirements, available to the suppliers they ask in a form another system can read, and on what terms;
 - to suppliers: whether they currently receive a copy of their own assessment result that they can give to anyone;
 - to the Office of the Privacy Commissioner: whether the identifier approach in `standards-map/credential-layer.md` section 4 is consistent with Information Privacy Principle 13 as applied to employer-scoped identifiers;
 - to a lawyer with employment and tort experience: whether a portable attestation, which states its scope, period, basis, and validity and can be withdrawn, carries any more risk for an employer or a supervisor than the informal attestations they already give;

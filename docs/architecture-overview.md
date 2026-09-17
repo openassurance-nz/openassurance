@@ -204,6 +204,29 @@ Receiving organisation
 
 The hosted service is replaceable.
 
+What moves is assurance records, and not completed forms.
+
+```text
+Relying organisation states its requirements
+        |
+        v
+Holder identifies assurance it already holds
+        |
+        v
+Holder presents the relevant existing records
+        |
+        v
+Relying organisation or its assessor decides whether they are sufficient
+        |
+        v
+Only a genuine gap leads to a further request
+        |
+        v
+Any new record created stays reusable
+```
+
+A new relying organisation should not reset the holder to zero.
+
 ## 7. Portability
 
 A valid assurance record should not become invalid because:
@@ -314,6 +337,8 @@ A first working draft of what v0.1 should define is in `exchange-model.md`.
 
 That draft divides the list above into a core proposed for v0.1 and extensions, and places requirement expression and endorsement scope among the extensions, which are drafted in `exchange-model/extensions.md`.
 
+The exchange expectations in the core are a discovery record under an organisation's own domain and an inbox at which its system receives files, with a file that can travel by any channel as the floor for a party that has no system.
+
 The extensions also draft a corrective action record and a signed request, and neither changes the record types in section 4.
 
 ## 12. Design Test
@@ -321,3 +346,5 @@ The extensions also draft a corrective action record and a signed request, and n
 Any proposed architecture should pass this test:
 
 > Can a record issued in one compatible environment be received and independently verified in another compatible environment without either party joining the other's platform?
+
+> Does this allow existing assurance to be reused, or does it make the holder recreate information again?

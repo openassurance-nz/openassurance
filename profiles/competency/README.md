@@ -30,6 +30,10 @@ This leads to:
 
 OpenCompetency aims to make the competency evidence portable instead.
 
+An employer should be able to meet a customer's requirement with the records it already holds, and be asked only for what those records do not show.
+
+Reuse does not mean wider disclosure: each presentation is still made for a stated purpose, to a named recipient, and carries only what that purpose needs.
+
 ## 3. Initial Record Types
 
 OpenCompetency should support or map to records such as:
@@ -288,7 +292,9 @@ The employer can also issue its own practical competency or attestation records.
 
 The customer can independently identify each original issuer.
 
-The floor for that exchange is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
+The exchange is between systems, so nobody attaches, uploads, or re-enters anything.
+
+The floor, for a party that has no system, is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
 
 ## 8. Small Organisations
 
@@ -356,4 +362,6 @@ OpenCompetency is not intended to:
 
 > **Can an employer provide valid competency evidence to a customer without both organisations being customers of the same competency platform?**
 
-If yes, OpenCompetency is serving its purpose.
+> **Can an employer satisfy a customer's competency requirement using existing valid worker assurance records, without recreating the worker, qualification, licence, or competency evidence in the customer's platform?**
+
+If yes to both, OpenCompetency is serving its purpose.
