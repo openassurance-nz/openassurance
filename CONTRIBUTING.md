@@ -148,6 +148,10 @@ OpenAssurance is at the problem definition and standards mapping stage.
 
 No exchange protocol, schema, or conformance suite exists yet. Contributions that assume one exists will be difficult to evaluate.
 
+Working drafts of the standards map, the decisions register, and the minimum exchange model are in `docs/`, and none of them is final.
+
+Contributions that challenge them are as useful as contributions that extend them.
+
 The most useful contributions at this stage are:
 
 - evidence about where duplication actually occurs;
@@ -161,3 +165,7 @@ The last of these is genuinely welcome.
 ## 10. Licence
 
 Contributions are made under the Apache License 2.0, as set out in `LICENSE`.
+
+That licence includes a patent grant from each contributor.
+
+Whether a specification-specific intellectual property policy is also needed is a question for the governance phase.

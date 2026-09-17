@@ -172,6 +172,8 @@ The immediate priorities are:
 
 The standards mapping in priority 3 has a working draft in `docs/standards-map.md`.
 
+The minimum exchange model in priority 4 has a first working draft in `docs/exchange-model.md`.
+
 ## Domains
 
 - OpenAssurance: https://openassurance.nz

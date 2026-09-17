@@ -76,6 +76,8 @@ The assessment provider owns its assessment or opinion.
 
 The supplier retains the ability to hold and share its underlying assurance evidence.
 
+The exchange model carries these as two different record types, evidence in its section 6.5 and assessment in its section 6.4, so that a buyer can always tell the supplier's own material from an assessor's opinion of it.
+
 ## 4. Initial Record Types
 
 OpenPrequal should support or map to:
@@ -94,6 +96,12 @@ OpenPrequal should support or map to:
 - assessment-provider credential;
 - buyer requirement profile.
 
+The working draft in `docs/exchange-model.md` defines the credential types that carry these records.
+
+Section 2 of `docs/standards-map/organisations.md` aligns the evidence categories to the twelve topics of WorkSafe New Zealand's risk-based prequalification template.
+
+Who should make an organisation's declaration is discussed in section 4.2 of the OpenCompetency profile, and the record type is defined in section 6.6 of the exchange model.
+
 ## 5. Buyer Requirements
 
 Different buyers may have different requirements.
@@ -110,6 +118,8 @@ Buyer requirement:
 ```
 
 OpenPrequal should allow the supplier to present existing assurance information against that requirement without completing an entirely new data-entry process.
+
+Section 3 of `docs/exchange-model/examples.md` works through an example, with the buyer's result reported separately for authenticity, currency, recognition, and requirement.
 
 ## 6. Assessment Schemes
 
@@ -148,6 +158,8 @@ Supplier
 
 The buyer should be able to identify the original issuer of each record.
 
+The floor for that exchange is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
+
 ## 8. Small Organisations
 
 A supplier should not need specialist procurement or assurance software to participate.
@@ -163,6 +175,8 @@ A hosted compatible service may allow the supplier to:
 - export its data.
 
 The supplier should be able to move to another compatible service without recreating the underlying assurance information.
+
+The exchange model makes that possible by identifying an issuer under its own domain name, which a hosted service serves on the supplier's behalf.
 
 
 ## 9. Organisation Information and Personal Information

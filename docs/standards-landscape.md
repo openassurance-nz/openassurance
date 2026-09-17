@@ -230,11 +230,11 @@ Privacy should be treated as an architectural requirement rather than an impleme
 
 ## 16. Next Research
 
-The items listed here in the first draft have been examined, and the results are recorded in `standards-map.md`.
+The items listed here in the first draft have been examined, and the results are recorded in `standards-map.md` and its five parts.
 
 That document states a position on each candidate standard, scheme, register, and legal instrument, and identifies the smallest genuinely new layer OpenAssurance needs to define.
 
-The questions that remain open after that assessment are listed in its section 18.
+The questions that remain open after that assessment, and the decisions still to be made, are listed in `decisions.md`.
 
 They concern the licence terms of published New Zealand credential schemas, the formats the government wallet will hold, machine-readable access to qualification and licence registers, and the willingness of insurers, assessors, and scheme operators to issue verifiable records.
 
