@@ -244,6 +244,14 @@ The buyer should be able to identify the original issuer of each record.
 
 The floor for that exchange is a signed file that any conforming system can export and import, as section 11 of the exchange model describes.
 
+The simplest exchange is a single file.
+
+A supplier that passes an assessment is normally given a certificate, and where the assessor issues it as a signed assessment record, the supplier can send it to any buyer that asks, on its own, with a rendering a person can read.
+
+The buyer checks that it is authentic, current, and from an assessor it recognises, and decides for itself.
+
+`docs/exchange-model/examples.md` section 5 shows that case, and what changes where the assessor still issues only a document.
+
 ## 8. Small Organisations
 
 A supplier should not need specialist procurement or assurance software to participate.

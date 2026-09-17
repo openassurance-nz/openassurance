@@ -10,9 +10,11 @@ These examples show the minimum exchange model at work, and they carry no requir
 
 Every name, address, and identifier in them is fictional, the context address is a placeholder, and the term names are provisional.
 
-One example is given for each profile, because Phase 4 calls for a reference exchange in each, a third shows the prequalification assessment reused by a second buyer, and a fourth shows discovery, keys, and issuer binding.
+One example is given for each profile, because Phase 4 calls for a reference exchange in each, a third shows the prequalification assessment reused by a second buyer, a fourth shows a certificate shared on its own, and a fifth shows discovery, keys, and issuer binding.
 
-The requirements they illustrate are in `exchange-model.md`, and the fourth example also uses the discovery record drafted in `extensions.md`.
+The requirements they illustrate are in `exchange-model.md`, and the fifth example also uses the discovery record drafted in `extensions.md`.
+
+A reader who wants the simplest case first should start with section 5.
 
 ## 2. OpenCompetency: An Attestation About a Person
 
@@ -124,6 +126,8 @@ Assessment
 ```
 
 The requirement record, the request, and the corrective action request are extensions drafted in `extensions.md`, and every other record is in the core.
+
+A buyer that asks only to see a certificate needs none of this, and section 5 shows that case.
 
 ### 3.1 The buyer's requirement record
 
@@ -1511,9 +1515,151 @@ An assessment says what it was made for, through its scope and the engagement it
 
 Whether a buyer is content for its assessment to be relied on by others, and whether it may say so in the record, is an open point in `extensions.md` section 11.
 
-## 5. Discovery, Keys, and Issuer Binding
+## 5. OpenPrequal: Sharing a Certificate on Its Own
 
-The fourth example follows the buyer in section 3 as it checks that the supplier's records come from the supplier.
+The fourth example is the simplest exchange in the profile, and probably the most common.
+
+A supplier that passes a prequalification assessment is normally given a certificate, and the next buyer often asks for nothing more than to see it.
+
+In the main path of section 3, Ridgeline holds Fernbank's assessment, and that record is the certificate.
+
+Hollowford Estate Wines Limited, which is fictional, runs glycol refrigeration for its fermentation tanks, and asks its contractors whether they are prequalified and whether it may see the certificate.
+
+There is no request, no requirement record, and no presentation.
+
+```text
+Assessor issues the certificate, once
+        |
+        v
+Supplier keeps it
+        |
+        +---- sends it to one buyer
+        +---- sends it to another
+        +---- sends it to a third
+                    |
+                    v
+             Each buyer verifies it, and decides for itself
+```
+
+### 5.1 What the assessor issues
+
+When Ridgeline passed, Fernbank issued two files.
+
+```text
+ridgeline-assessment-2026-1182.vc.jwt    the certificate, as a signed assessment record
+ridgeline-assessment-2026-1182.pdf       a rendering a person can read
+```
+
+The record is the one shown in full in section 3.4.
+
+It is a certificate in the sense people already use the word: it states a conclusion, a scope, and a period, and it leaves out the findings, the recommendations, and the working papers behind them.
+
+That is the current assurance state and nothing else, which is what `extensions.md` section 10 says should travel.
+
+The rendering is what `exchange-model.md` section 11.2 asks for.
+
+```text
+Fernbank Safety Assessors Limited
+Certificate of assessment
+
+Organisation         Ridgeline Refrigeration Limited, NZBN illustrative
+Assessed             Health and safety management for industrial refrigeration maintenance
+Criteria             Fernbank contractor assessment criteria, version 4.2
+Result               Meets criteria; 86 percent
+Category             Medium-sized, higher-risk activities
+Evidence reviewed    documents, and a site visit
+Assessed on          8 May 2026
+Valid                12 May 2026 to 11 May 2027, unless withdrawn or replaced
+Corrective actions   none outstanding
+
+This page carries no authority of its own.
+The file ridgeline-assessment-2026-1182.vc.jwt carries the assessor's signature,
+and any conforming verifier can check it.
+```
+
+### 5.2 What the supplier sends
+
+Ridgeline attaches both files to an email.
+
+The record carries no personal information, so it travels on its own, without a presentation, as `exchange-model.md` section 11.1 allows.
+
+Ridgeline sends the same two files to every buyer that asks, and enters nothing into anyone's system.
+
+The file can be forwarded by anyone, and that does no harm, because the record says which organisation it is about and cannot be passed off as another's.
+
+### 5.3 What the buyer sees
+
+A person at Hollowford who has only an email client opens the rendering, as they would today.
+
+A system that can verify reads the other file, and answers what a system can answer.
+
+```text
+Record                   Signature    Issuer binding   Current      Recognised
+Fernbank's assessment    verified     confirmed        current      recognised
+```
+
+```text
+Fernbank's assessment
+
+Assessor's result       Meets criteria; 86 percent
+Category                Medium-sized, higher-risk activities
+Evidence reviewed       documents, and a site visit
+Corrective actions      none outstanding
+Superseded              no; this is the assessor's current assessment
+Requirement             not evaluated; Hollowford has configured none
+```
+
+Hollowford's rule is the one it has always used, which is a current certificate from an assessor on its own list.
+
+With a PDF, that the certificate is genuine, that it came from the assessor named, and that it has not been withdrawn are assumed.
+
+Here each is checked, and the decision is still a person's.
+
+Current means more than the dates, because the status entry shows a certificate that has been withdrawn or replaced at Hollowford's next check, and Fernbank does not learn who checked.
+
+Hollowford is not a customer of Fernbank, holds no account with it, and did not need one, which is `exchange-model.md` section 11.3.
+
+The score is carried and not interpreted, so 86 percent from one assessor says nothing about 86 percent from another.
+
+Whether Fernbank is on Hollowford's list is Hollowford's decision, and the model has no view.
+
+A buyer that needs more than a certificate asks for it with a request, as Tidewater does in section 3, and the certificate is then one piece of evidence among others.
+
+### 5.4 Where the assessor issues only a document
+
+An assessor that does not yet issue signed records still issues a certificate, and the supplier still holds it.
+
+Ridgeline carries it as an evidence record, exactly as it carries its insurance certificate in section 3.4.
+
+```text
+                         Signed assessment record        Document carried as evidence
+Signature                the assessor's, verified        the supplier's, verified
+Issuer binding           the assessor's, confirmed       the supplier's, confirmed
+Current                  validity period and status      the period the document states
+Recognised               checked against the buyer's     not applicable, because the source
+                         own list                        is only purported
+Left for the buyer       nothing further                 confirm with the assessor, as today
+```
+
+Nothing is lost compared with today, and the digest fixes the supplier's copy.
+
+When the assessor later issues a signed record, it replaces the evidence record and nothing else changes, as `exchange-model.md` section 6.5 describes.
+
+### 5.5 What the certificate case shows
+
+Everything in this example is in the core, and no extension is used.
+
+- the assessor issues one record, once;
+- the supplier keeps it, and sends it as many times as it likes;
+- each buyer verifies it without joining anything, and decides for itself.
+
+It is also the smallest useful step for each party.
+
+An assessor that does nothing more than issue its certificate as a signed record has made its result portable, a supplier needs only to keep two files, and a buyer needs only a verifier.
+
+## 6. Discovery, Keys, and Issuer Binding
+
+The fifth example follows the buyer in section 3 as it checks that the supplier's records come from the supplier.
 
 Issuer binding in `exchange-model.md` section 7.5 is part of the core, and the discovery record in `extensions.md` section 4 is an extension, so the record format shown is a proposal.
 
@@ -1617,9 +1763,9 @@ The supplier's system reads it, puts the buyer's issuer address in the `aud` cla
 
 Neither organisation has joined anything, and the only infrastructure either needed was a domain name.
 
-## 6. What the Examples Share
+## 7. What the Examples Share
 
-The two profile examples use the same record structure, the same envelope, the same file, and the same four-part result, the third shows one of those records reused, and the fourth shows the issuer binding that all of them depend on.
+The two profile examples use the same record structure, the same envelope, the same file, and the same four-part result, the third shows one of those records reused, the fourth shows one sent on its own, and the fifth shows the issuer binding that all of them depend on.
 
 They differ where the profiles differ.
 
@@ -1630,5 +1776,7 @@ The prequalification example identifies organisations by a public identifier, ke
 It also carries the buyer's determination, a corrective action request, and its closure as records the supplier holds, so the exchange does not end when documents have moved.
 
 The reuse example shows the supplier presenting only the assessor's current assessment to a second buyer, who decides for itself what it demonstrates.
+
+The certificate example needs nothing but the core: one signed record, sent as a file to any buyer that asks.
 
 Phase 4 should demonstrate both exchanges between systems that share nothing but this model.

@@ -144,7 +144,7 @@ The inbox MAY be an email address, because the floor in `exchange-model.md` sect
 
 Keys stay in the controller document and are not published in DNS.
 
-`examples.md` section 5 works through an example, with the controller document and the binding check.
+`examples.md` section 6 works through an example, with the controller document and the binding check.
 
 The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 11.
 

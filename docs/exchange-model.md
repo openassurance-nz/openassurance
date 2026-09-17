@@ -620,6 +620,10 @@ The file extension is `.vc.jwt` for a record and `.vp.jwt` for a presentation.
 
 A file MAY travel by any channel the parties choose.
 
+A record that carries no personal information MAY be sent as a file on its own, which is how a supplier shares a certificate of assessment.
+
+A record that carries personal information SHOULD travel inside a presentation, so that sections 10.2 and 10.3 apply to it.
+
 A holder MUST be able to export everything it holds, so that changing system does not strand its records.
 
 ### 11.2 A rendering a person can read
@@ -781,7 +785,7 @@ Conformance tests are Phase 5 and do not exist yet.
 
 ## 16. Worked Examples
 
-Worked examples for both profiles, and for discovery, keys, and issuer binding, are in `exchange-model/examples.md`.
+Worked examples for both profiles, for an assessment reused by a second buyer, for a certificate shared on its own, and for discovery, keys, and issuer binding, are in `exchange-model/examples.md`.
 
 They are illustrative and carry no requirements.
 
