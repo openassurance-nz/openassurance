@@ -119,6 +119,8 @@ A director is publicly listed against the NZBN, directors already sign tender de
 
 An organisation-level declaration in OpenPrequal should therefore carry the declarant's name, their role as director or officer, and the register that lists them, and the NZBN authority credential the government is trialling would be the machine-verifiable form of the same thing.
 
+Naming a person proves neither their role nor their approval, and section 5.6 of the exchange model says how each is evidenced and reported.
+
 A director did not watch a worker operate a machine, and an attestation's value comes from proximity to the work.
 
 Observed competency should be attested by the person who observed it, and requiring officer sign-off on such records would make them less informative rather than more.

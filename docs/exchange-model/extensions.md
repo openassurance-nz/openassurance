@@ -73,7 +73,7 @@ Keys stay in the controller document and are not published in DNS.
 
 `examples.md` section 4 works through an example, with the controller document and the binding check.
 
-The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 9.
+The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 10.
 
 ## 5. Request and Response
 
@@ -114,7 +114,7 @@ Requester                               Holder
 
 Where possible the request reuses the claims of the OpenID for Verifiable Presentations request object, which already carries a nonce, a query, and a response address.
 
-That protocol assumes the person using the wallet is the subject, so a way to say whom a request is about is the one genuinely new element, and it is an open point in section 9.
+That protocol assumes the person using the wallet is the subject, so a way to say whom a request is about is the one genuinely new element, and it is an open point in section 10.
 
 ## 6. Approval for a Period
 
@@ -152,7 +152,7 @@ Where both parties run systems that support them, records SHOULD be issued using
 
 A system that supports interactive exchange MUST still support the floor.
 
-The credential format identifier that those protocols use for a record secured under `exchange-model.md` section 8.1 is an open point in section 9.
+The credential format identifier that those protocols use for a record secured under `exchange-model.md` section 8.1 is an open point in section 10.
 
 ## 8. Government-Issued Credentials
 
@@ -166,7 +166,29 @@ A verifier that claims this optional class MUST be able to accept a presentation
 
 No conforming system is required to claim that class, and it is expected to matter once government-issued credentials are in general use.
 
-## 9. Open Points
+## 9. Stronger Evidence of Role and Approval
+
+**Decision D10.**
+
+`exchange-model.md` section 5.6 lets a record carry a named person's authority and approval, and leaves two methods to this document because their formats are not settled.
+
+A signed approval is a signature made with a key bound to the person, over the same statement digest the core requires, carried inside the record beside the organisation's own signature.
+
+It shows that the holder of that key approved the statement, and it is only as strong as the binding between the key and the person.
+
+A credentialed approval adds a credential issued by someone other than the organisation, establishing the person's identity and their role.
+
+The government wallet documentation lists proof of role in a public register, and delegated authority, among the credential types it expects to hold.
+
+An accredited provider could issue such a credential by establishing a person's identity and checking the Companies Register, without OpenAssurance operating anything.
+
+No such credential is known to be available yet, and nothing in the core depends on one.
+
+When one exists, a verifier SHOULD accept it as authority evidence in place of a register check, and SHOULD report the role as independently verified.
+
+A conforming system MUST NOT require either method, because a small supplier must be able to make a declaration with nothing more than the core.
+
+## 10. Open Points
 
 These are unresolved in the extensions, and none of them holds up the core.
 
@@ -176,7 +198,7 @@ These are unresolved in the extensions, and none of them holds up the core.
 - **Format identifier in the interactive protocols.** How the OpenID format identifiers for W3C credentials apply to a record secured under `exchange-model.md` section 8.1 needs confirming by implementation;
 - **An mdoc rendering.** `exchange-model.md` section 14 keeps it possible, and whether to define one is decision D3, which depends on answers from the Government Digital Delivery Agency.
 
-## 10. Standards Referenced
+## 11. Standards Referenced
 
 Assessment, status, and sources for each of these are in `standards-map.md` and its parts, and the standards the core relies on are listed in `exchange-model.md` section 20.
 

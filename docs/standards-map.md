@@ -217,12 +217,14 @@ Status is as verified on 16 September 2026.
 | Prequalification assessment and requirement structure | none | | Define |
 | Certifications buyers accept | ISO 45001, NZS 7901, SafePlus, ACC AEP, MOSS | Operating | Reference |
 | Insurance | none | | Define as small record type |
+| Director or officer role behind a declaration | Companies Register roles data | Public, with appointment and cessation dates | Reference, the floor for authority evidence |
+| Role or delegated authority as a credential | credential types the government wallet expects | Anticipated, not yet available | Evaluate, extension |
 | Personal information | Privacy Act 2020, including IPP 3A from May 2026 | In force | Reference; PIA required |
 | Trust framework | Digital Identity Services Trust Framework Act 2023 and Rules | In force, voluntary accreditation | Reference; compatibility target |
 | Government wallet and verifier | Govt.nz app, issuance platform, NZ Verify | Operating, mdoc | Reference; optional mdoc acceptance class |
 | Person name, date, address | mandated government data standards | Mandated for departments | Reference |
 
-Fifty of the fifty-nine rows point at something that already exists.
+Fifty-two of the sixty-one rows point at something that already exists.
 
 Nine say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
 
@@ -249,6 +251,8 @@ An **attestation** is a statement by a supervisor, employer, or assessor that a 
 An **authorisation** is a permission an organisation grants a person to do defined work, under conditions, until withdrawn.
 
 Neither has a home in any vocabulary examined.
+
+Both name a person, as a declaration does, and the exchange model carries evidence of that person's role and of their approval separately from the organisation's signature, under decision D10.
 
 OpenCompetency should define both as small credential types on the W3C data model.
 

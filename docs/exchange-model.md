@@ -184,6 +184,50 @@ Matching the record to a person at the point of reliance is the relying organisa
 
 None of this requires an identifier shared between issuers.
 
+### 5.6 Named persons: role and act
+
+**Working assumption, decision D10.**
+
+Several records name a person who stands behind them: the attestor of an attestation, the person who grants an authorisation, and the declarant of a declaration.
+
+The organisation's signature proves that the organisation issued the record.
+
+It does not prove that the named person held the role claimed, and it does not prove that they approved this record.
+
+Someone else with access to the organisation's system could create the record and put that person's name on it.
+
+Those are two separate facts, and a record carries evidence for each separately.
+
+- **authority evidence** says why the person was entitled to act in the capacity named, as a reference to a public register, to another record such as an authorisation, or to a credential;
+- **approval evidence** says how the person approved this exact record.
+
+Authority evidence that cites a public register MUST give the register, the organisation, the role, and the date on which the issuer checked it, and SHOULD give the appointment date the register shows.
+
+A verifier SHOULD check the role as at the date of the record, and not as at the date of verification, because a register that records appointment and cessation dates lets a statement outlive the appointment that entitled its maker.
+
+A register check matches a name and no more: it establishes that a person of that name held that role on that date, and not that the person who approved the record is that person.
+
+Approval evidence MUST carry the time of approval, the method, and a digest of the statement approved, so that an approval cannot be carried over to a statement with different words.
+
+The method is one of four.
+
+- **asserted**: the organisation states that the person approved the record, which is the floor;
+- **authenticated**: the organisation states that the person approved it while signed in to the organisation's own system, and says how they were authenticated;
+- **signed**: the approval carries a signature made with a key bound to the person;
+- **credentialed**: the approval is accompanied by a credential, issued by a party other than the organisation, that establishes the person's identity and role.
+
+The first two rest on the organisation's word, and a verifier MUST report them as asserted by the issuer.
+
+Only the last two give a verifier something it can check for itself, and their formats are an extension.
+
+Delegation needs nothing new.
+
+An organisation authorises a person to make declarations or attestations within a scope by issuing an authorisation record under section 6.3, and that record is the authority evidence.
+
+None of this bears on whether the statement is true.
+
+A declaration that a director provably made is still a self-declaration, and a verifier MUST NOT present evidence of role or approval as corroboration of what was declared.
+
 ## 6. Record Types
 
 The architecture overview names six record types.
@@ -220,7 +264,7 @@ Its subject MUST carry:
 - the basis: direct observation, supervision, review of records, or assessment against stated criteria;
 - the attestor's role, and either their name or an identifier scoped to the issuer.
 
-It SHOULD carry the attestor's authority, as a reference to another record or to a public register.
+It SHOULD carry authority evidence and approval evidence for the attestor, as section 5.6 describes.
 
 An attestor is a person too, and their name is personal information sent to every recipient, which is why the issuer may identify them by role and scoped identifier instead.
 
@@ -239,6 +283,8 @@ Its subject MUST carry:
 - the role that granted it.
 
 It SHOULD carry the prerequisites relied on, as references to the records that satisfied them.
+
+It MAY carry authority evidence and approval evidence for the person who granted it, as section 5.6 describes.
 
 An authorisation MUST carry `credentialStatus`, because an authorisation is withdrawn more often than it expires.
 
@@ -287,7 +333,9 @@ A declaration record is a statement by an organisation or a person about itself.
 
 Its issuer and its subject are the same party, and the record MUST say so.
 
-An organisation's declaration SHOULD name the declarant, their role as director or officer, and the public register that lists them.
+An organisation's declaration MUST name the declarant and the capacity in which they declare, such as director or officer.
+
+It MUST carry approval evidence and SHOULD carry authority evidence, as section 5.6 describes, because the organisation's signature shows neither that the declarant held that role nor that they approved the statement.
 
 A self-declaration's value comes from corroboration by other records, and a verifier SHOULD present it as a self-declaration.
 
@@ -542,6 +590,7 @@ A conforming verifier answers the first two trust questions as follows.
 6. Where the record carries a status entry, fetch the status list, verify it as a record in its own right, and read the entry.
 7. Look for a replacement or a correction the verifier already holds.
 8. For each related resource the verifier uses, check the digest.
+9. Where the record names a person, check the authority evidence against its source as at the date of the record, and check that the digest in the approval evidence matches the statement.
 
 The third and fourth questions are answered by the relying organisation against its own recognition list and its own requirement.
 
@@ -560,6 +609,13 @@ A verification result MUST report the four questions separately, with authentici
 - requirement: met, not met, or not evaluated.
 
 A conforming system MUST NOT present a single combined result without making each of the four available.
+
+Where a record names a person, the result MUST also report two further things, apart from the signature and apart from each other.
+
+- role: confirmed against a named source as at the date of the record, asserted only, or not checked;
+- approval: signed, credentialed, asserted by the issuer, or absent, and whether its digest matches the statement.
+
+Neither is evidence that the statement is true, and a result MUST NOT present them as if they were.
 
 A verifier SHOULD keep a record of what it verified, against which key and which status list, and when, without retaining personal information beyond what section 13 allows.
 
@@ -670,6 +726,7 @@ Choices between alternatives that the standards map bears on are recorded as dec
 - **Domain continuity.** A lapsed domain that is re-registered by someone else, while the register still lists it, would pass the binding check in section 7.5, and a verifier that has seen an issuer before SHOULD be warned when its keys change without continuity;
 - **Signing time.** The time of signing is asserted by the signer, so a compromised key can backdate, and the rule in section 8.3 is weaker than it reads until trusted timestamps or re-issuance after compromise are addressed;
 - **Attestor and issuer liability.** Any attestation carries the risk of being relied on, and that is as true of a reference letter as of a signed record; what is new is that a portable record travels further and lasts longer, and whether stating its scope, period, basis, and validity, with a status entry for withdrawal, keeps that risk where it is today deserves a legal view;
+- **The statement digest.** Section 5.6 binds an approval to the exact statement, which needs an agreed canonical form to hash, and the JSON Canonicalization Scheme in RFC 8785 is the candidate;
 - **Bulk export.** Section 11.1 requires everything to be exportable, and whether that is a set of files, a single presentation, or a Comprehensive Learner Record is undecided;
 - **Replacement and correction terms.** Section 9.3 needs term names, and a decision on whether the link is a claim or a typed related resource;
 - **Algorithm choice.** Section 8.2 is a proposal;

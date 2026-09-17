@@ -170,7 +170,23 @@ A declaration is a signed statement by the supplier about itself, such as a stat
 
 It is an Attestation whose issuer and subject are the same organisation.
 
-The data model represents that without difficulty, and the profile only needs to say so.
+The data model represents that without difficulty.
+
+What the organisation's signature does not show is who inside the organisation made the statement, whether they held the role they claim, and whether they approved these exact words.
+
+**Position: Reference the Companies Register; define the evidence structure.**
+
+The Companies Register publishes, for every company role, the type of role, its status as current or ceased, the person's full legal name, and the appointment and cessation dates.[^coroles]
+
+The data is available through search, bulk data, and APIs, most of them free of charge.[^coapis]
+
+That is enough for anyone to check, without asking permission, that a person of a given name was a director of a given company on a given date, including a date in the past.
+
+It is a name match and no more, because addresses and dates of birth are restricted.
+
+The government wallet documentation lists proof of role in a public register, and delegated authority, among the credential types it expects to hold, which would be the stronger form of the same evidence.[^wallettech]
+
+The exchange model uses the register check as the floor for a declarant's authority, keeps the person's approval of the exact statement as separate evidence, reports both apart from the signature, and records the choice as decision D10 in `decisions.md`.
 
 ## 8. What OpenPrequal has to define
 
@@ -208,3 +224,9 @@ References to external organisations, schemes, and government publications are p
 [^nzs7901]: Standards New Zealand, NZS 7901:2014, "Electricity and gas industries — Safety management systems for public safety". https://www.standards.govt.nz/shop/nzs-79012014/
 
 [^safeplus]: WorkSafe New Zealand, "About SafePlus", a joint programme of WorkSafe New Zealand, ACC, and the Ministry of Business, Innovation and Employment. https://www.worksafe.govt.nz/managing-health-and-safety/businesses/safeplus/about-safeplus/
+
+[^coroles]: New Zealand Companies Office, "Roles", available data. https://www.companiesoffice.govt.nz/data-services/available-data/roles/
+
+[^coapis]: New Zealand Companies Office, "Using our data through APIs". https://www.companiesoffice.govt.nz/data-services/ways-to-get-our-data/using-our-data-through-apis/
+
+[^wallettech]: Government Digital Delivery Agency, "Govt.nz app wallet technical guide". https://github.com/NZ-Digital-Public-Infrastructure/govt-nz-app-wallet

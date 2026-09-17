@@ -181,7 +181,36 @@ The supplier signs the record, the certificate is hash-linked, and the record sa
 
 The third record is a declaration that the supplier has had no regulator notices, warnings, or prosecutions in the last five years.
 
-Its issuer and its subject are both the supplier, it names the declarant and her role as director, and it identifies the Companies Register as the register that lists her.
+Its issuer and its subject are both the supplier, and the supplier's signature shows only that the supplier issued it.
+
+It therefore names the declarant and carries evidence of her role and of her approval separately, as `exchange-model.md` section 5.6 requires.
+
+```json
+{
+  "declarant": {
+    "name": "R. Hale",
+    "capacity": "Director",
+    "authorityEvidence": {
+      "type": "PublicRegisterRole",
+      "register": "New Zealand Companies Register",
+      "organisationNzbn": "illustrative",
+      "role": "Director",
+      "appointmentDate": "2021-04-15",
+      "checkedAt": "2026-09-17T10:12:00+12:00"
+    },
+    "approvalEvidence": {
+      "method": "authenticated",
+      "authentication": "Signed in to the supplier's system with a second factor",
+      "approvedAt": "2026-09-17T10:14:22+12:00",
+      "statementDigest": "sha256-illustrativeDigestValueOnly"
+    }
+  }
+}
+```
+
+The register shows that a person of that name was appointed a director of that company in 2021 and had not ceased by the date of the declaration, which anyone can check.
+
+That she approved these exact words rests on the supplier's word, because the method is one the buyer cannot check for itself, and the result below says so.
 
 It is the only record of the three that contains personal information, so the presentation that carries them meets `exchange-model.md` sections 10.2 and 10.3 because of it.
 
@@ -220,6 +249,19 @@ Director's declaration   verified     current      self-declaration    condition
 *  the supplier's signature; the document carries no signature from its source
 ** the period stated in the document; the buyer may confirm it with the source
 ```
+
+```text
+Director's declaration, the named person
+
+Declarant                  R. Hale, Director
+Role at declaration date   confirmed by name against the Companies Register
+Approval                   asserted by the issuer; digest matches the statement
+Corroboration              none
+```
+
+The last line matters most.
+
+However well the role and the approval are evidenced, they show who said it, and never that what was said is true.
 
 The issuer binding of all three issuers is confirmed against the NZBN Register, which is what lets the buyer treat the names on the records as the organisations they claim to be.
 

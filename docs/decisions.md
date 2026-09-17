@@ -127,6 +127,18 @@ Status: open.
 
 Applied as a working assumption in `exchange-model.md` section 8.3.
 
+### D10. Named persons: authority and approval
+
+The question is how a record shows that a named person, such as the director who makes a declaration, held the role claimed and approved this exact record, when the organisation's signature proves neither.
+
+Likely path: the record carries authority evidence and approval evidence separately; a check of a public register as at the date of the record, and an approval bound to a digest of the statement, are the floor for v0.1; a verifier reports both apart from the signature and apart from the truth of the statement; approvals signed by the person, or accompanied by a credential of their role, are extensions.
+
+This would change if a credential proving a role in a public register, or delegated authority, became generally available, which the government wallet documentation lists among the credential types it expects, at which point the credentialed method would move into the core.[^wallettech]
+
+Status: open.
+
+Applied as a working assumption in `exchange-model.md` section 5.6, and in `exchange-model/extensions.md` section 9.
+
 ## 3. Open Questions
 
 These could not be settled from published material and should be put to the parties named.
@@ -167,3 +179,5 @@ References to external organisations, schemes, and government publications are p
 [^beehive2026]: New Zealand Government, "New template to simplify prequalification process", 20 August 2026. https://www.beehive.govt.nz/release/new-template-simplify-prequalification-process
 
 [^distfact]: Digital Identity Services Trust Framework Act 2023, 2023 No 13, sections 3, 8, 10, 15, 18 to 23, 34, 43, and 58. https://www.legislation.govt.nz/act/public/2023/0013/latest/whole.html
+
+[^wallettech]: Government Digital Delivery Agency, "Govt.nz app wallet technical guide". https://github.com/NZ-Digital-Public-Infrastructure/govt-nz-app-wallet
