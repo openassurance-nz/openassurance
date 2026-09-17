@@ -1,6 +1,6 @@
 # OpenAssurance Standards Map
 
-**Status:** Working draft, Phase 2 (map existing standards)
+**Status:** Working draft, Phase 2 (map existing standards)  
 **Last reviewed:** September 2026
 
 ## 1. Purpose
