@@ -34,6 +34,8 @@ An employer should be able to meet a customer's requirement with the records it 
 
 Reuse does not mean wider disclosure: each presentation is still made for a stated purpose, to a named recipient, and carries only what that purpose needs.
 
+A system may claim OpenCompetency request interoperability only where it conforms to the Request exchange class in section 15.5 of the exchange model, so that accepting a worker's records while still requiring the worker to be recreated in a customer's platform cannot be presented as removing the duplication.
+
 ## 3. Initial Record Types
 
 OpenCompetency should support or map to records such as:
@@ -266,7 +268,7 @@ OpenCompetency should not define a universal answer to what makes someone a comp
 
 It should provide a common way to express and test the receiving organisation's requirements.
 
-The requirement record drafted in `docs/exchange-model/extensions.md` section 3 is the working draft of that common way, and is not proposed for v0.1.
+The requirement record drafted in `docs/exchange-model/extensions.md` section 3 is the working draft of that common way, and is part of the Request exchange conformance class that decision D15 proposes for v0.1 alongside the core.
 
 ## 7. Exchange Example
 

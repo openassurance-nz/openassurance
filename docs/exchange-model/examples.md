@@ -125,7 +125,7 @@ Assessment
            Replacement assessment
 ```
 
-The requirement record, the request, and the corrective action request are extensions drafted in `extensions.md`, and every other record is in the core.
+The requirement record and the request belong to the Request exchange class, the corrective action request is an extension, all three are drafted in `extensions.md`, and every other record is in the core.
 
 A buyer that asks only to see a certificate needs none of this, and section 5 shows that case.
 
@@ -1132,7 +1132,7 @@ Suppose a later version of Tidewater's set had twenty requirements.
 ```text
 Tidewater's requirements                      R1 to R20
 
-Ridgeline's system finds records it holds     against all twenty
+Ridgeline's system finds records it holds     against all twenty, as candidates and not as results
 A person at Ridgeline types                   nothing
 
 Tidewater assesses                            R1 to R17 demonstrated
@@ -1194,12 +1194,25 @@ R20   a director makes a new declaration, in a form shown by Ridgeline's own sof
 
 The form in the last line is an interface inside Ridgeline's own system, and what leaves that system is the record.
 
+That a new record exists does not mean that a requirement is demonstrated, so one step remains.
+
+```text
+Ridgeline presents the three new records    against R18, R19, and R20
+Tidewater assesses them                     and determines whether each is now demonstrated
+Tidewater issues its assessment             covering all twenty, which Ridgeline keeps
+```
+
+Had the subcontractor evidence still fallen short, R19 alone would have been followed up again.
+
 All three records join what Ridgeline holds.
 
 ```text
-Before Tidewater's request    records relevant to seventeen of Tidewater's twenty requirements
-After it                      records relevant to all twenty, and Tidewater's assessment as well
+Before Tidewater's request    assurance relevant to all twenty requirements, and sufficient for seventeen
+After it                      three further records, Tidewater's determination that all twenty are
+                              demonstrated, and Tidewater's assessment to keep
 ```
+
+Sufficient is Tidewater's word, and the next buyer decides for itself.
 
 The next buyer's requirements will differ, and Ridgeline will start further along than it did this time.
 

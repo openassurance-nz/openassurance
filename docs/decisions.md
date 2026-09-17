@@ -185,15 +185,29 @@ Applied as a working assumption in `exchange-model.md` sections 11.4 and 11.5, a
 
 The question is how OpenAssurance relates to the forms through which most prequalification information is collected today, each with its own questions, inside the system of the buyer or scheme that asks.
 
-Likely path: OpenAssurance exchanges assurance records and not completed forms, as `CHARTER.md` section 3.4 says; a user interface may use forms to create, review, or collect records, forms are not part of the exchange, and no particular form or portal is required for conformance; a form is treated as four separable things, which are what the asker needs demonstrated, the answering, the keeping of the answers, and the assessment; what the questions are after is expressed as requirements, a typed answer is a declaration made once by a named person, an uploaded document is an evidence record, and the result is an assessment record, so no new record type is needed; a request states requirements and is never a questionnaire; the aim is that a thing is entered once and not that nothing is ever entered; a system built around a form adopts the model in three steps, each useful alone, which are giving back what was typed and the result as records, taking in records against requirements, and stating its requirements as a requirement record that reaches the suppliers who are asked; a requirement record need not be published and a scoring method need not be disclosed; a conforming system does not require what a record it has received already says to be entered again.
+Likely path: OpenAssurance exchanges assurance records and not completed forms, as `CHARTER.md` section 3.4 says; a user interface may use forms to create, review, or collect records, forms are not part of the exchange, and no particular form or portal is required for conformance; a form is treated as four separable things, which are what the asker needs demonstrated, the answering, the keeping of the answers, and the assessment; what the questions are after is expressed as requirements, self-asserted information that no other record already represents may be captured in one or more declarations, each grouping related statements and approved by an authorised person, and never as one record for each field of a form, an uploaded document is an evidence record, and the result is an assessment record, so no new record type is needed; a request states requirements and is never a questionnaire; the aim is that a thing is entered once and not that nothing is ever entered; a system built around a form adopts the model in three steps, each useful alone, which are giving back what was typed and the result as records, taking in records against requirements, and stating its requirements as a requirement record that reaches the suppliers who are asked; a requirement record need not be published and a scoring method need not be disclosed; a conforming system does not require what a record it has received already says to be entered again.
 
-What is unsettled is how an answer typed into another party's form comes back to the supplier as a declaration the supplier issues, since the supplier and not the system that collected it is the party making the statement.
+Where the information was typed into a relying organisation's system, that system can return it as a portable draft, and it becomes a declaration only when the supplier approves and signs it through a mechanism it has authorised, because the supplier and not the system that collected it is the party making the statement.
+
+What is unsettled is the form of that draft.
 
 This would change if scheme operators and buyers, asked during Phase 1, would not state their requirements to the suppliers they ask in a form another system can read, in which case the first two steps would stand alone and a supplier would map its records to each form by hand.
 
 Status: open.
 
 Applied as a working assumption in `exchange-model.md` section 11.3, in `exchange-model/extensions.md` sections 3 and 5.7, and in section 5.4 of the OpenPrequal profile.
+
+### D15. The conformance boundary
+
+The question is how to keep the core minimal without letting a system that only imports and verifies records present itself as removing duplication while it still sends holders through a questionnaire of its own.
+
+Likely path: the core stays record exchange, which is records, signatures, status, presentations, delivery, and verification; a further conformance class, Request exchange, is layered on it, applies to both profiles, and is proposed for v0.1 alongside the core; the class requires requirement records that state what must be demonstrated, signed requests, submission maps, no response in a structure made for one requester, no questionnaire as a condition of responding, and follow-up only on what remains undemonstrated; a system that conforms only in the core classes is not described as supporting request exchange, and a claim of OpenPrequal or OpenCompetency request interoperability requires the class; the requirement record and the request stay drafted where they are, and are not moved into the core.
+
+This would change if implementers found that record exchange and request exchange could not usefully be claimed apart, in which case the requirement record and the request would move into the core.
+
+Status: open.
+
+Applied as a working assumption in `exchange-model.md` sections 2.4 and 15.5, in `exchange-model/extensions.md` sections 1, 3, and 5, and in section 5.6 of the OpenPrequal profile.
 
 ## 3. Open Questions
 

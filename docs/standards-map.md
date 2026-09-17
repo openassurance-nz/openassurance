@@ -47,7 +47,7 @@ Issuer-signed, holder-controlled, independently verifiable records already exist
 
 Nine things remain for OpenAssurance to define, all small, and none of them needs anyone else to act first.
 
-The exchange model divides them into a core proposed for v0.1 and extensions that are drafted but not proposed.
+The exchange model divides them into a core proposed for v0.1, a Request exchange conformance class proposed alongside it, and extensions that are drafted but not proposed.
 
 They are listed in section 7, and the working draft that defines them is `exchange-model.md`.
 
@@ -189,7 +189,7 @@ Status is as verified on 16 September 2026.
 | Presentation protocol | OpenID4VP 1.0 | Final, July 2025 | Adopt, profiled |
 | Transaction query | DCQL | Part of OpenID4VP 1.0 | Adopt |
 | Transaction query | DIF Presentation Exchange 2.1.1 | DIF Ratified, not referenced by OpenID4VP 1.0 | Set aside |
-| Request for records | none for a request delivered to an inbox or sent as a file; the OpenID4VP request object when interactive | Final, July 2025 | Define a small signed request, extension, decision D12; translate when interactive |
+| Request for records | none for a request delivered to an inbox or sent as a file; the OpenID4VP request object when interactive | Final, July 2025 | Define a small signed request, Request exchange class, decisions D12 and D15; translate when interactive |
 | Browser mediation | W3C Digital Credentials API | Working Draft | Evaluate |
 | Online mdoc presentation | ISO/IEC TS 18013-7 | Technical Specification | Reference |
 | Organisation-to-organisation transfer | W3C Linked Data Notifications for the inbox pattern; none for the file convention | Recommendation, May 2017 | Define as exchange convention, borrowing the inbox pattern, decision D13 |
@@ -200,7 +200,7 @@ Status is as verified on 16 September 2026.
 | Recognition publishing | ETSI TS 119 612 and TS 119 602 | Technical Specifications | Reference |
 | Recognition source | government trust list, VICAL | Operating, sandbox | Reference |
 | Requirement expression | CTDL ConditionProfile | Stable vocabulary, CC BY | Evaluate |
-| Requirement expression | none that states an expectation with evidence guidance and objective criteria | | Define, extension, decision D11 |
+| Requirement expression | none that states an expectation with evidence guidance and objective criteria | | Define, Request exchange class, decisions D11 and D15 |
 | Achievement vocabulary | Open Badges 3.0 | Final, June 2024 | Profile, base for achievements |
 | Achievement record proof format | Open Badges 3.0 JSON Web Token proof format | Final, June 2024 | Accept alongside the common envelope, decision D4 |
 | Many achievements, one person | Comprehensive Learner Record 2.0 | Final, February 2025 | Evaluate for bulk transfer |
@@ -239,7 +239,7 @@ Everything below the workplace vocabulary is covered by a stable standard, and t
 
 What remains is short.
 
-The exchange model divides these items into a core proposed for v0.1 and extensions, and says which is which.
+The exchange model divides these items into a core proposed for v0.1, a Request exchange conformance class proposed alongside it, and extensions, and says which is which.
 
 ### 7.1 Workplace attestation and authorisation
 
@@ -325,7 +325,7 @@ The exchange model puts the first in its core, as a DNS record on the pattern DK
 
 It drafts two extensions for the others, in `exchange-model/extensions.md`: a small signed request that pins the exact requirement records it refers to and is translated into the OpenID presentation request when the exchange is interactive, and a standing grant with a change notice that carries no personal information.
 
-Neither extension is proposed for v0.1, and each of the three reuses an existing mechanism before defining anything.
+The signed request is part of the Request exchange conformance class, which is proposed for v0.1 alongside the core under decision D15, approval for a period is not proposed for v0.1, and each of the three reuses an existing mechanism before defining anything.
 
 ### 7.10 What depends on another party
 

@@ -1,20 +1,22 @@
 # OpenAssurance Minimum Exchange Model: Extensions
 
 **Part of:** `exchange-model.md`  
-**Status:** Working draft, not proposed for v0.1  
+**Status:** Working draft; sections 3 and 5 are proposed for v0.1 as the Request exchange class, and the rest is not proposed for v0.1  
 **Last reviewed:** September 2026
 
 ## 1. Purpose
 
 The core of the minimum exchange model is in `exchange-model.md`.
 
-This document holds the extensions that were drafted alongside it and are not proposed for v0.1.
+This document holds what was drafted alongside it, in two groups.
 
-They are kept so that the core does not foreclose them, and so that the thinking behind them is not lost.
+Sections 3 and 5 make up the Request exchange conformance class of `exchange-model.md` section 15.5, which is proposed for v0.1 as a class separate from the core, under decision D15.
+
+The other sections are extensions that are not proposed for v0.1, and they are kept so that the core does not foreclose them, and so that the thinking behind them is not lost.
 
 Requirement words, working assumptions, and the split between system requirements and operator obligations are used as `exchange-model.md` section 2 defines them.
 
-Nothing here is needed for the two reference exchanges in Phase 4.
+The reference exchanges in Phase 4 need the core and the Request exchange class, and none of the other extensions.
 
 Each extension reuses an existing mechanism before defining anything, and each is open to challenge through the process in `CONTRIBUTING.md`.
 
@@ -33,6 +35,8 @@ An endorsement without a scope MUST be treated by a verifier as informational on
 ## 3. Requirement
 
 **Working assumption, decision D11.**
+
+**Part of the Request exchange class, `exchange-model.md` section 15.5.**
 
 A requirement record is a signed statement by a relying organisation describing what it expects, together with guidance and examples of evidence that may demonstrate it.
 
@@ -145,6 +149,8 @@ This section is kept so that the numbers of the other extensions do not change.
 ## 5. Request and Response
 
 **Working assumption, decision D12.**
+
+**Part of the Request exchange class, `exchange-model.md` section 15.5.**
 
 The floor lets a holder send a presentation unprompted.
 
@@ -323,7 +329,7 @@ Additional assurance, which the holder keeps and can reuse
 
 A follow-up request refers to the earlier request by its `jti`, selects the requirements that remain undemonstrated, and SHOULD say for each what further assurance is sought.
 
-It SHOULD NOT select a requirement that the relying organisation has already determined to be met.
+It MUST NOT select a requirement that the relying organisation has already determined to be met.
 
 These are genuine reasons to ask for something again.
 

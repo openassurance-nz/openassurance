@@ -417,7 +417,7 @@ Different assessment providers could evaluate that evidence.
       Assessment A            Assessment B
 ```
 
-Each provider retains ownership of its own assessment methodology and result.
+Each provider keeps its own assessment methodology, is the issuer of its result, and remains accountable for it, while the supplier holds the signed result and can present it.
 
 OpenAssurance simply allows the resulting records and permitted evidence to move between organisations.
 
@@ -645,31 +645,34 @@ They summarise the principles set out in the project Charter, which remains the 
 3. **Portable records**  
    Changing software or hosting provider should not invalidate assurance information.
 
-4. **Independent verification**  
+4. **Reuse existing assurance**  
+   A holder should not have to recreate information it already holds merely because another relying organisation uses a different system.
+
+5. **Independent verification**  
    A recipient should be able to verify who issued a record and whether it remains current.
 
-5. **Local acceptance**  
+6. **Local acceptance**  
    The receiving organisation decides what it requires and accepts.
 
-6. **Issuer provenance**  
+7. **Issuer provenance**  
    The original issuer remains identifiable when a record is shared by another party.
 
-7. **Open exchange**  
+8. **Open exchange**  
    Conforming systems should exchange assurance records without bilateral proprietary integrations.
 
-8. **Privacy by design**  
+9. **Privacy by design**  
    Personal information should be purpose-bound and limited to what is necessary.
 
-9. **No universal worker identifier**  
+10. **No universal worker identifier**  
    Identifiers should not enable unnecessary tracking of individuals across unrelated organisations.
 
-10. **Small organisations can participate**  
+11. **Small organisations can participate**  
     Organisations should not need specialist IT infrastructure to use the standard.
 
-11. **Reuse existing standards first**  
+12. **Reuse existing standards first**  
     Existing open standards should be preferred over creating new technical mechanisms.
 
-12. **Vendor neutrality**  
+13. **Vendor neutrality**  
     Commercial providers remain free to compete on services around the open exchange layer.
 
 ---
@@ -743,9 +746,13 @@ One OpenPrequal example.
 
 The objective should be to demonstrate that information created in one environment can be independently received and verified in another.
 
+Each example should also demonstrate that a holder can meet a new request with assurance it already holds, and that the relying organisation then asks only for what is missing.
+
 ### Phase 5 - Develop conformance tests
 
 Define what a system must support before it can claim OpenAssurance compatibility.
+
+That includes a separate class for systems that make and answer requests, so that accepting records while still requiring a questionnaire cannot be presented as removing duplication.
 
 ### Phase 6 - Establish longer-term governance
 

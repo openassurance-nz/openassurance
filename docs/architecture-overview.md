@@ -126,31 +126,51 @@ The organisation deciding whether the assurance information is sufficient for it
 
 ## 4. Core Record Types
 
-The initial OpenAssurance model is expected to include:
+The exchange model carries assurance as a small set of record types, and defines each in `exchange-model.md` section 6.
 
-### Credential
+Six are in the core.
 
-A signed assertion of qualification, training, competency, assessment, status, or similar achievement.
+### Achievement
+
+A signed assertion that a person holds a qualification, licence, certification, training outcome, or similar achievement.
 
 ### Attestation
 
-A signed statement that a person or organisation observed, performed, maintained, or satisfied something.
+A first-hand signed statement that a person performed, demonstrated, or maintained something.
 
-### Evidence
+### Authorisation
 
-Supporting information that may underpin an assertion or assessment.
+A permission an organisation grants a person to do defined work, which the organisation can withdraw.
 
 ### Assessment
 
 An evaluation or opinion issued after reviewing evidence.
 
+### Evidence
+
+Supporting information that may underpin an assertion or assessment, held by a party other than its source.
+
+### Declaration
+
+A statement an organisation or a person makes about itself, made by a named person.
+
+Three more are drafted outside the core, in `exchange-model/extensions.md`.
+
+### Requirement
+
+A statement of what a receiving organisation needs demonstrated for a role, activity, supplier category, contract, or risk.
+
 ### Endorsement
 
 A statement that one party recognises another issuer, assessor, record, or capability for a defined scope.
 
-### Requirement
+### Corrective action request
 
-A statement of what a receiving organisation expects for a role, activity, supplier category, contract, or risk.
+A statement by an assessor of something an organisation must put right, closed by a later assessment.
+
+A request for records is a signed message and not a record.
+
+An earlier draft of this overview called the achievement record a credential, and every record type is a verifiable credential in the technical sense.
 
 ## 5. Trust Flow
 
@@ -321,7 +341,7 @@ OpenAssurance v0.1 should aim to define:
 - minimum metadata;
 - issuer provenance;
 - requirement expression;
-- recognition and endorsement scope;
+- how recognition is reported;
 - exchange expectations;
 - import/export expectations;
 - conformance rules.
@@ -335,11 +355,17 @@ It should avoid creating:
 
 A first working draft of what v0.1 should define is in `exchange-model.md`.
 
-That draft divides the list above into a core proposed for v0.1 and extensions, and places requirement expression and endorsement scope among the extensions, which are drafted in `exchange-model/extensions.md`.
+That draft divides the work into three.
+
+The core, which is record exchange, is proposed for v0.1.
+
+Requirement expression, with the signed request that carries it, is a separate conformance class called Request exchange, proposed for v0.1 alongside the core and drafted in `exchange-model/extensions.md`.
+
+Endorsement scope was on this list in an earlier draft, and is now an extension for a later version, as are the other extensions in that document.
 
 The exchange expectations in the core are a discovery record under an organisation's own domain and an inbox at which its system receives files, with a file that can travel by any channel as the floor for a party that has no system.
 
-The extensions also draft a corrective action record and a signed request, and neither changes the record types in section 4.
+A system that conforms in the core alone exchanges and verifies records, and only a system that also conforms in the Request exchange class may claim to support requests, which is decision D15 in `decisions.md`.
 
 ## 12. Design Test
 

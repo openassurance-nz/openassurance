@@ -197,11 +197,15 @@ These decisions remain with regulators, qualification authorities, industry bodi
 
 ## 7. Open Exchange Requirement
 
-The following principle is foundational:
+The following principles are foundational:
 
 > **A conforming assurance record must be capable of being exported, transmitted, received, and independently verified without requiring the issuer, subject, holder, sender, and verifier to subscribe to the same commercial platform.**
 
+> **A holder must be able to meet a request with conforming records it already holds, without recreating their contents in the relying organisation's system, and a relying organisation must be able to ask only for what those records do not demonstrate.**
+
 An implementation should not claim OpenAssurance compatibility where interoperability exists only between customers of its own service.
+
+An implementation that accepts conforming records, and still requires what they say to be completed again in a questionnaire of its own, should not claim to support OpenAssurance requests.
 
 ## 8. Development Approach
 

@@ -72,7 +72,9 @@ Supplier evidence
           Assessment Credential B
 ```
 
-The assessment provider owns its assessment or opinion.
+The assessment provider is the issuer of its assessment, and remains accountable for it.
+
+The supplier holds the signed result, and can present it.
 
 The supplier retains the ability to hold and share its underlying assurance evidence.
 
@@ -254,11 +256,15 @@ Each part of a form corresponds to something the exchange model already has, so 
 In a form today                     In OpenPrequal
 What the questions are after        requirements, which state what must be demonstrated
 A fact held in a public register    checked against the register, and not asked
-A typed answer                      a declaration, made once by a named person
+Self-asserted information           one or more declarations, each approved by an authorised person
 An uploaded document                an evidence record, or the source's own signed record
 The score or result                 an assessment record, which is the certificate
 Submitting the form                 a presentation, which maps requirements to the records presented
 ```
+
+A declaration is a substantial record, in which the organisation is both issuer and subject, a declarant is named, and evidence of that person's approval is carried.
+
+Self-asserted information that no other record already represents is therefore grouped, so that related statements make one declaration approved by an authorised person, and a record is not made for each field of a form.
 
 A request is not a questionnaire.
 
@@ -268,7 +274,7 @@ It says that these are the requirements that apply to this engagement, and the s
 
 A system built around a form can adopt this in three steps, each useful on its own, and none of them requires it to give up its form.
 
-- give back: issue the result as an assessment record the supplier holds, and return what the supplier typed and uploaded in a form the supplier's own system can keep and reuse;
+- give back: issue the result as an assessment record the supplier holds, and return what the supplier typed and uploaded as a portable draft, which the supplier's own system can turn into records once an authorised person approves them;
 - take in: accept a record against a requirement, and ask a person only for what no record demonstrates;
 - state the requirements: express what the questions are after as a requirement record that reaches the suppliers who are asked, so that a supplier's system can work out what it already holds before anyone types.
 
@@ -284,7 +290,9 @@ OpenPrequal does not write anyone's requirements, and a common set, such as Work
 
 If a requirement record became one more form for a person to fill in, OpenPrequal would have failed its own core test, so a supplier's system answers from the records it holds first, and a person is asked only for the remainder.
 
-How an answer typed into another party's form comes back to the supplier as a declaration the supplier issues is unsettled, and it is decision D14 in `docs/decisions.md`.
+A system that collected what a supplier typed cannot turn it into a declaration the supplier issued.
+
+It can return a portable draft, and the draft becomes a declaration only when the supplier approves and signs it through a mechanism it has authorised, which is decision D14 in `docs/decisions.md`, where the form of that draft is still open.
 
 ### 5.5 Only the gaps
 
@@ -313,6 +321,24 @@ That the buyer uses a different system is not one of them.
 Any new record made to close a gap joins what the supplier holds, so the next buyer may need less again, and a supplier becomes easier to assure over time.
 
 `docs/exchange-model/extensions.md` section 5.7 drafts the follow-up request, and `docs/exchange-model/examples.md` section 3.14 works through an example.
+
+### 5.6 Claiming OpenPrequal request interoperability
+
+Importing and verifying a supplier's records is not enough to remove the duplication this profile describes.
+
+A system could accept OpenAssurance records and still require a supplier to complete its own questionnaire.
+
+A system may therefore claim OpenPrequal request interoperability only where it conforms to the Request exchange class in section 15.5 of the exchange model.
+
+- it states what it requires as requirement records, and not as questions;
+- it asks with a signed request;
+- it accepts the records a supplier already holds, with a map from requirements to records, and requires no response in a structure of its own;
+- it does not make completing a form or a portal a condition of responding;
+- it follows up only on what remains undemonstrated.
+
+A system that conforms in the core classes alone exchanges and verifies records, which is useful, and it says so in those words.
+
+The choice is decision D15 in `docs/decisions.md`.
 
 ## 6. Assessment Schemes
 
@@ -359,7 +385,9 @@ The simplest exchange is a single file.
 
 A supplier that passes an assessment is normally given a certificate, and where the assessor issues it as a signed assessment record, the supplier's system can deliver it to the system of any buyer the supplier approves.
 
-Nothing is attached, uploaded, or entered twice, and a renewed certificate follows the first without anyone chasing it.
+Nothing is attached, uploaded, or entered twice.
+
+Where the supplier has approved sharing with a buyer for a period, as section 6 of `docs/exchange-model/extensions.md` drafts, a renewed certificate follows the first without anyone chasing it, and without that approval nothing is sent.
 
 The buyer's system checks that it is authentic, current, and from an assessor the buyer recognises, and the buyer decides for itself.
 

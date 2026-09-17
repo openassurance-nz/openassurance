@@ -169,7 +169,11 @@ A core OpenAssurance conformance rule is:
 
 > **A conforming assurance record must be capable of being exported, transmitted, received, and independently verified without requiring the issuer, subject, holder, sender, and verifier to subscribe to the same commercial platform.**
 
+> **A holder must be able to meet a request with conforming records it already holds, without recreating their contents in the relying organisation's system, and a relying organisation must be able to ask only for what those records do not demonstrate.**
+
 A platform cannot meaningfully claim OpenAssurance compatibility if receiving a conforming record requires the sending organisation to become a customer or tenant of that platform.
+
+Nor can it claim to support OpenAssurance requests if it accepts conforming records and still requires what they say to be completed again in a questionnaire of its own.
 
 ## Status
 

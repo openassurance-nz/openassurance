@@ -40,7 +40,7 @@ The last two of those are always the receiver's own decision.
 
 Everything else in this document is the detail needed to make those six things testable.
 
-Extensions drafted for later versions are in `exchange-model/extensions.md`, and worked examples for both profiles are in `exchange-model/examples.md`.
+The Request exchange class, which carries requirements and requests, and the extensions drafted for later versions are in `exchange-model/extensions.md`, and worked examples for both profiles are in `exchange-model/examples.md`.
 
 ## 2. How to Read This Draft
 
@@ -68,9 +68,24 @@ Section 20 lists them by name for convenience and does not repeat the assessment
 
 A peer review of the first draft found that it was not minimal.
 
-This document is therefore the core only: what the two reference exchanges in Phase 4 need, and what is proposed for v0.1.
+This document is therefore the core only, which is the least that makes a record portable and verifiable between two systems.
 
-The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, request and response, approval for a period, the interactive protocols, acceptance of government-issued credentials, and stronger evidence of a named person's role and approval, are in `exchange-model/extensions.md` and are not proposed for v0.1.
+```text
+OpenAssurance core
+    records, signatures, status, presentations, delivery, verification
+        |
+        +---- Request exchange, a further conformance class
+        |         requirements, signed requests, submission maps,
+        |         gap-only follow-up, no restatement of existing records
+        |
+        +---- Other extensions, not proposed for v0.1
+```
+
+Request exchange is a conformance class of its own, in section 15.5, and it is proposed for v0.1 alongside the core, because a system that only imports and verifies records could still send a supplier through its own questionnaire, which is decision D15.
+
+Its detail, the requirement record and the request and response, is drafted in `exchange-model/extensions.md` sections 3 and 5.
+
+The other extensions drafted alongside it, which are the endorsement type, corrective action and closure, approval for a period, the interactive protocols, acceptance of government-issued credentials, and stronger evidence of a named person's role and approval, are in `exchange-model/extensions.md` and are not proposed for v0.1.
 
 Discovery and the inbox were first drafted as extensions and were moved into the core, because exchange between systems is the purpose of the model and a core that defined only a file could not move a record between two systems without a person carrying it, which is decision D13.
 
@@ -239,9 +254,9 @@ A declaration that a director provably made is still a self-declaration, and a v
 
 ## 6. Record Types
 
-The architecture overview names six record types.
+The architecture overview describes the record types in outline.
 
-The core defines six credential types, because an authorisation and a declaration are distinct enough from an attestation to need their own.
+The core defines six, and an authorisation and a declaration are types of their own because they are distinct enough from an attestation to need them.
 
 Endorsement, requirement, and corrective action records are extensions, in `exchange-model/extensions.md`.
 
@@ -715,7 +730,7 @@ An organisation that has no system MAY give an email address as its inbox, becau
 
 ### 11.6 Beyond the core
 
-A signed request, approval for a period, the interactive protocols, and acceptance of government-issued credentials are extensions, drafted in `exchange-model/extensions.md`.
+The requirement record and the signed request make up the Request exchange class of section 15.5, and approval for a period, the interactive protocols, and acceptance of government-issued credentials are extensions, all drafted in `exchange-model/extensions.md`.
 
 None of them changes the floor, discovery, or the inbox.
 
@@ -853,6 +868,43 @@ A host provides storage or services for another party's records.
 - lets each party leave with its records and, where the host signs for it, with what it needs to keep them verifiable;
 - where it operates an inbox for a party, treats what arrives as that party's, and lets the party point its discovery record elsewhere when it leaves;
 - never becomes the issuer of a record by hosting it.
+
+### 15.5 Request exchange
+
+**Working assumption, decision D15.**
+
+The four classes above make records portable and verifiable.
+
+They do not by themselves stop a system from importing a record and then sending its holder through a questionnaire of its own.
+
+Request exchange is a further class, layered on the core and applicable to both profiles, and it is what carries reuse before recreation into conformance.
+
+Its detail is drafted in `exchange-model/extensions.md` sections 3 and 5, which this class makes part of what is proposed for v0.1 for any system that claims it.
+
+A system that claims the class as a requester:
+
+- states what it requires as requirement records, which say what must be demonstrated, and never as a questionnaire;
+- asks with a signed request that pins those records, delivered as section 11.5 describes;
+- accepts a presentation of records the holder already holds, with its submission map, and MUST NOT require a response in any structure of its own, or require a holder to restate what a record it presents already says;
+- MUST NOT make the completion of a form, a questionnaire, or a portal of its own a condition of responding, though it MAY offer one as an interface to a holder that has no system;
+- follows up only on requirements that remain undemonstrated, and MUST NOT ask again about a requirement it has determined to be met;
+- SHOULD give the holder its determination as an assessment record under section 6.4, so that what the exchange creates stays reusable.
+
+A system that claims the class as a responder:
+
+- verifies a request before anyone considers what to disclose;
+- identifies the records it holds that may be relevant to each requirement, and treats each as a candidate and never as a result;
+- assembles a presentation and a submission map for a person to approve;
+- asks a person only for what no held record may demonstrate, and keeps what results as a record the holder can use again;
+- answers a follow-up request with what was sought, and nothing more.
+
+**Claims.**
+
+A system that conforms only in the classes of sections 15.1 to 15.4 exchanges and verifies records, and MUST NOT be described as supporting OpenAssurance request exchange, or as meeting the request interoperability of either profile.
+
+A claim of OpenPrequal or OpenCompetency request interoperability requires this class.
+
+That keeps the record-exchange core minimal, and it means that accepting OpenAssurance records while still requiring a questionnaire to be completed cannot be presented as removing the duplication.
 
 An optional class for accepting government-issued credentials is an extension.
 
