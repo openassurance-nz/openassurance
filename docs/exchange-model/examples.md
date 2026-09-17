@@ -216,39 +216,81 @@ It is the only record of the three that contains personal information, so the pr
 
 **The buyer's requirement.**
 
-The requirement is shown in outline, because its structure is the least settled part of the model.
+The requirement record is an extension, drafted in `extensions.md` section 3, and is shown here in outline.
+
+It states what the buyer expects, gives examples of evidence that may demonstrate it, and keeps what a system checks to the objective criteria.
 
 ```text
-Requirement:
-Refrigeration maintenance contractors, ammonia plant
+Requirements for refrigeration maintenance contractors, ammonia plant
+Issued by Tidewater Cold Storage Limited, version 3
 
-Issued by:
-Tidewater Cold Storage Limited
+R1  Health and safety capability                          mandatory
+Statement:
+The contractor manages the health and safety risks of industrial
+refrigeration work, including work on ammonia plant.
+Evidence that may demonstrate it, among other things:
+- an assessment by an assessor the buyer recognises
+- a management-system certification from an accredited certifier
+- the contractor's own procedures, records, and examples of practice
+Objective criteria:
+- any assessment or certification relied on is current
+- an assessment relied on included a site visit
 
-All of:
-1. One of:
-   - a current assessment that included a site visit, from an
-     assessor the buyer recognises
-   - current ISO 45001 certification from an accredited certifier
-2. Public liability insurance of at least NZD 10,000,000, current
-3. A declaration on regulator interventions in the last five
-   years, made by a director
+R2  Public liability insurance                            mandatory
+Statement:
+The contractor holds public liability insurance adequate for the work.
+Objective criteria:
+- cover of at least NZD 10,000,000
+- current on the date work starts
 
-Informational:
-- worker engagement arrangements
+R3  Regulator interventions                               mandatory
+Statement:
+The contractor discloses any regulator notices, warnings, or
+prosecutions in the previous five years.
+Objective criteria:
+- a declaration covering the previous five years
+- made by a director
+
+R4  Worker engagement                                     informational
+Statement:
+The contractor involves its workers in managing risk.
+Evidence that may demonstrate it, among other things:
+- meeting notes, toolbox talks, or a description of how it is done
 ```
+
+The supplier is not told which document to put in which box.
+
+It presents what it holds, which here is an assessment, its insurance evidence, and a declaration.
 
 **What the buyer's system reports.**
 
+The system answers what a system can answer, and says plainly where a person is needed.
+
 ```text
-Record                   Authentic    Current      Recognised          Requirement
-Assessment               verified     current      recognised          condition 1 met
-Insurance evidence       verified *   current **   not applicable      condition 2 met on its face
-Director's declaration   verified     current      self-declaration    condition 3 met
+Record                   Signature    Issuer binding   Current      Recognised
+Assessment               verified     confirmed        current      recognised
+Insurance evidence       verified *   confirmed        current **   not applicable
+Director's declaration   verified     confirmed        current      self-declaration
 
 *  the supplier's signature; the document carries no signature from its source
 ** the period stated in the document; the buyer may confirm it with the source
 ```
+
+```text
+Requirement   Objective criteria                    Result
+R1            current; site visit included          needs assessment by a person
+R2            limit met; current                    met, on the face of an unsigned document
+R3            period covered; made by a director    met
+R4            none                                  not evaluated; nothing was presented
+```
+
+R1 calls for judgement, so the system does not report it as met.
+
+The buyer's contract manager reads the assessor's result, decides that it demonstrates R1, and records that determination.
+
+The buyer may give the supplier that determination as an assessment record of its own, made against R1 version 3, which the supplier can keep and present elsewhere.
+
+Had the manager found a gap, the outcome would have been a corrective action request under `extensions.md` section 10, and not a fresh questionnaire.
 
 ```text
 Director's declaration, the named person
@@ -263,7 +305,7 @@ The last line matters most.
 
 However well the role and the approval are evidenced, they show who said it, and never that what was said is true.
 
-The issuer binding of all three issuers is confirmed against the NZBN Register, which is what lets the buyer treat the names on the records as the organisations they claim to be.
+The issuer binding column is what lets the buyer treat the names on the records as the organisations they claim to be, and each was confirmed against the NZBN Register.
 
 The buyer sees at once which of the three rests on an independent issuer, which on the supplier's own word, and which on a document it may want to confirm.
 
