@@ -169,11 +169,19 @@ A corrective action request means something must be addressed to satisfy or main
 
 A recommendation is an opportunity for improvement, and does not imply that any requirement failed.
 
+An assessment gives a determination for each requirement, in the assessor's own words and, where the assessor maps them, in common words, with the evidence reviewed and any limit on that evidence stated.
+
+It always says which corrective action requests it raised, even when there were none, because a supplier chooses what it presents.
+
 A supplier that receives a corrective action request, fixes the issue, and has it closed by the assessor should be able to keep and present the whole chain: the assessment, the request, the evidence of what was done, and the closure.
 
 That stops the same issue being rediscovered and reassessed by each buyer in turn.
 
+A corrective action request never changes once issued, and whether it is open, overdue, or closed is read from the records that follow it.
+
 The records are drafted in `docs/exchange-model/extensions.md` sections 3 and 10, and the request in its section 5, and the choices are decisions D11 and D12 in `docs/decisions.md`.
+
+`docs/exchange-model/examples.md` sections 3.8 to 3.13 follow an assessment, a corrective action request, the supplier's evidence of correction, the closure, and the replacement assessment from start to finish.
 
 ## 6. Assessment Schemes
 

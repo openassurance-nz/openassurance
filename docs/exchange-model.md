@@ -294,7 +294,7 @@ An assessment record is an opinion formed by reviewing evidence, issued by the p
 
 Its subject MUST carry:
 
-- what was assessed, and the organisation or person it concerns;
+- what was assessed, which is a scope of activity or another record, and the organisation or person it concerns;
 - the criteria or standard assessed against, with its version;
 - the result, in the assessor's own terms;
 - the date of assessment.
@@ -303,15 +303,47 @@ It SHOULD carry, where the assessor's scheme uses them, a category, a status, a 
 
 **Working assumption, decision D11.**
 
-Where the assessment was made against a requirement record, it MUST identify that record and its version, and SHOULD give a determination for each requirement assessed, with the evidence reviewed and any finding.
+Where the assessment was made against a requirement record, that record is the criteria, and the assessment MUST identify it exactly.
 
-A determination is the assessor's own, and where the assessor is willing to map it, it SHOULD also be given in common words: met, partially met, not met, not applicable, or not assessed.
+It does so by the identifier of the record, which names one immutable version, together with the identifier of the requirement set, the version, and a digest of the secured record, so that there is never doubt later about what was assessed.
 
-The mapping belongs to the assessor, and the model never derives one scheme's result from another's.
+Where the assessment answers a request, it SHOULD carry the request's identifier.
 
-An assessment MAY carry recommendations, which are opportunities for improvement, and a recommendation MUST NOT be read as a failure of any requirement.
+Such an assessment MUST give one determination for each requirement in the record, and a requirement the assessor did not consider is given as not assessed, so that a reader can tell a requirement that was not assessed from one that was left out.
 
-An assessment MUST list the identifier of every corrective action request it raised, so that a relying organisation can see whether one has been left out of a presentation.
+Each determination MUST carry:
+
+- the identifier of the requirement within the record;
+- the result, in the assessor's own terms;
+- the evidence reviewed, as the identifier and type of each record, and never as a copy of it.
+
+A determination SHOULD carry a finding, which says why the assessor reached the result, and MUST carry one where the result is that the requirement is partially met or not met.
+
+Where the assessor is willing to map its result, the determination SHOULD also give it in common words: met, partially met, not met, not applicable, or not assessed.
+
+The assessor's own result and the common result are carried side by side, and neither replaces the other.
+
+The mapping belongs to the assessor, a system MUST NOT derive a common result from the assessor's own terms, and the model never derives one scheme's result from another's.
+
+A determination MAY carry a qualification, which records a limit on the evidence without changing the result, such as that a document relied on carries no signature from its source, or that a statement is a self-declaration.
+
+A system MUST NOT read a qualification as a failure, and MUST NOT drop one when it shows the result.
+
+A finding or a qualification SHOULD be written about an organisation's systems and evidence and not about named people, and personal information that it does not need SHOULD be left out.
+
+An assessment MAY carry recommendations, which are opportunities for improvement, each with an identifier and, where it has one, the requirement it relates to.
+
+A recommendation MUST NOT be read as a failure of any requirement, or as a corrective action that is outstanding.
+
+An assessment made against a requirement record MUST carry a list of the identifiers of every corrective action request it raised, and the list MUST be present, and empty, where none was raised.
+
+Any other assessment of an organisation SHOULD carry the same list.
+
+A supplier chooses what it presents, so the list is what lets a relying organisation see that a request has been left out, and an empty list says that none was raised, which an absent list does not.
+
+A system that finds no list MUST report that as not stated, and MUST NOT report it as none raised.
+
+An assessment that replaces an earlier one does so as section 9.3 describes, and the earlier assessment remains authentic as a record of what was determined at the time.
 
 Corrective action requests and their closure are an extension, as are requirement records themselves.
 
@@ -752,7 +784,7 @@ Choices between alternatives that the standards map bears on are recorded as dec
 - **Bulk export.** Section 11.1 requires everything to be exportable, and whether that is a set of files, a single presentation, or a Comprehensive Learner Record is undecided;
 - **Replacement and correction terms.** Section 9.3 needs term names, and a decision on whether the link is a claim or a typed related resource;
 - **Algorithm choice.** Section 8.2 is a proposal;
-- **Assessment result structure.** Section 6.4 lists what schemes commonly report, and needs testing with buyers and scheme operators as `decisions.md` section 3 describes;
+- **Assessment result structure.** Section 6.4 lists what schemes commonly report, requires a determination for each requirement, and requires the list of corrective action requests to be present even when it is empty, and all three need testing with buyers, assessors, and scheme operators as `decisions.md` section 3 describes;
 - **Verification over time.** What happens when an issuer ceases to exist remains open as decision D9, and `standards-map/credential-layer.md` section 3.4 describes what the standards offer;
 - **Privacy Impact Assessment.** Section 13 is provisional until it is done.
 

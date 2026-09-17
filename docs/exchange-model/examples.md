@@ -95,7 +95,33 @@ Tidewater Cold Storage Limited operates cold stores and is considering engaging 
 
 Fernbank Safety Assessors Limited has already assessed the supplier's health and safety management.
 
-The example follows one transaction from start to finish.
+The example follows one transaction from start to finish, and sections 3.9 to 3.13 follow a second path in which a requirement is only partially met.
+
+```text
+Requirement record
+     |
+     v
+Request
+     |
+     v
+Presentation
+     |
+     v
+Assessment
+     |
+     +---- Recommendation
+     |
+     +---- Corrective action request
+                |
+                v
+           Evidence of correction
+                |
+                v
+           Closure assessment
+                |
+                v
+           Replacement assessment
+```
 
 The requirement record, the request, and the corrective action request are extensions drafted in `extensions.md`, and every other record is in the core.
 
@@ -258,9 +284,17 @@ That is why evidence guidance and objective criteria are kept apart.
         }
       }
     ]
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "7640",
+    "statusListCredential": "https://tidewatercoldstorage.example/status/1"
   }
 }
 ```
+
+The record stands until Tidewater withdraws it, so it carries a status entry as `exchange-model.md` section 9.2 requires, and a later version leaves this one unaltered.
 
 Each objective criterion is a named type and not an expression in a general language of paths and operators.
 
@@ -368,9 +402,13 @@ The empty list of corrective action requests is deliberate: it is what lets a re
   "validFrom": "2026-05-12T00:00:00+12:00",
   "validUntil": "2027-05-11T23:59:59+12:00",
   "credentialSubject": {
-    "name": "Ridgeline Refrigeration Limited",
-    "nzbn": "illustrative",
-    "assessed": "Health and safety management for industrial refrigeration maintenance",
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "scope": {
+      "activity": "Health and safety management for industrial refrigeration maintenance"
+    },
     "criteria": {
       "name": "Fernbank contractor assessment criteria",
       "version": "4.2"
@@ -387,7 +425,7 @@ The empty list of corrective action requests is deliberate: it is what lets a re
     },
     "assessmentDate": "2026-05-08",
     "recommendations": [],
-    "correctiveActionsRaised": []
+    "correctiveActionRequests": []
   },
   "credentialStatus": {
     "type": "BitstringStatusListEntry",
@@ -436,7 +474,13 @@ The supplier signs the record, the certificate is hash-linked, and the record sa
       "mediaType": "application/pdf",
       "digestSRI": "sha384-illustrativeDigestValueOnly"
     }
-  ]
+  ],
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "4402",
+    "statusListCredential": "https://ridgelinerefrigeration.example/status/2"
+  }
 }
 ```
 
@@ -618,7 +662,11 @@ Tidewater's contract manager reads the assessor's result, decides that it demons
 
 ### 3.8 The buyer's assessment record
 
-Tidewater records its determination as an assessment of its own, made against the exact requirement version it asked about.
+Two assessments now exist, and they are different things.
+
+Fernbank's assessment is evidence that Ridgeline presented.
+
+Tidewater's assessment is Tidewater's own determination of whether the evidence presented demonstrates Tidewater's requirements, and Tidewater issues it because Tidewater is the party that reviewed the evidence.
 
 Ridgeline can keep it and present it to anyone else.
 
@@ -628,57 +676,87 @@ Ridgeline can keep it and present it to anyone else.
     "https://www.w3.org/ns/credentials/v2",
     "https://example.org/openassurance/v0.1"
   ],
-  "id": "https://tidewatercoldstorage.example/assessments/2026-0209",
+  "id": "https://tidewatercoldstorage.example/assessments/2026-0441",
   "type": ["VerifiableCredential", "AssessmentCredential"],
   "issuer": {
     "id": "https://tidewatercoldstorage.example/issuer",
     "name": "Tidewater Cold Storage Limited",
     "nzbn": "illustrative"
   },
-  "validFrom": "2026-09-24T11:00:00+12:00",
+  "validFrom": "2026-09-24T14:30:00+12:00",
   "validUntil": "2027-09-23T23:59:59+12:00",
   "credentialSubject": {
-    "name": "Ridgeline Refrigeration Limited",
-    "nzbn": "illustrative",
-    "assessed": "Prequalification for refrigeration maintenance under contract 2026-118",
-    "assessedAgainst": {
-      "requirementSet": "https://tidewatercoldstorage.example/requirements/ammonia",
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "assessmentDate": "2026-09-24",
+    "scope": {
+      "activity": "Industrial refrigeration maintenance",
+      "context": "Ammonia plant",
+      "engagementReference": "2026-118"
+    },
+    "request": {
+      "id": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000"
+    },
+    "requirementSet": {
+      "id": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "subjectId": "https://tidewatercoldstorage.example/requirements/ammonia",
       "version": "3",
-      "record": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
       "digestSRI": "sha384-illustrativeDigestValueOnly"
     },
-    "request": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000",
-    "assessmentDate": "2026-09-24",
-    "assessor": { "role": "Contract Manager" },
-    "result": { "outcome": "Approved for the engagement" },
     "determinations": [
       {
-        "requirement": "R1",
-        "determination": "met",
-        "evidenceReviewed": ["https://fernbankassessors.example/assessments/2026-1182"],
-        "finding": "An independent assessment, current and including a site visit, by an assessor the buyer recognises."
+        "requirementId": "R1",
+        "result": { "outcome": "Accepted", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://fernbankassessors.example/assessments/2026-1182",
+            "recordType": "AssessmentCredential"
+          }
+        ],
+        "finding": "The assessment covered health and safety management for industrial refrigeration maintenance, included a site visit, and was current at the date of review."
       },
       {
-        "requirement": "R2",
-        "determination": "met",
-        "evidenceReviewed": ["https://records.ridgelinerefrigeration.example/evidence/2026-0031"],
-        "finding": "Cover meets the limit and is current at the start of the engagement. The certificate is not signed by its source, and was confirmed with the broker."
+        "requirementId": "R2",
+        "result": { "outcome": "Accepted", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0031",
+            "recordType": "EvidenceCredential"
+          }
+        ],
+        "finding": "The certificate presented states current public liability cover of NZD 10,000,000, and was confirmed with the broker.",
+        "qualification": "The certificate is carried as supplier-held evidence and does not carry a digital signature from its purported source."
       },
       {
-        "requirement": "R3",
-        "determination": "met",
-        "evidenceReviewed": ["https://records.ridgelinerefrigeration.example/declarations/2026-0044"]
+        "requirementId": "R3",
+        "result": { "outcome": "Accepted", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/declarations/2026-0044",
+            "recordType": "DeclarationCredential"
+          }
+        ],
+        "finding": "A declaration covering the required five-year period was made by a declarant whose name matched a current director on the Companies Register.",
+        "qualification": "The declaration remains a self-declaration. Evidence of the declarant's role and approval does not corroborate the truth of what was declared."
       },
       {
-        "requirement": "R4",
-        "determination": "notAssessed",
-        "finding": "Informational, and nothing was presented."
+        "requirementId": "R4",
+        "result": { "outcome": "Not assessed", "commonResult": "notAssessed" },
+        "evidenceReviewed": [],
+        "finding": "No evidence was presented. R4 is informational and does not affect the determination."
       }
     ],
     "recommendations": [
-      "Consider presenting a short description of worker engagement arrangements with future responses."
+      {
+        "id": "REC-1",
+        "relatesTo": "R4",
+        "statement": "Consider keeping examples of completed worker engagement activities with the health and safety records presented at future reviews.",
+        "effectOnDetermination": "none"
+      }
     ],
-    "correctiveActionsRaised": []
+    "correctiveActionRequests": []
   },
   "credentialStatus": {
     "type": "BitstringStatusListEntry",
@@ -689,11 +767,77 @@ Ridgeline can keep it and present it to anyone else.
 }
 ```
 
-The recommendation fails nothing.
+**What each part is for.**
 
-### 3.9 If there had been a gap
+The request identifier gives the chain from request to presentation to assessment.
 
-Had the certificate expired before the engagement started, the outcome would have been a corrective action request, and not a fresh questionnaire.
+The requirement set names the exact immutable version assessed, by record, by set, by version, and by digest, so that there is never doubt later about what was assessed.
+
+There is one determination for each requirement the assessor considered.
+
+The assessment does not simply say approved, because a future buyer should be able to see what was assessed and what supported each determination.
+
+Each result keeps the assessor's own word beside the common one.
+
+Another scheme might say conformance where Tidewater says accepted, or minor deficiency for a result it maps to partially met, and the mapping is always the assessor's.
+
+Nothing here lets anyone infer that an 86 per cent result from one scheme equals a pass from another.
+
+Evidence reviewed is referenced by identifier and never copied, so the original signed records stay authoritative and the result is a graph of signed records.
+
+A finding explains why the assessor reached the result, and describes the organisation's systems or evidence, not individual workers.
+
+A qualification records a limit on the evidence without changing the result.
+
+R2's objective criteria pass, and the certificate is still a copy the supplier holds, so the assessment says both, and the buyer decides whether that is enough.
+
+The recommendation states that it has no effect, and a receiving system must not turn it into a failed requirement or an outstanding corrective action.
+
+The empty list of corrective action requests says that none was raised, which is different from not knowing.
+
+### 3.9 A parallel case: a requirement partially met
+
+The transaction above succeeds, so a second path exercises what happens when it does not.
+
+Suppose instead that Ridgeline had no independent assessment, and presented its own competency system as evidence for R1.
+
+Its evidence record over that system, numbered 2026-0052, is of the same kind as the insurance evidence in section 3.4 and is not shown.
+
+Tidewater's first assessment, called A1 here, determines R1 as partially met and raises a corrective action request.
+
+Its other three determinations are as in section 3.8 and are left out of this extract.
+
+```json
+{
+  "id": "https://tidewatercoldstorage.example/assessments/2026-0458",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "credentialSubject": {
+    "determinations": [
+      {
+        "requirementId": "R1",
+        "result": { "outcome": "Improvement required", "commonResult": "partiallyMet" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0052",
+            "recordType": "EvidenceCredential"
+          }
+        ],
+        "finding": "The competency system identifies the training required for each role, but expiry dates for licences and authorisations are not consistently recorded or monitored."
+      }
+    ],
+    "recommendations": [],
+    "correctiveActionRequests": [
+      "https://tidewatercoldstorage.example/corrective-actions/CAR-7"
+    ]
+  }
+}
+```
+
+A buyer that is later shown A1 can see that CAR-7 exists, even if Ridgeline does not present it.
+
+### 3.10 The corrective action request
+
+CAR-7 is a signed record of its own, drafted in `extensions.md` section 10.
 
 ```json
 {
@@ -701,43 +845,245 @@ Had the certificate expired before the engagement started, the outcome would hav
     "https://www.w3.org/ns/credentials/v2",
     "https://example.org/openassurance/v0.1"
   ],
-  "id": "https://tidewatercoldstorage.example/corrective-actions/2026-0031",
+  "id": "https://tidewatercoldstorage.example/corrective-actions/CAR-7",
   "type": ["VerifiableCredential", "CorrectiveActionCredential"],
   "issuer": {
     "id": "https://tidewatercoldstorage.example/issuer",
     "name": "Tidewater Cold Storage Limited",
     "nzbn": "illustrative"
   },
-  "validFrom": "2026-09-24T11:00:00+12:00",
+  "validFrom": "2026-09-24T14:35:00+12:00",
   "credentialSubject": {
-    "name": "Ridgeline Refrigeration Limited",
-    "nzbn": "illustrative",
-    "requirement": {
-      "requirementSet": "https://tidewatercoldstorage.example/requirements/ammonia",
-      "version": "3",
-      "item": "R2"
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
     },
-    "raisedBy": "https://tidewatercoldstorage.example/assessments/2026-0209",
-    "finding": "The certificate of currency presented expires before the engagement starts.",
-    "outcomeRequired": "Evidence of public liability cover of at least NZD 10,000,000 that is current on 1 October 2026.",
-    "due": "2026-09-30"
+    "assessment": {
+      "id": "https://tidewatercoldstorage.example/assessments/2026-0458"
+    },
+    "requirement": {
+      "set": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "id": "R1"
+    },
+    "finding": "The competency system identifies the training required for each role, but expiry dates for licences and authorisations are not consistently recorded or monitored.",
+    "requiredOutcome": "Expiry dates are recorded and actively monitored for every licence and authorisation relied on for the work.",
+    "dueDate": "2026-11-30"
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "7719",
+    "statusListCredential": "https://tidewatercoldstorage.example/status/1"
   }
 }
 ```
 
-The assessment in section 3.8 would then have listed that identifier, and determined R2 as not met.
+It has no field that says open or closed, and it never will.
 
-Ridgeline would present new evidence, Tidewater would issue a closure assessment against the request, and a replacement assessment would record R2 as met, as `extensions.md` section 10 describes.
+Its status entry says only whether Tidewater has withdrawn the request, as it might where one was raised in error.
 
-Ridgeline would hold the whole chain, and the next buyer would see the gap, what was done, and that it was accepted.
+The signed record stays as it is, and its life is told by the records that follow it.
 
-### 3.10 What the transaction shows
+### 3.11 The supplier's evidence of correction
+
+Ridgeline makes the change and issues an evidence record over what it did.
+
+The documents carry no digital signature of their own, and here that matters less, because their source is the issuer of the evidence record and its signature covers their digests.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://records.ridgelinerefrigeration.example/evidence/2026-0088",
+  "type": ["VerifiableCredential", "EvidenceCredential"],
+  "issuer": {
+    "id": "https://ridgelinerefrigeration.example/issuer",
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-10-18T09:00:00+13:00",
+  "credentialSubject": {
+    "documentKind": "Corrective action evidence",
+    "purportedSource": "Ridgeline Refrigeration Limited",
+    "obtained": "2026-10-18",
+    "sourceSigned": false,
+    "relatesTo": "https://tidewatercoldstorage.example/corrective-actions/CAR-7",
+    "summary": "Competency records now include licence and authorisation expiry dates, with a monthly expiry review."
+  },
+  "relatedResource": [
+    {
+      "id": "https://records.ridgelinerefrigeration.example/files/competency-matrix-2026-10.pdf",
+      "mediaType": "application/pdf",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    },
+    {
+      "id": "https://records.ridgelinerefrigeration.example/files/expiry-report-2026-10.pdf",
+      "mediaType": "application/pdf",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    },
+    {
+      "id": "https://records.ridgelinerefrigeration.example/files/expiry-review-procedure-v2.pdf",
+      "mediaType": "application/pdf",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    }
+  ],
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "4463",
+    "statusListCredential": "https://ridgelinerefrigeration.example/status/2"
+  }
+}
+```
+
+Names of individual workers that the finding does not need are removed from the documents before they are linked.
+
+### 3.12 The closure assessment
+
+Tidewater reviews the evidence of correction.
+
+No closure record type is needed, because an assessment already means a party reviewing evidence and forming an opinion, and that is what closure is.
+
+This assessment, called A2 here, has the corrective action request as its subject.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://tidewatercoldstorage.example/assessments/2026-0517",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "issuer": {
+    "id": "https://tidewatercoldstorage.example/issuer",
+    "name": "Tidewater Cold Storage Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-10-21T11:10:00+13:00",
+  "credentialSubject": {
+    "assessed": {
+      "type": "CorrectiveActionCredential",
+      "id": "https://tidewatercoldstorage.example/corrective-actions/CAR-7"
+    },
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "assessmentDate": "2026-10-21",
+    "evidenceReviewed": [
+      {
+        "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0088",
+        "recordType": "EvidenceCredential"
+      }
+    ],
+    "result": {
+      "outcome": "Corrective action accepted",
+      "closureResult": "accepted"
+    },
+    "finding": "The evidence demonstrates that expiry dates are now recorded for licences and authorisations and are included in a scheduled monthly review."
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "7731",
+    "statusListCredential": "https://tidewatercoldstorage.example/status/1"
+  }
+}
+```
+
+Had the evidence fallen short, the closure result would have been not accepted, with the assessor's own words for it, such as further evidence required.
+
+CAR-7 would still not have changed, and it would have stayed open until a later closure assessment accepted it.
+
+Only Tidewater can close CAR-7, because Tidewater raised it.
+
+An accepted closure does not by itself change what A1 determined about R1.
+
+### 3.13 The replacement assessment
+
+With CAR-7 accepted, Tidewater issues a new assessment against the same requirement record, called A3 here, which replaces A1.
+
+Its other three determinations are unchanged and are left out of this extract, and the name of the term that links it to A1 is provisional.
+
+```json
+{
+  "id": "https://tidewatercoldstorage.example/assessments/2026-0533",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "validFrom": "2026-10-21T11:30:00+13:00",
+  "credentialSubject": {
+    "replaces": "https://tidewatercoldstorage.example/assessments/2026-0458",
+    "determinations": [
+      {
+        "requirementId": "R1",
+        "result": { "outcome": "Accepted", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0052",
+            "recordType": "EvidenceCredential"
+          },
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0088",
+            "recordType": "EvidenceCredential"
+          },
+          {
+            "recordId": "https://tidewatercoldstorage.example/assessments/2026-0517",
+            "recordType": "AssessmentCredential"
+          }
+        ],
+        "finding": "The competency system now records and monitors expiry dates, following the closure of CAR-7."
+      }
+    ],
+    "recommendations": [],
+    "correctiveActionRequests": []
+  }
+}
+```
+
+Tidewater marks A1 as superseded through its status entry, as `exchange-model.md` section 9.3 describes.
+
+A1 remains authentic as a record of what was determined in September, and A3 is Tidewater's current determination.
+
+```text
+Requirement set, version 3
+        |
+        v
+Assessment A1              R1 partially met; raises CAR-7
+        |
+        +---- CAR-7
+        |        |
+        |        +---- Evidence 2026-0088, from the supplier
+        |        |
+        |        +---- Closure assessment A2: accepted
+        v
+Replacement assessment A3  R1 met; no corrective action requests
+```
+
+A future relying organisation can verify every link for itself, and the same issue is not rediscovered and reassessed by each buyer in turn.
+
+### 3.14 What the transaction shows
 
 Nothing has been re-entered, the supplier has joined nothing, and the decision is the buyer's.
 
-Two files went one way and one came back.
+Two files went one way, one came back, and the supplier kept the buyer's actual decision, any corrective action, and the evidence that it was accepted as closed.
 
-If the insurer later issues a signed record, it replaces the evidence record, the first asterisk disappears, and nothing else changes.
+The exchange does not stop when documents have moved.
+
+These stay separate facts throughout.
+
+- whether a record is authentic;
+- whether it is current;
+- whether the buyer recognises its issuer;
+- what evidence was reviewed;
+- what the assessor concluded;
+- whether a corrective action was raised;
+- whether that corrective action was later accepted;
+- what the assessor's current determination is.
+
+Carrying them separately, and not as one green or red status, is what makes the resulting assurance portable and understandable by someone who was not there.
+
+If the insurer later issues a signed record, it replaces the evidence record for R2, the qualification on that determination falls away, and nothing else changes.
 
 ## 4. Discovery, Keys, and Issuer Binding
 
@@ -854,5 +1200,7 @@ They differ where the profiles differ.
 The competency example identifies a person by a scoped identifier and carries personal information throughout, so every privacy requirement in `exchange-model.md` section 13 applies.
 
 The prequalification example identifies organisations by a public identifier, keeps personal information to one named declarant, and separates the supplier's evidence from the assessor's opinion of it.
+
+It also carries the buyer's determination, a corrective action request, and its closure as records the supplier holds, so the exchange does not end when documents have moved.
 
 Phase 4 should demonstrate both exchanges between systems that share nothing but this model.

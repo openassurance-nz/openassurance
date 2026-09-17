@@ -369,21 +369,52 @@ An assessment that finds a requirement partially met or not met usually says wha
 
 Today that finding stays with the assessor, and the next buyer's assessor discovers the same thing again.
 
+The terms follow established audit practice, in which a nonconformity calls for corrective action and an opportunity for improvement does not.
+
+A recommendation is an opportunity for improvement, it is carried inside the assessment record as `exchange-model.md` section 6.4 describes, and it has no effect on any determination.
+
+### 10.1 The corrective action request
+
 A corrective action request is a record issued by an assessor to the organisation assessed, and it MUST carry:
 
 - its own identifier;
-- the requirement it relates to, with its version, and the assessment that raised it;
+- the organisation it concerns;
+- the assessment that raised it;
+- the requirement it relates to, by the identifier of the requirement record, which names the version, and the identifier of the requirement within it;
 - the finding;
 - the outcome required;
 - the date by which it is due.
 
-The terms follow established audit practice, in which a nonconformity calls for corrective action and an opportunity for improvement does not.
+The subject of a request, with every detail illustrative:
 
-A recommendation is an opportunity for improvement, it is carried inside the assessment record, and it has no effect on any determination.
+```json
+{
+  "organisation": {
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative"
+  },
+  "assessment": {
+    "id": "https://tidewatercoldstorage.example/assessments/2026-0458"
+  },
+  "requirement": {
+    "set": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+    "id": "R1"
+  },
+  "finding": "The competency system identifies the training required for each role, but expiry dates for licences and authorisations are not consistently recorded or monitored.",
+  "requiredOutcome": "Expiry dates are recorded and actively monitored for every licence and authorisation relied on for the work.",
+  "dueDate": "2026-11-30"
+}
+```
 
-A signed record is never edited, so a corrective action request has no status field that changes.
+The outcome required says what must be true, and not which document must be produced, for the reason section 3 gives for requirements.
 
-Its life is a chain of records, each linked to the last by identifier.
+A signed record is never edited, so a corrective action request MUST NOT carry a field that is expected to change, such as a status of open or closed.
+
+Its status entry under `exchange-model.md` section 9.2 says only whether the issuer has withdrawn the request, as it might where one was raised in error, and says nothing about progress.
+
+### 10.2 The chain
+
+The life of a request is a chain of records, each linked to the last by identifier.
 
 ```text
 Assessment                  raises CAR-7, and lists it
@@ -395,15 +426,81 @@ Corrective action request   finding, outcome required, due date
 Evidence                    held and signed by the supplier, showing what was done
      |
      v
-Closure assessment          issued by the assessor against CAR-7: accepted, or not yet
+Closure assessment          issued by the assessor against CAR-7: accepted, or not accepted
      |
      v
 Replacement assessment      the requirement is now met, replacing the first assessment
 ```
 
+The supplier's evidence of correction is an evidence record under `exchange-model.md` section 6.5, and it SHOULD name the request it relates to.
+
+### 10.3 The closure assessment
+
 A closure is an assessment record whose subject is the corrective action request, so no further record type is needed.
 
-The state of a corrective action is derived from the chain: open until a closure assessment accepts it, and overdue once its due date has passed without one.
+An assessment already means a party reviewing evidence and forming an opinion, and that is what closure is.
+
+A closure assessment MUST carry:
+
+- the corrective action request assessed, by type and identifier;
+- the organisation it concerns;
+- the evidence reviewed, as the identifier and type of each record;
+- the result in the assessor's own terms, and a closure result of accepted or not accepted;
+- a finding;
+- the date of assessment.
+
+The subject of a closure assessment, with every detail illustrative:
+
+```json
+{
+  "assessed": {
+    "type": "CorrectiveActionCredential",
+    "id": "https://tidewatercoldstorage.example/corrective-actions/CAR-7"
+  },
+  "organisation": {
+    "name": "Ridgeline Refrigeration Limited",
+    "nzbn": "illustrative"
+  },
+  "assessmentDate": "2026-10-21",
+  "evidenceReviewed": [
+    {
+      "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0088",
+      "recordType": "EvidenceCredential"
+    }
+  ],
+  "result": {
+    "outcome": "Corrective action accepted",
+    "closureResult": "accepted"
+  },
+  "finding": "The evidence demonstrates that expiry dates are now recorded for licences and authorisations and are included in a scheduled monthly review."
+}
+```
+
+Accepted means that the assessor accepts that the outcome required has been achieved.
+
+Not accepted means that the evidence reviewed did not demonstrate the outcome required, the request stays open, and a later closure assessment may accept it.
+
+The assessor's own words sit beside the closure result, as they do in any determination, so an assessor may say further evidence required where the closure result is not accepted.
+
+A closure assessment MUST be issued by the issuer of the corrective action request.
+
+An assessment of the request by anyone else is that party's opinion, which a relying organisation may weigh, and it closes nothing.
+
+An accepted closure does not change the determination that raised the request.
+
+The assessor's current determination is given by a replacement assessment, issued as `exchange-model.md` section 9.3 describes, and until one is issued the earlier determination stands.
+
+### 10.4 State is derived, and never stored
+
+The request never changes, and its state is derived from the chain by whoever reads it.
+
+- open, until a current closure assessment from its issuer accepts it;
+- overdue, where it is open and its due date has passed;
+- closed, once a current closure assessment from its issuer accepts it.
+
+A system can derive state only from the records it holds.
+
+It MUST report a request that an assessment lists and the presentation leaves out as not presented, and a request with no closure assessment as open on the records held.
 
 A supplier that holds the chain can present it to any relying organisation, which sees that the issue was found, what was done about it, and that the assessor who raised it accepted the result.
 
@@ -411,40 +508,29 @@ That is what stops the same issue being rediscovered and reassessed by every buy
 
 A supplier chooses what it presents, so an open corrective action could be left out.
 
-The assessment record lists every corrective action request it raised, which makes an omission visible, and the assessor's current assessment remains the authority on what is still open.
+The assessment record lists every corrective action request it raised, and the list is present and empty where none was raised, which makes an omission visible, and the assessor's current assessment remains the authority on what is still open.
 
-Findings SHOULD be written about an organisation's systems and not about named people, and personal information that a finding does not need SHOULD be left out.
+### 10.5 What a system reports
+
+A system that shows an assessment and its chain MUST keep these apart, in addition to the questions in `exchange-model.md` section 12.2.
+
+- what evidence was reviewed;
+- what the assessor concluded, in its own terms, and in common words where it gave them;
+- whether corrective action requests were raised: none, those listed, or not stated;
+- for each request listed, whether it was presented, and whether a closure assessment from its issuer accepts it;
+- what the assessor's current determination is, which is that of its latest assessment that has not been replaced.
+
+It MUST NOT collapse them into a single status.
+
+### 10.6 Privacy
+
+Findings SHOULD be written about an organisation's systems and not about named people, and personal information that a finding does not need SHOULD be left out, as `exchange-model.md` section 6.4 says of any finding.
+
+Evidence of correction often comes from records about workers, and names that the finding does not need SHOULD be removed before a document is linked.
 
 Where the subject of an assessment is a person, a corrective action is sensitive information about them, and it SHOULD stay between that person, their employer, and the assessor.
 
-An example, in outline and with every detail illustrative:
-
-```text
-Assessment of requirement R12, version 2
-
-Evidence reviewed:
-- competency matrix
-- current licences
-- operator authorisations
-- training records
-
-Determination:
-Partially met
-
-Finding:
-The system identifies the training each role needs, but does not
-consistently track when it expires.
-
-Corrective action request raised:
-CAR-7, due 30 November 2026
-Outcome required: expiry dates recorded and reviewed for every
-licence and authorisation the work depends on
-
-Recommendation:
-Consider recording toolbox meeting attendance electronically, to make
-future reviews easier.
-Effect on any determination: none
-```
+`examples.md` sections 3.9 to 3.13 follow one request through the whole chain, with each record in full.
 
 ## 11. Open Points
 
@@ -452,7 +538,7 @@ These are unresolved in the extensions, and none of them holds up the core.
 
 - **Requests.** Section 5 leaves open how one request is addressed to many recipients, as in a tender, how long a recipient remembers the identifiers it has seen, and how a request about a person names them without disclosing more than the requester was given;
 - **The submission map and the terms of a response.** Section 5.4 needs term names, and a decision on where in a presentation they sit;
-- **Corrective action terms.** Section 10 needs term names, and a decision on whether a closure is an assessment as drafted or a record type of its own;
+- **Corrective action terms.** Section 10 needs term names, a decision on whether a closure is an assessment as drafted or a record type of its own, and a test with assessors of the rule that an assessment always lists the requests it raised, even when there are none;
 - **Grants and change notices.** Section 6 describes a standing grant and a content-free change notice, and neither has a format, so existing event formats need evaluating first;
 - **The discovery record.** Section 4 proposes a DNS record, and its format, the behaviour of an HTTPS inbox, and a well-known address as an alternative are undecided;
 - **Format identifier in the interactive protocols.** How the OpenID format identifiers for W3C credentials apply to a record secured under `exchange-model.md` section 8.1 needs confirming by implementation;
