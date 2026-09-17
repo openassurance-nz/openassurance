@@ -121,6 +121,52 @@ OpenPrequal should allow the supplier to present existing assurance information 
 
 Section 3 of `docs/exchange-model/examples.md` works through an example, with the buyer's result reported separately for authenticity, currency, recognition, and requirement.
 
+### 5.1 A requirement is guidance for judgement, not a set of machine rules
+
+Prequalification that works does something simple.
+
+- it states the requirement clearly;
+- it gives examples of acceptable evidence;
+- it allows equivalent evidence where that is appropriate;
+- it assesses the evidence provided;
+- it asks for corrective action, or makes a recommendation, where one is needed.
+
+OpenPrequal should carry exactly that, and should not recreate the pattern in which a supplier must put a particular document in a particular box.
+
+Evidence examples in a requirement are guidance, and are not exclusive unless the requirement expressly says so.
+
+Some parts of a requirement are objective, such as an insurance limit, that evidence is current, the period a declaration covers, or that a director made it, and those parts can be checked by a system.
+
+The judgement stays with the assessor wherever judgement is what is needed.
+
+```text
+Requirement
+     |
+     v
+Evidence
+     |
+     v
+Assessment
+     |
+     v
+Corrective action or recommendation
+     |
+     v
+Closure, where one is required
+```
+
+### 5.2 Corrective actions and recommendations
+
+A corrective action request means something must be addressed to satisfy or maintain a requirement.
+
+A recommendation is an opportunity for improvement, and does not imply that any requirement failed.
+
+A supplier that receives a corrective action request, fixes the issue, and has it closed by the assessor should be able to keep and present the whole chain: the assessment, the request, the evidence of what was done, and the closure.
+
+That stops the same issue being rediscovered and reassessed by each buyer in turn.
+
+The records are drafted in `docs/exchange-model/extensions.md` sections 3 and 10, and the choice is decision D11 in `docs/decisions.md`.
+
 ## 6. Assessment Schemes
 
 OpenPrequal should not require different prequalification schemes to be treated as equivalent.

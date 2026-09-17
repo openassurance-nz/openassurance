@@ -139,6 +139,18 @@ Status: open.
 
 Applied as a working assumption in `exchange-model.md` section 5.6, and in `exchange-model/extensions.md` section 9.
 
+### D11. Requirements, assessments, and corrective actions
+
+The question is whether a requirement is a set of machine rules that a system evaluates, or a statement of what is expected that an assessor judges evidence against.
+
+Likely path: a requirement record states the expectation, gives guidance and non-exclusive examples of evidence, and marks only its objective criteria, such as thresholds, currency, periods, capacity, and accepted issuers, as checkable by a system; an assessment record carries the assessor's determination for each requirement, with findings and recommendations; a corrective action request is a record of its own, closed by a further assessment, so that a supplier can present a finding together with what was done and the assessor's acceptance; terms follow established audit practice.
+
+This would change if buyers and assessors, asked during Phase 1, wanted requirements they could evaluate entirely by machine, in which case the objective criteria would be extended and the judgement criteria left as they are.
+
+Status: open.
+
+Applied as a working assumption in `exchange-model.md` section 6.4, and in `exchange-model/extensions.md` sections 3 and 10.
+
 ## 3. Open Questions
 
 These could not be settled from published material and should be put to the parties named.

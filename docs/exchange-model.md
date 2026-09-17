@@ -63,7 +63,7 @@ A peer review of the first draft found that it was not minimal.
 
 This document is therefore the core only: what the two reference exchanges in Phase 4 need, and what is proposed for v0.1.
 
-The extensions drafted alongside it, which are the endorsement and requirement types, discovery, request and response, approval for a period, the interactive protocols, and acceptance of government-issued credentials, are in `exchange-model/extensions.md` and are not proposed for v0.1.
+The extensions drafted alongside it, which are the endorsement and requirement types, corrective action and closure, discovery, request and response, approval for a period, the interactive protocols, and acceptance of government-issued credentials, are in `exchange-model/extensions.md` and are not proposed for v0.1.
 
 Worked examples are in `exchange-model/examples.md`.
 
@@ -234,7 +234,7 @@ The architecture overview names six record types.
 
 The core defines six credential types, because an authorisation and a declaration are distinct enough from an attestation to need their own.
 
-Endorsement and requirement records are extensions, in `exchange-model/extensions.md`.
+Endorsement, requirement, and corrective action records are extensions, in `exchange-model/extensions.md`.
 
 Type names are provisional.
 
@@ -300,6 +300,20 @@ Its subject MUST carry:
 - the date of assessment.
 
 It SHOULD carry, where the assessor's scheme uses them, a category, a status, a score, and the scope of evidence reviewed, including whether a site visit took place.
+
+**Working assumption, decision D11.**
+
+Where the assessment was made against a requirement record, it MUST identify that record and its version, and SHOULD give a determination for each requirement assessed, with the evidence reviewed and any finding.
+
+A determination is the assessor's own, and where the assessor is willing to map it, it SHOULD also be given in common words: met, partially met, not met, not applicable, or not assessed.
+
+The mapping belongs to the assessor, and the model never derives one scheme's result from another's.
+
+An assessment MAY carry recommendations, which are opportunities for improvement, and a recommendation MUST NOT be read as a failure of any requirement.
+
+An assessment MUST list the identifier of every corrective action request it raised, so that a relying organisation can see whether one has been left out of a presentation.
+
+Corrective action requests and their closure are an extension, as are requirement records themselves.
 
 The model carries an assessor's result without interpreting it.
 
@@ -606,9 +620,11 @@ A verification result MUST report the four questions separately, with authentici
 - issuer binding: confirmed, asserted only, or not checked;
 - currency: current, not yet valid, expired, suspended, revoked, superseded, or unknown;
 - recognition: recognised, not recognised, or not evaluated;
-- requirement: met, not met, or not evaluated.
+- requirement: met, not met, needs assessment by a person, or not evaluated.
 
 A conforming system MUST NOT present a single combined result without making each of the four available.
+
+A system reports a requirement as needing assessment by a person where its objective criteria are satisfied and the rest of it calls for judgement, and it MUST NOT report such a requirement as met.
 
 Where a record names a person, the result MUST also report two further things, apart from the signature and apart from each other.
 

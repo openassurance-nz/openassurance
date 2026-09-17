@@ -196,8 +196,17 @@ For organisations, the genuinely new content is a small vocabulary that:
 
 - names the evidence categories, aligned to the WorkSafe template topics;
 - separates supplier evidence from an assessor's assessment of it, as the profile already requires;
-- expresses an assessment result with category, status, score, and validity in a scheme-neutral way;
-- expresses a buyer requirement in terms of accepted assessments, accepted certifications, accepted endorsements, and required standalone evidence.
+- expresses an assessment result with category, status, score, and validity in a scheme-neutral way, and a determination and finding for each requirement assessed;
+- expresses a buyer requirement as a statement of what is expected, with non-exclusive examples of evidence, keeping what a system checks to objective criteria such as accepted assessments, certifications, endorsements, thresholds, and currency;
+- carries a corrective action request and its closure as records the supplier can hold and present, and a recommendation as a note that fails nothing.
+
+The last of these borrows its terms from established audit practice.
+
+Guidance on auditing management systems records findings of conformity and nonconformity and notes opportunities for improvement, the occupational health and safety management standard requires a nonconformity to be answered with corrective action, and the requirements for certification bodies distinguish major from minor nonconformities.[^iso19011][^iso45001][^iso17021]
+
+Those are standards for how audits are conducted and not data formats, so OpenPrequal defines the record and takes the words from them.
+
+The cross-recognition scheme in section 3 already requires a member scheme to tell a supplier that falls short how to improve, and nothing today lets the supplier carry that finding, or its resolution, to the next buyer.[^totikarules]
 
 None of this replaces any scheme's methodology, scoring, or criteria, which remain the scheme's own.
 
@@ -230,3 +239,9 @@ References to external organisations, schemes, and government publications are p
 [^coapis]: New Zealand Companies Office, "Using our data through APIs". https://www.companiesoffice.govt.nz/data-services/ways-to-get-our-data/using-our-data-through-apis/
 
 [^wallettech]: Government Digital Delivery Agency, "Govt.nz app wallet technical guide". https://github.com/NZ-Digital-Public-Infrastructure/govt-nz-app-wallet
+
+[^iso19011]: ISO 19011:2026, "Guidelines for auditing management systems", which replaced the 2018 edition. https://www.iso.org/standard/19011
+
+[^iso45001]: ISO 45001:2018, "Occupational health and safety management systems — Requirements with guidance for use", confirmed 2024, with a revision in draft. https://www.iso.org/standard/63787.html
+
+[^iso17021]: ISO/IEC 17021-1:2015, "Conformity assessment — Requirements for bodies providing audit and certification of management systems — Part 1: Requirements". https://www.iso.org/standard/61651.html

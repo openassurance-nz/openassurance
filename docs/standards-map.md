@@ -217,6 +217,7 @@ Status is as verified on 16 September 2026.
 | Prequalification assessment and requirement structure | none | | Define |
 | Certifications buyers accept | ISO 45001, NZS 7901, SafePlus, ACC AEP, MOSS | Operating | Reference |
 | Insurance | none | | Define as small record type |
+| Findings, corrective actions, and recommendations | terms from ISO 19011, ISO 45001, and ISO/IEC 17021-1 | International Standards for audit practice, not data formats | Define, extension, borrowing the terms |
 | Director or officer role behind a declaration | Companies Register roles data | Public, with appointment and cessation dates | Reference, the floor for authority evidence |
 | Role or delegated authority as a credential | credential types the government wallet expects | Anticipated, not yet available | Evaluate, extension |
 | Personal information | Privacy Act 2020, including IPP 3A from May 2026 | In force | Reference; PIA required |
@@ -224,9 +225,9 @@ Status is as verified on 16 September 2026.
 | Government wallet and verifier | Govt.nz app, issuance platform, NZ Verify | Operating, mdoc | Reference; optional mdoc acceptance class |
 | Person name, date, address | mandated government data standards | Mandated for departments | Reference |
 
-Fifty-two of the sixty-one rows point at something that already exists.
+Fifty-two of the sixty-two rows point at something that already exists.
 
-Nine say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
+Ten say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
 
 Section 7 describes what each of those requires.
 
@@ -264,7 +265,9 @@ The July 2025 ministerial statement's observation that "on-the-job experience sh
 
 `standards-map/recognition-and-requirements.md` section 3 found a query language and a descriptive condition vocabulary, and no publishable requirement model that translates into a query.
 
-OpenAssurance should define a Requirement record and its translation to DCQL.
+OpenAssurance should define a Requirement record that states what is expected, gives non-exclusive examples of evidence, and marks the objective criteria a system can check, which are the only part that translates to a DCQL query.
+
+A requirement is guidance for an assessor's judgement and not a rules engine, which is decision D11.
 
 ### 7.3 Endorsement scope
 
@@ -277,6 +280,8 @@ OpenAssurance should define the scope vocabulary.
 `standards-map/organisations.md` found a public template, a cross-recognition scheme, and a set of accepted certifications, and no data model for any of them.
 
 OpenPrequal should define the evidence categories, the assessment-result structure, and the buyer-requirement structure, aligned to the WorkSafe template and neutral between schemes.
+
+It should also define a corrective action request, closed by a further assessment, so that a supplier can present a finding together with what was done about it and the assessor's acceptance, in the terms of established audit practice.
 
 It should also publish an illustrative Requirement record that expresses the six information areas in WorkSafe's position statement, as a starting template a buyer adapts, without implying that WorkSafe endorses it.[^wsposition]
 

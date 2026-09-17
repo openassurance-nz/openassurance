@@ -32,26 +32,73 @@ An endorsement without a scope MUST be treated by a verifier as informational on
 
 ## 3. Requirement
 
-A requirement record states what a relying organisation expects for a role, activity, contract, or supplier category.
+**Working assumption, decision D11.**
 
-Its subject is the requirement itself.
+A requirement record is a signed statement by a relying organisation describing what it expects, together with guidance and examples of evidence that may demonstrate it.
 
-It MUST carry:
+It is not a rules engine.
 
-- what the requirement applies to;
-- the conditions, each naming the record type and claims that satisfy it;
-- which conditions are mandatory and which are informational;
-- any alternatives, where one of several conditions will do.
+Prequalification that works states a requirement clearly, shows what acceptable evidence looks like, allows equivalent evidence, and leaves the judgement to an assessor, and a requirement record is built to carry exactly that.
 
-It MAY carry, for any condition, the issuers or endorsements the relying organisation accepts and the currency it needs.
+A requirement record MAY hold one requirement or a numbered set, and each requirement MUST carry:
 
-A requirement record SHOULD be readable by a person, and is intended to be translatable into a DCQL query for use in an interactive exchange.
+- an identifier that stays the same between versions, and a version;
+- what it applies to, such as a role, an activity, a contract, or a supplier category;
+- the statement of what is expected, in words a person can assess against;
+- whether it is mandatory or informational.
+
+Each requirement SHOULD carry guidance, and examples of evidence that may demonstrate it.
+
+Evidence examples are not exclusive unless the requirement expressly says so.
+
+A supplier is not asked to put a particular document in a particular box: it presents the evidence it has, and an assessor decides whether that evidence demonstrates the requirement.
+
+A requirement MAY also carry objective criteria, which are the parts a system can check without judgement:
+
+- a threshold, such as public liability insurance of at least a stated amount;
+- currency, such as a licence or an assessment that has not expired;
+- a period, such as a declaration covering the previous five years;
+- a capacity, such as a declaration made by a director;
+- an accepted issuer or endorsement, or one of several alternatives.
+
+Only objective criteria are intended to be translatable into a DCQL query for use in an interactive exchange.
+
+Everything else is for a person, and a conforming system MUST NOT report a requirement as met on the strength of its objective criteria alone where the requirement also calls for judgement.
+
+A requirement MAY name a category from a published set of topics, such as the twelve in WorkSafe New Zealand's risk-based prequalification template, so that evidence organised for one buyer can be found by another.
 
 **Working assumption, decision D8.**
 
 Terms that match the CTDL condition profile exactly are borrowed from it, and the rest are defined by OpenAssurance.
 
 Publishing a requirement is optional, and a relying organisation MAY keep its requirements private.
+
+An example, in outline and with every detail illustrative:
+
+```text
+Requirement R12, version 2
+
+Applies to:
+Suppliers carrying out physical work on site
+
+Statement:
+Workers are competent for the work they perform, and the licences,
+qualifications, and authorisations the work needs remain current.
+
+Mandatory:
+Yes
+
+Evidence that may demonstrate it, among other things:
+- a competency matrix
+- training records
+- licences and qualifications
+- employer authorisations
+- competency assessments
+- expiry and renewal records
+
+Objective criteria:
+- any licence relied on is current at the date of assessment
+```
 
 ## 4. Discovery
 
@@ -73,7 +120,7 @@ Keys stay in the controller document and are not published in DNS.
 
 `examples.md` section 4 works through an example, with the controller document and the binding check.
 
-The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 10.
+The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 11.
 
 ## 5. Request and Response
 
@@ -114,7 +161,7 @@ Requester                               Holder
 
 Where possible the request reuses the claims of the OpenID for Verifiable Presentations request object, which already carries a nonce, a query, and a response address.
 
-That protocol assumes the person using the wallet is the subject, so a way to say whom a request is about is the one genuinely new element, and it is an open point in section 10.
+That protocol assumes the person using the wallet is the subject, so a way to say whom a request is about is the one genuinely new element, and it is an open point in section 11.
 
 ## 6. Approval for a Period
 
@@ -152,7 +199,7 @@ Where both parties run systems that support them, records SHOULD be issued using
 
 A system that supports interactive exchange MUST still support the floor.
 
-The credential format identifier that those protocols use for a record secured under `exchange-model.md` section 8.1 is an open point in section 10.
+The credential format identifier that those protocols use for a record secured under `exchange-model.md` section 8.1 is an open point in section 11.
 
 ## 8. Government-Issued Credentials
 
@@ -188,17 +235,103 @@ When one exists, a verifier SHOULD accept it as authority evidence in place of a
 
 A conforming system MUST NOT require either method, because a small supplier must be able to make a declaration with nothing more than the core.
 
-## 10. Open Points
+## 10. Corrective Action and Closure
+
+**Working assumption, decision D11.**
+
+An assessment that finds a requirement partially met or not met usually says what must be put right.
+
+Today that finding stays with the assessor, and the next buyer's assessor discovers the same thing again.
+
+A corrective action request is a record issued by an assessor to the organisation assessed, and it MUST carry:
+
+- its own identifier;
+- the requirement it relates to, with its version, and the assessment that raised it;
+- the finding;
+- the outcome required;
+- the date by which it is due.
+
+The terms follow established audit practice, in which a nonconformity calls for corrective action and an opportunity for improvement does not.
+
+A recommendation is an opportunity for improvement, it is carried inside the assessment record, and it has no effect on any determination.
+
+A signed record is never edited, so a corrective action request has no status field that changes.
+
+Its life is a chain of records, each linked to the last by identifier.
+
+```text
+Assessment                  raises CAR-7, and lists it
+     |
+     v
+Corrective action request   finding, outcome required, due date
+     |
+     v
+Evidence                    held and signed by the supplier, showing what was done
+     |
+     v
+Closure assessment          issued by the assessor against CAR-7: accepted, or not yet
+     |
+     v
+Replacement assessment      the requirement is now met, replacing the first assessment
+```
+
+A closure is an assessment record whose subject is the corrective action request, so no further record type is needed.
+
+The state of a corrective action is derived from the chain: open until a closure assessment accepts it, and overdue once its due date has passed without one.
+
+A supplier that holds the chain can present it to any relying organisation, which sees that the issue was found, what was done about it, and that the assessor who raised it accepted the result.
+
+That is what stops the same issue being rediscovered and reassessed by every buyer in turn.
+
+A supplier chooses what it presents, so an open corrective action could be left out.
+
+The assessment record lists every corrective action request it raised, which makes an omission visible, and the assessor's current assessment remains the authority on what is still open.
+
+Findings SHOULD be written about an organisation's systems and not about named people, and personal information that a finding does not need SHOULD be left out.
+
+Where the subject of an assessment is a person, a corrective action is sensitive information about them, and it SHOULD stay between that person, their employer, and the assessor.
+
+An example, in outline and with every detail illustrative:
+
+```text
+Assessment of requirement R12, version 2
+
+Evidence reviewed:
+- competency matrix
+- current licences
+- operator authorisations
+- training records
+
+Determination:
+Partially met
+
+Finding:
+The system identifies the training each role needs, but does not
+consistently track when it expires.
+
+Corrective action request raised:
+CAR-7, due 30 November 2026
+Outcome required: expiry dates recorded and reviewed for every
+licence and authorisation the work depends on
+
+Recommendation:
+Consider recording toolbox meeting attendance electronically, to make
+future reviews easier.
+Effect on any determination: none
+```
+
+## 11. Open Points
 
 These are unresolved in the extensions, and none of them holds up the core.
 
 - **The request object.** Section 5 reuses the claims of the OpenID request object where it can, and how a request says whom it is about, and how it is signed and delivered to an email inbox, are undecided;
+- **Corrective action terms.** Section 10 needs term names, and a decision on whether a closure is an assessment as drafted or a record type of its own;
 - **Grants and change notices.** Section 6 describes a standing grant and a content-free change notice, and neither has a format, so existing event formats need evaluating first;
 - **The discovery record.** Section 4 proposes a DNS record, and its format, the behaviour of an HTTPS inbox, and a well-known address as an alternative are undecided;
 - **Format identifier in the interactive protocols.** How the OpenID format identifiers for W3C credentials apply to a record secured under `exchange-model.md` section 8.1 needs confirming by implementation;
 - **An mdoc rendering.** `exchange-model.md` section 14 keeps it possible, and whether to define one is decision D3, which depends on answers from the Government Digital Delivery Agency.
 
-## 11. Standards Referenced
+## 12. Standards Referenced
 
 Assessment, status, and sources for each of these are in `standards-map.md` and its parts, and the standards the core relies on are listed in `exchange-model.md` section 20.
 

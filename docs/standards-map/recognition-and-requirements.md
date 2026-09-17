@@ -167,17 +167,23 @@ The short answer is that the vocabularies found describe what a credential *is* 
 
 **Position: define, as a small OpenAssurance record type.**
 
-A Requirement record needs to say, for a named role, activity, contract, or supplier category:
+A requirement is not a set of machine rules.
 
-- which record types satisfy it;
-- which issuers or which endorsements of issuers it accepts;
-- what currency it needs;
+Prequalification that works states what is expected, shows what acceptable evidence looks like, allows equivalent evidence, and leaves the judgement to an assessor, which is how the template recorded in `organisations.md` section 2 describes itself when it says it is not a checklist.
+
+A Requirement record therefore needs to say, for a named role, activity, contract, or supplier category:
+
+- what is expected, in words a person can assess against;
+- guidance, and examples of evidence that may demonstrate it, which are not exclusive unless it says so;
+- any objective criteria, such as a threshold, currency, a period, a capacity, or an accepted issuer or endorsement;
 - which alternatives are acceptable;
-- which conditions are mandatory and which are informational.
+- whether it is mandatory or informational.
 
 It should be publishable, signable as an ordinary credential whose subject is the requirement itself, and readable by a person.
 
-It should also be mechanically translatable into a DCQL query for use at transaction time, so that a relying organisation maintains its requirement once and the query is derived.
+Only the objective criteria translate into a DCQL query for use at transaction time, and the rest is judged by an assessor, whose determination is carried in an Assessment record.
+
+The design, and the corrective action record that follows from it, are decision D11 in `decisions.md`.
 
 This is the largest genuinely new item in the map, and it is still small.
 
