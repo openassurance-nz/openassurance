@@ -171,17 +171,39 @@ A recommendation is an opportunity for improvement, and does not imply that any 
 
 An assessment gives a determination for each requirement, in the assessor's own words and, where the assessor maps them, in common words, with the evidence reviewed and any limit on that evidence stated.
 
-It always says which corrective action requests it raised, even when there were none, because a supplier chooses what it presents.
+It always says whether any corrective action is outstanding, and how many, because a supplier chooses what it presents, and it says no more about them than that.
 
-A supplier that receives a corrective action request, fixes the issue, and has it closed by the assessor should be able to keep and present the whole chain: the assessment, the request, the evidence of what was done, and the closure.
+A supplier that receives a corrective action request, fixes the issue, and has it closed by the assessor should be able to keep the whole chain: the assessment, the request, the evidence of what was done, and the closure.
 
-That stops the same issue being rediscovered and reassessed by each buyer in turn.
+Once the request is closed, the assessor issues a replacement assessment that states the position as it now is, and that is what the supplier normally presents.
+
+> **OpenPrequal exchanges the current assurance state, and does not automatically expose the assurance history.**
+
+The history exists for auditability, the current assessment exists for reuse, and the supplier may show the history to anyone it chooses.
+
+A recommendation is advice from one assessor to the supplier, and it does not travel with the assessment.
+
+That stops the same issue being rediscovered and reassessed by each buyer in turn, and stops a closed finding from following a supplier around.
 
 A corrective action request never changes once issued, and whether it is open, overdue, or closed is read from the records that follow it.
 
 The records are drafted in `docs/exchange-model/extensions.md` sections 3 and 10, and the request in its section 5, and the choices are decisions D11 and D12 in `docs/decisions.md`.
 
 `docs/exchange-model/examples.md` sections 3.8 to 3.13 follow an assessment, a corrective action request, the supplier's evidence of correction, the closure, and the replacement assessment from start to finish.
+
+### 5.3 Reuse by another buyer
+
+An assessment that a supplier holds can be presented to a second buyer that took no part in it.
+
+The first buyer's decision does not bind the second.
+
+The second buyer decides whether it recognises the assessor, whether the assessment is current, whether its scope is relevant to the engagement, which of its own requirements the assessment helps to demonstrate, and what further evidence it still needs.
+
+It may accept the assessment as evidence and ask for nothing more, or find it relevant and not enough, and ask only about the part it does not cover.
+
+> **OpenPrequal is not mutual recognition by default. It is portable assurance evidence that lets the next buyer make an informed local decision without starting from zero.**
+
+`docs/exchange-model/examples.md` section 4 works through both outcomes.
 
 ## 6. Assessment Schemes
 

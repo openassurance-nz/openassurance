@@ -283,7 +283,9 @@ OpenAssurance should define the scope vocabulary.
 
 OpenPrequal should define the evidence categories, the assessment-result structure, and the buyer-requirement structure, aligned to the WorkSafe template and neutral between schemes.
 
-It should also define a corrective action request, closed by a further assessment, so that a supplier can present a finding together with what was done about it and the assessor's acceptance, in the terms of established audit practice.
+It should also define a corrective action request, closed by a further assessment, so that a supplier can keep a finding together with what was done about it and the assessor's acceptance, in the terms of established audit practice.
+
+What a supplier normally presents to another buyer is the assessor's current conclusion, which states whether anything is outstanding, and the history behind it stays with the supplier and the assessor.
 
 It should also publish an illustrative Requirement record that expresses the six information areas in WorkSafe's position statement, as a starting template a buyer adapts, without implying that WorkSafe endorses it.[^wsposition]
 

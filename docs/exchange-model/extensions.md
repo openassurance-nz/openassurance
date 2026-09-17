@@ -144,7 +144,7 @@ The inbox MAY be an email address, because the floor in `exchange-model.md` sect
 
 Keys stay in the controller document and are not published in DNS.
 
-`examples.md` section 4 works through an example, with the controller document and the binding check.
+`examples.md` section 5 works through an example, with the controller document and the binding check.
 
 The record format, the behaviour of an HTTPS inbox, and whether a well-known address should be offered as an alternative are open points in section 11.
 
@@ -210,6 +210,8 @@ It SHOULD carry the engagement that gives rise to it, such as a contract referen
 The subject is either the recipient organisation itself, or a person whose records the recipient holds, identified by claims such as a name and the job concerned, and never by an identifier the requester was not given by the holder.
 
 Where requirements apply, the request MUST reference each requirement record by its `id` and by a digest, and MAY select particular requirements from it by identifier.
+
+A request MAY refer to an earlier request by its `jti`, and MAY say, against a requirement it selects, what further evidence the requester seeks, which is how a requester asks for more where what it was given is relevant and not enough.
 
 The request does not restate the requirements.
 
@@ -367,11 +369,17 @@ A conforming system MUST NOT require either method, because a small supplier mus
 
 An assessment that finds a requirement partially met or not met usually says what must be put right.
 
-Today that finding stays with the assessor, and the next buyer's assessor discovers the same thing again.
-
 The terms follow established audit practice, in which a nonconformity calls for corrective action and an opportunity for improvement does not.
 
-A recommendation is an opportunity for improvement, it is carried inside the assessment record as `exchange-model.md` section 6.4 describes, and it has no effect on any determination.
+A corrective action request is for something the organisation must put right.
+
+Where the evidence presented is simply not enough to decide, nothing has been found wanting, and the assessor asks for more with a further request as section 5.1 describes, and not with a corrective action request.
+
+A recommendation is an opportunity for improvement, it is advice to the organisation assessed, and `exchange-model.md` section 6.4 keeps it out of the part of an assessment record that travels.
+
+> **OpenAssurance exchanges the current assurance state, and does not automatically expose the assurance history.**
+
+The history exists for auditability, and the current assessment exists for reuse.
 
 ### 10.1 The corrective action request
 
@@ -408,6 +416,8 @@ The subject of a request, with every detail illustrative:
 
 The outcome required says what must be true, and not which document must be produced, for the reason section 3 gives for requirements.
 
+The request points to the assessment that raised it, and the assessment does not point back, so an assessment that is presented discloses no more than how many requests are unresolved.
+
 A signed record is never edited, so a corrective action request MUST NOT carry a field that is expected to change, such as a status of open or closed.
 
 Its status entry under `exchange-model.md` section 9.2 says only whether the issuer has withdrawn the request, as it might where one was raised in error, and says nothing about progress.
@@ -417,20 +427,22 @@ Its status entry under `exchange-model.md` section 9.2 says only whether the iss
 The life of a request is a chain of records, each linked to the last by identifier.
 
 ```text
-Assessment                  raises CAR-7, and lists it
+Assessment                  a requirement is partially met; one request is unresolved
      |
      v
-Corrective action request   finding, outcome required, due date
+Corrective action request   refers to the assessment; finding, outcome required, due date
      |
      v
-Evidence                    held and signed by the supplier, showing what was done
+Evidence                    refers to the request; held and signed by the supplier
      |
      v
-Closure assessment          issued by the assessor against CAR-7: accepted, or not accepted
+Closure assessment          refers to the request and the evidence: accepted, or not accepted
      |
      v
-Replacement assessment      the requirement is now met, replacing the first assessment
+Replacement assessment      replaces the first; the requirement is now met; none unresolved
 ```
+
+The order is the order of events, and each record refers only to records that came before it.
 
 The supplier's evidence of correction is an evidence record under `exchange-model.md` section 6.5, and it SHOULD name the request it relates to.
 
@@ -488,11 +500,11 @@ An assessment of the request by anyone else is that party's opinion, which a rel
 
 An accepted closure does not change the determination that raised the request.
 
-The assessor's current determination is given by a replacement assessment, issued as `exchange-model.md` section 9.3 describes, and until one is issued the earlier determination stands.
+The assessor's current determination is given by the replacement assessment that `exchange-model.md` section 6.4 requires, and until it is issued the earlier determination stands.
 
 ### 10.4 State is derived, and never stored
 
-The request never changes, and its state is derived from the chain by whoever reads it.
+The request never changes, and its state is derived from the chain by whoever holds the chain.
 
 - open, until a current closure assessment from its issuer accepts it;
 - overdue, where it is open and its due date has passed;
@@ -500,37 +512,58 @@ The request never changes, and its state is derived from the chain by whoever re
 
 A system can derive state only from the records it holds.
 
-It MUST report a request that an assessment lists and the presentation leaves out as not presented, and a request with no closure assessment as open on the records held.
+The supplier and the assessor hold the chain, and a relying organisation normally does not.
 
-A supplier that holds the chain can present it to any relying organisation, which sees that the issue was found, what was done about it, and that the assessor who raised it accepted the result.
+What a relying organisation relies on is the assessor's current assessment, which states whether any request that affects it is unresolved, and how many are.
 
-That is what stops the same issue being rediscovered and reassessed by every buyer in turn.
+That statement is inside the record the assessor signed, so a supplier cannot hide an unresolved request by leaving a record out, and the assessor's current assessment remains the authority on what is outstanding.
 
-A supplier chooses what it presents, so an open corrective action could be left out.
+### 10.5 What travels
 
-The assessment record lists every corrective action request it raised, and the list is present and empty where none was raised, which makes an omission visible, and the assessor's current assessment remains the authority on what is still open.
+A holder normally presents the assessor's current assessment, together with the requirement record it was made against, because the assessment identifies each requirement and does not restate it.
 
-### 10.5 What a system reports
+The following stay with the supplier and the assessor unless the holder deliberately chooses to present them.
 
-A system that shows an assessment and its chain MUST keep these apart, in addition to the questions in `exchange-model.md` section 12.2.
+- an assessment that has been superseded;
+- a corrective action request that has been closed, its closure assessment, and the evidence of correction;
+- the detail of a request that is unresolved, whose existence the current assessment already states;
+- recommendations;
+- an assessor's working notes.
+
+A holding system MUST NOT add any of these to a presentation unless the holder selects them.
+
+A relying organisation that needs the detail of an unresolved request asks for it, and SHOULD say why, and the holder decides as it does with any request.
+
+A supplier may well choose to present a closed chain, because a finding that was dealt with promptly speaks well of it, and that is the supplier's choice to make.
+
+Where an assessor has accepted a closure and has not yet issued the replacement assessment, the supplier MAY present the closure assessment beside the earlier assessment.
+
+A recommendation does not become permanent baggage attached to an organisation each time its assessment is shared.
+
+### 10.6 What a system reports
+
+A system that shows an assessment MUST keep these apart, in addition to the questions in `exchange-model.md` section 12.2.
 
 - what evidence was reviewed;
 - what the assessor concluded, in its own terms, and in common words where it gave them;
-- whether corrective action requests were raised: none, those listed, or not stated;
-- for each request listed, whether it was presented, and whether a closure assessment from its issuer accepts it;
-- what the assessor's current determination is, which is that of its latest assessment that has not been replaced.
+- whether any corrective action request is unresolved: none, the number stated, or not stated;
+- whether the assessment is the assessor's current one, or has been superseded.
+
+A system that holds the chain also reports, for each request, whether a closure assessment from its issuer accepts it.
 
 It MUST NOT collapse them into a single status.
 
-### 10.6 Privacy
+### 10.7 Privacy
 
 Findings SHOULD be written about an organisation's systems and not about named people, and personal information that a finding does not need SHOULD be left out, as `exchange-model.md` section 6.4 says of any finding.
 
 Evidence of correction often comes from records about workers, and names that the finding does not need SHOULD be removed before a document is linked.
 
+Keeping that evidence out of later presentations is one more reason for section 10.5.
+
 Where the subject of an assessment is a person, a corrective action is sensitive information about them, and it SHOULD stay between that person, their employer, and the assessor.
 
-`examples.md` sections 3.9 to 3.13 follow one request through the whole chain, with each record in full.
+`examples.md` sections 3.9 to 3.13 follow one request through the whole chain, with each record in full, and its section 4 shows what a second buyer is then given.
 
 ## 11. Open Points
 
@@ -538,7 +571,8 @@ These are unresolved in the extensions, and none of them holds up the core.
 
 - **Requests.** Section 5 leaves open how one request is addressed to many recipients, as in a tender, how long a recipient remembers the identifiers it has seen, and how a request about a person names them without disclosing more than the requester was given;
 - **The submission map and the terms of a response.** Section 5.4 needs term names, and a decision on where in a presentation they sit;
-- **Corrective action terms.** Section 10 needs term names, a decision on whether a closure is an assessment as drafted or a record type of its own, and a test with assessors of the rule that an assessment always lists the requests it raised, even when there are none;
+- **Corrective action terms.** Section 10 needs term names, a decision on whether a closure is an assessment as drafted or a record type of its own, a test of whether a count of unresolved requests without their identifiers is enough for a relying organisation, and a decision on whether a recommendation needs a record form of its own;
+- **Reuse of an assessment.** `examples.md` section 4 shows a buyer's assessment reused by a second buyer, and whether an assessor may state terms for reliance by others, and whether a supplier may always pass on the requirement record it was assessed against, are undecided;
 - **Grants and change notices.** Section 6 describes a standing grant and a content-free change notice, and neither has a format, so existing event formats need evaluating first;
 - **The discovery record.** Section 4 proposes a DNS record, and its format, the behaviour of an HTTPS inbox, and a well-known address as an alternative are undecided;
 - **Format identifier in the interactive protocols.** How the OpenID format identifiers for W3C credentials apply to a record secured under `exchange-model.md` section 8.1 needs confirming by implementation;

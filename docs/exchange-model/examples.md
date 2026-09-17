@@ -10,9 +10,9 @@ These examples show the minimum exchange model at work, and they carry no requir
 
 Every name, address, and identifier in them is fictional, the context address is a placeholder, and the term names are provisional.
 
-One example is given for each profile, because Phase 4 calls for a reference exchange in each, and a third shows discovery, keys, and issuer binding.
+One example is given for each profile, because Phase 4 calls for a reference exchange in each, a third shows the prequalification assessment reused by a second buyer, and a fourth shows discovery, keys, and issuer binding.
 
-The requirements they illustrate are in `exchange-model.md`, and the third example also uses the discovery record drafted in `extensions.md`.
+The requirements they illustrate are in `exchange-model.md`, and the fourth example also uses the discovery record drafted in `extensions.md`.
 
 ## 2. OpenCompetency: An Attestation About a Person
 
@@ -384,7 +384,7 @@ Ridgeline holds three records that bear on the requirements.
 
 The assessor is the issuer, the supplier is the subject, and the result is carried in the assessor's own terms.
 
-The empty list of corrective action requests is deliberate: it is what lets a reader see that none was raised and none has been left out.
+The statement that no corrective action is outstanding is deliberate: it is inside the record the assessor signed, so nothing can be hidden by leaving a record out.
 
 ```json
 {
@@ -424,8 +424,7 @@ The empty list of corrective action requests is deliberate: it is what lets a re
       "siteVisit": true
     },
     "assessmentDate": "2026-05-08",
-    "recommendations": [],
-    "correctiveActionRequests": []
+    "correctiveActionState": { "outstanding": false }
   },
   "credentialStatus": {
     "type": "BitstringStatusListEntry",
@@ -696,6 +695,10 @@ Ridgeline can keep it and present it to anyone else.
       "context": "Ammonia plant",
       "engagementReference": "2026-118"
     },
+    "evidenceScope": {
+      "documentsReviewed": true,
+      "siteVisit": false
+    },
     "request": {
       "id": "urn:uuid:ea7b55e0-0000-4000-8000-000000000000"
     },
@@ -748,15 +751,7 @@ Ridgeline can keep it and present it to anyone else.
         "finding": "No evidence was presented. R4 is informational and does not affect the determination."
       }
     ],
-    "recommendations": [
-      {
-        "id": "REC-1",
-        "relatesTo": "R4",
-        "statement": "Consider keeping examples of completed worker engagement activities with the health and safety records presented at future reviews.",
-        "effectOnDetermination": "none"
-      }
-    ],
-    "correctiveActionRequests": []
+    "correctiveActionState": { "outstanding": false }
   },
   "credentialStatus": {
     "type": "BitstringStatusListEntry",
@@ -770,6 +765,8 @@ Ridgeline can keep it and present it to anyone else.
 **What each part is for.**
 
 The request identifier gives the chain from request to presentation to assessment.
+
+The scope of evidence reviewed says that Tidewater reviewed documents and did not visit a site, which a later reader needs in order to weigh the result.
 
 The requirement set names the exact immutable version assessed, by record, by set, by version, and by digest, so that there is never doubt later about what was assessed.
 
@@ -791,9 +788,20 @@ A qualification records a limit on the evidence without changing the result.
 
 R2's objective criteria pass, and the certificate is still a copy the supplier holds, so the assessment says both, and the buyer decides whether that is enough.
 
-The recommendation states that it has no effect, and a receiving system must not turn it into a failed requirement or an outstanding corrective action.
+The corrective action state says that none is outstanding, which is different from not knowing.
 
-The empty list of corrective action requests says that none was raised, which is different from not knowing.
+Tidewater also has a recommendation for Ridgeline, and it is not in the record.
+
+```text
+Tidewater's note to Ridgeline, sent with the assessment and not part of it
+
+Recommendation REC-1, relating to R4
+Consider keeping examples of completed worker engagement activities with the
+health and safety records presented at future reviews.
+Effect on any determination: none
+```
+
+A recommendation is advice from one assessor to the supplier, so it stays with the two of them, and it does not follow Ridgeline to the next buyer unless Ridgeline chooses to show it.
 
 ### 3.9 A parallel case: a requirement partially met
 
@@ -816,6 +824,7 @@ Its other three determinations are as in section 3.8 and are left out of this ex
       {
         "requirementId": "R1",
         "result": { "outcome": "Improvement required", "commonResult": "partiallyMet" },
+        "correctiveActionState": { "outstanding": true, "count": 1 },
         "evidenceReviewed": [
           {
             "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0052",
@@ -825,15 +834,16 @@ Its other three determinations are as in section 3.8 and are left out of this ex
         "finding": "The competency system identifies the training required for each role, but expiry dates for licences and authorisations are not consistently recorded or monitored."
       }
     ],
-    "recommendations": [],
-    "correctiveActionRequests": [
-      "https://tidewatercoldstorage.example/corrective-actions/CAR-7"
-    ]
+    "correctiveActionState": { "outstanding": true, "count": 1 }
   }
 }
 ```
 
-A buyer that is later shown A1 can see that CAR-7 exists, even if Ridgeline does not present it.
+A1 does not name CAR-7.
+
+A buyer shown A1 while the request is open can see that one corrective action is outstanding against R1, and learns no more than that unless it asks and Ridgeline agrees.
+
+Ridgeline cannot hide it, because the statement is inside the record Tidewater signed.
 
 ### 3.10 The corrective action request
 
@@ -1005,14 +1015,46 @@ An accepted closure does not by itself change what A1 determined about R1.
 
 With CAR-7 accepted, Tidewater issues a new assessment against the same requirement record, called A3 here, which replaces A1.
 
-Its other three determinations are unchanged and are left out of this extract, and the name of the term that links it to A1 is provisional.
+Issuing it is not optional, because `exchange-model.md` section 6.4 requires a replacement whenever a request that affects an assessment is raised or closed.
+
+Its determinations of R2, R3, and R4 are as in section 3.8 and are left out here, and the name of the term that links it to A1 is provisional.
 
 ```json
 {
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
   "id": "https://tidewatercoldstorage.example/assessments/2026-0533",
   "type": ["VerifiableCredential", "AssessmentCredential"],
+  "issuer": {
+    "id": "https://tidewatercoldstorage.example/issuer",
+    "name": "Tidewater Cold Storage Limited",
+    "nzbn": "illustrative"
+  },
   "validFrom": "2026-10-21T11:30:00+13:00",
+  "validUntil": "2027-09-23T23:59:59+12:00",
   "credentialSubject": {
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "assessmentDate": "2026-10-21",
+    "scope": {
+      "activity": "Industrial refrigeration maintenance",
+      "context": "Ammonia plant",
+      "engagementReference": "2026-118"
+    },
+    "evidenceScope": {
+      "documentsReviewed": true,
+      "siteVisit": false
+    },
+    "requirementSet": {
+      "id": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "subjectId": "https://tidewatercoldstorage.example/requirements/ammonia",
+      "version": "3",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    },
     "replaces": "https://tidewatercoldstorage.example/assessments/2026-0458",
     "determinations": [
       {
@@ -1026,17 +1068,18 @@ Its other three determinations are unchanged and are left out of this extract, a
           {
             "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0088",
             "recordType": "EvidenceCredential"
-          },
-          {
-            "recordId": "https://tidewatercoldstorage.example/assessments/2026-0517",
-            "recordType": "AssessmentCredential"
           }
         ],
-        "finding": "The competency system now records and monitors expiry dates, following the closure of CAR-7."
+        "finding": "The competency system identifies the training required for each role, and records and monitors the expiry dates of the licences and authorisations relied on for the work."
       }
     ],
-    "recommendations": [],
-    "correctiveActionRequests": []
+    "correctiveActionState": { "outstanding": false }
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "7744",
+    "statusListCredential": "https://tidewatercoldstorage.example/status/1"
   }
 }
 ```
@@ -1045,11 +1088,15 @@ Tidewater marks A1 as superseded through its status entry, as `exchange-model.md
 
 A1 remains authentic as a record of what was determined in September, and A3 is Tidewater's current determination.
 
+A3 describes the position as it now is.
+
+It does not mention CAR-7, it does not list the closure assessment among the evidence reviewed, and its finding says what the competency system does and not what it used to lack.
+
 ```text
 Requirement set, version 3
         |
         v
-Assessment A1              R1 partially met; raises CAR-7
+Assessment A1              R1 partially met; one corrective action outstanding
         |
         +---- CAR-7
         |        |
@@ -1057,10 +1104,12 @@ Assessment A1              R1 partially met; raises CAR-7
         |        |
         |        +---- Closure assessment A2: accepted
         v
-Replacement assessment A3  R1 met; no corrective action requests
+Replacement assessment A3  R1 met; no corrective action outstanding
 ```
 
-A future relying organisation can verify every link for itself, and the same issue is not rediscovered and reassessed by each buyer in turn.
+Ridgeline and Tidewater hold the whole chain, and anyone Ridgeline chooses to show it to can verify every link.
+
+Of that chain, what Ridgeline normally presents is A3 alone, as section 4 shows, so the same issue is not rediscovered by each buyer in turn, and it does not follow Ridgeline around either.
 
 ### 3.14 What the transaction shows
 
@@ -1077,17 +1126,394 @@ These stay separate facts throughout.
 - whether the buyer recognises its issuer;
 - what evidence was reviewed;
 - what the assessor concluded;
-- whether a corrective action was raised;
-- whether that corrective action was later accepted;
+- whether any corrective action is outstanding;
 - what the assessor's current determination is.
+
+Those who hold the chain can also see what was raised and whether it was accepted, and that history stays with them unless the supplier chooses to show it.
 
 Carrying them separately, and not as one green or red status, is what makes the resulting assurance portable and understandable by someone who was not there.
 
 If the insurer later issues a signed record, it replaces the evidence record for R2, the qualification on that determination falls away, and nothing else changes.
 
-## 4. Discovery, Keys, and Issuer Binding
+## 4. OpenPrequal: A Second Buyer Reuses an Assessment
 
-The third example follows the buyer in section 3 as it checks that the supplier's records come from the supplier.
+The third example tests the proposition itself, and not only a first exchange.
+
+It continues the parallel case in sections 3.9 to 3.13, in which Ridgeline holds no independent assessment, so Tidewater's assessment A3 is the only opinion of its health and safety management that Ridgeline holds.
+
+Southmere Seafoods Limited, which is fictional, processes seafood, runs ammonia refrigeration for its blast freezers, and is considering engaging Ridgeline for scheduled maintenance of that plant.
+
+Southmere took no part in Tidewater's assessment, and Tidewater takes no part in this exchange.
+
+```text
+Tidewater's requirement
+        |
+        v
+Ridgeline's evidence
+        |
+        v
+Tidewater's assessment, which Ridgeline keeps
+        |
+        v
+Southmere requests assurance
+        |
+        v
+Ridgeline presents Tidewater's assessment
+        |
+        v
+Southmere decides
+```
+
+Southmere has five questions to answer, and the model answers none of them on its behalf.
+
+- does Southmere recognise Tidewater as an assessor;
+- is the assessment current;
+- is its scope relevant to this engagement;
+- which of Southmere's requirements does it help to demonstrate;
+- what further evidence, if any, does Southmere still need.
+
+### 4.1 The second buyer's requirement
+
+Southmere's requirement record has the form shown in section 3.1, and two of its requirements are given here in outline.
+
+```text
+Southmere Seafoods, requirements for mechanical contractors, version 2
+
+S1   The contractor demonstrates an effective health and safety management
+     system appropriate to higher-risk mechanical work.
+
+     Evidence that may demonstrate it:
+     - an assessment by a party Southmere recognises
+     - a management-system certification from an accredited certifier
+     - the contractor's own procedures, with records showing their use
+     - other evidence that demonstrates equivalent arrangements
+
+     Objective criteria:
+     - any assessment relied on is current
+
+S2   The contractor holds public liability cover of at least NZD 5,000,000,
+     current at the start of the engagement.
+```
+
+Southmere's request is of the kind shown in section 3.2, sent on 10 November 2026 for an engagement that starts on 1 December.
+
+### 4.2 What Ridgeline presents
+
+```text
+Presented
+- Tidewater's assessment A3, numbered 2026-0533
+- Tidewater's requirement record, version 3
+- Ridgeline's insurance evidence, numbered 2026-0031
+
+Not presented
+- the superseded assessment A1
+- corrective action request CAR-7, the evidence of correction, and closure assessment A2
+- Tidewater's recommendation
+```
+
+The requirement record goes with the assessment because A3 says that R1 is met and does not say what R1 is.
+
+The digest in A3 lets Southmere confirm that the record presented is the exact version Tidewater assessed against.
+
+Nothing in A3 mentions CAR-7, so Southmere does not learn that there was ever a corrective action, and it does not need to.
+
+A3 says that it replaces an earlier assessment, which tells Southmere only that Tidewater has assessed Ridgeline before.
+
+The submission map in the presentation is an index, as it was in section 3.5.
+
+```json
+{
+  "submission": [
+    {
+      "requirement": "S1",
+      "records": [
+        "https://tidewatercoldstorage.example/assessments/2026-0533",
+        "https://tidewatercoldstorage.example/requirements/ammonia/versions/3"
+      ]
+    },
+    {
+      "requirement": "S2",
+      "records": ["https://records.ridgelinerefrigeration.example/evidence/2026-0031"]
+    }
+  ]
+}
+```
+
+Presenting Tidewater's assessment tells Southmere that Tidewater is a customer of Ridgeline, and whether to disclose that is Ridgeline's decision.
+
+### 4.3 What Southmere's system reports
+
+```text
+Record                          Signature    Issuer binding   Current      Recognised
+Tidewater's assessment A3       verified     confirmed        current      recognised
+Tidewater's requirements, v3    verified     confirmed        current      not applicable
+Insurance evidence              verified *   confirmed        current **   not applicable
+
+*  the supplier's signature; the document carries no signature from its source
+** the period stated in the document; the buyer may confirm it with the source
+```
+
+```text
+Tidewater's assessment A3, as it bears on S1
+
+Assessor                  Tidewater Cold Storage Limited
+Scope                     Industrial refrigeration maintenance; ammonia plant
+Evidence reviewed         documents; no site visit
+Requirement assessed      R1 of Tidewater's requirements, version 3
+Requirement record        presented; digest matches the assessment
+Assessor's result         Accepted; met
+Assessment date           21 October 2026
+Corrective actions        none outstanding
+Superseded                no; this is the assessor's current assessment
+Replaces                  an earlier assessment, which was not presented
+```
+
+```text
+Requirement   Objective criteria                    Result
+S1            the assessment relied on is current   needs assessment by a person
+S2            limit met; current at start           met, on the face of an unsigned document
+```
+
+Southmere's recognition list is its own, and it lists Tidewater as an assessor of refrigeration contractors.
+
+Had Southmere not recognised Tidewater, the assessment would still have been authentic and current, and a person could still have read it and given it what weight they chose.
+
+Checking the status of A3 tells Tidewater nothing, because a status list is fetched whole and does not show which record was checked.
+
+### 4.4 Southmere decides
+
+A person at Southmere reads R1 beside S1, and reads the scope of A3 beside the engagement.
+
+```text
+Southmere requirement S1
+
+Evidence presented              Tidewater's assessment A3
+Assessor                        Tidewater Cold Storage Limited, recognised by Southmere
+Assessment scope                Industrial refrigeration maintenance; ammonia plant
+Requirement assessed            R1 of Tidewater's requirements, version 3
+Assessment result               R1 met
+Assessment date                 21 October 2026
+Corrective actions              none outstanding
+Southmere's determination       Accepted as evidence for S1
+Additional evidence required    none
+```
+
+Tidewater's decision does not bind Southmere.
+
+Southmere uses it as evidence, and does not repeat the assessment that produced it.
+
+For S2, Southmere does not rely on Tidewater's determination of R2, which says what Tidewater concluded about a certificate.
+
+The evidence record over the certificate says what the cover is, costs Ridgeline nothing more to present, and lets Southmere check the limit and the dates for itself.
+
+Reuse is worth most where judgement was needed, and an objective fact is better checked from its own evidence.
+
+### 4.5 Southmere's assessment record
+
+Southmere records its determination as an assessment of its own.
+
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://example.org/openassurance/v0.1"
+  ],
+  "id": "https://southmereseafoods.example/assessments/2026-0067",
+  "type": ["VerifiableCredential", "AssessmentCredential"],
+  "issuer": {
+    "id": "https://southmereseafoods.example/issuer",
+    "name": "Southmere Seafoods Limited",
+    "nzbn": "illustrative"
+  },
+  "validFrom": "2026-11-12T10:00:00+13:00",
+  "validUntil": "2027-11-11T23:59:59+13:00",
+  "credentialSubject": {
+    "organisation": {
+      "name": "Ridgeline Refrigeration Limited",
+      "nzbn": "illustrative"
+    },
+    "assessmentDate": "2026-11-12",
+    "scope": {
+      "activity": "Scheduled maintenance of industrial refrigeration plant",
+      "context": "Ammonia plant, seafood processing",
+      "engagementReference": "SM-2026-41"
+    },
+    "evidenceScope": {
+      "documentsReviewed": true,
+      "siteVisit": false
+    },
+    "request": {
+      "id": "urn:uuid:5c1d9a20-0000-4000-8000-000000000001"
+    },
+    "requirementSet": {
+      "id": "https://southmereseafoods.example/requirements/mechanical/versions/2",
+      "subjectId": "https://southmereseafoods.example/requirements/mechanical",
+      "version": "2",
+      "digestSRI": "sha384-illustrativeDigestValueOnly"
+    },
+    "determinations": [
+      {
+        "requirementId": "S1",
+        "result": { "outcome": "Accepted as evidence", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://tidewatercoldstorage.example/assessments/2026-0533",
+            "recordType": "AssessmentCredential"
+          },
+          {
+            "recordId": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+            "recordType": "RequirementCredential"
+          }
+        ],
+        "finding": "A current assessment by another operator of ammonia plant, made against a requirement that matches S1 for this engagement, determined that requirement met with no corrective action outstanding.",
+        "qualification": "This determination rests on another organisation's assessment, which reviewed documents without a site visit, and does not repeat it."
+      },
+      {
+        "requirementId": "S2",
+        "result": { "outcome": "Accepted", "commonResult": "met" },
+        "evidenceReviewed": [
+          {
+            "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0031",
+            "recordType": "EvidenceCredential"
+          }
+        ],
+        "finding": "The certificate presented states current public liability cover of NZD 10,000,000, which exceeds the limit required.",
+        "qualification": "The certificate is carried as supplier-held evidence and does not carry a digital signature from its purported source."
+      }
+    ],
+    "correctiveActionState": { "outstanding": false }
+  },
+  "credentialStatus": {
+    "type": "BitstringStatusListEntry",
+    "statusPurpose": "revocation",
+    "statusListIndex": "1288",
+    "statusListCredential": "https://southmereseafoods.example/status/1"
+  }
+}
+```
+
+The evidence reviewed names Tidewater's assessment, so a third buyer shown this record can see that Southmere's opinion rests on Tidewater's and is not a second independent look.
+
+An opinion that rests on an opinion stays visible as one, however many times it is reused.
+
+### 4.6 The same evidence, a different engagement
+
+Suppose instead that the engagement was the replacement of two rooftop condensers, which have to be lifted into place.
+
+The records Ridgeline presents are the same, and so is everything Southmere's system reports.
+
+The person at Southmere reads the scope of A3 and the words of R1, and finds that neither covers lifting.
+
+```text
+Southmere requirement S1
+
+Evidence presented              Tidewater's assessment A3
+Southmere's determination       Relevant but insufficient
+Reason                          The assessment covered refrigeration maintenance, and did not
+                                assess the lifting operations this engagement requires
+Additional evidence requested   Evidence of how lifting operations are planned, and of the
+                                competency arrangements for those who plan and direct them
+```
+
+Nothing has been found wanting in Ridgeline, so this is not a corrective action request, as `extensions.md` section 10 explains.
+
+Southmere has not yet formed its opinion, so it issues no assessment.
+
+It sends a further request, which refers to the first and says what it still seeks, and only the fields that differ from a first request are shown.
+
+```json
+{
+  "iss": "https://southmereseafoods.example/issuer",
+  "aud": "https://ridgelinerefrigeration.example/issuer",
+  "jti": "urn:uuid:5c1d9a20-0000-4000-8000-000000000002",
+  "type": "OpenAssuranceRequest",
+  "follows": "urn:uuid:5c1d9a20-0000-4000-8000-000000000001",
+  "requirements": [
+    {
+      "id": "https://southmereseafoods.example/requirements/mechanical/versions/2",
+      "digestSRI": "sha384-illustrativeDigestValueOnly",
+      "items": ["S1"],
+      "furtherEvidence": [
+        {
+          "item": "S1",
+          "sought": "Evidence of how lifting operations are planned, and of the competency arrangements for those who plan and direct them."
+        }
+      ]
+    }
+  ]
+}
+```
+
+Ridgeline responds with an evidence record over its lifting procedure and a completed lift plan, with the names of workers removed.
+
+Southmere asked about arrangements, which are evidence about the organisation.
+
+Had it needed to know that particular workers are competent, that would be a different exchange under the competency profile, with the privacy requirements that section 2 carries.
+
+Southmere then forms its opinion, and its determination of S1 names both sources.
+
+```json
+{
+  "requirementId": "S1",
+  "result": { "outcome": "Accepted", "commonResult": "met" },
+  "evidenceReviewed": [
+    {
+      "recordId": "https://tidewatercoldstorage.example/assessments/2026-0533",
+      "recordType": "AssessmentCredential"
+    },
+    {
+      "recordId": "https://tidewatercoldstorage.example/requirements/ammonia/versions/3",
+      "recordType": "RequirementCredential"
+    },
+    {
+      "recordId": "https://records.ridgelinerefrigeration.example/evidence/2026-0097",
+      "recordType": "EvidenceCredential"
+    }
+  ],
+  "finding": "Another operator's current assessment demonstrates the management of refrigeration and ammonia risks, and the contractor's lifting procedure and a completed lift plan demonstrate the planning of lifting operations, which that assessment did not cover."
+}
+```
+
+Tidewater's assessment still saved both parties from starting again, because Southmere asked only about the part it did not cover.
+
+This outcome matters as much as the first.
+
+### 4.7 What the reuse shows
+
+> **OpenAssurance is not mutual recognition by default. It is portable assurance evidence that lets the next buyer make an informed local decision without starting from zero.**
+
+The example was also a test of whether an assessment carries enough to be reused by someone who was not there.
+
+```text
+What Southmere needed to know           Where it found it
+Who assessed                            the issuer of A3, and its issuer binding
+What was assessed                       the scope in A3
+Against which requirement and version   the requirement set in A3, and the record presented, bound by digest
+On what basis                           the scope of evidence reviewed in A3
+When                                    the assessment date and the validity period
+The assessor's conclusion               the determination of R1, and its finding
+Whether it is still current             the validity period and the status entry
+Whether anything is outstanding         the corrective action state in A3
+```
+
+Southmere did not need the history behind A3, and was not given it.
+
+The test changed four things in the model.
+
+- a holder presents the requirement record with the assessment, because the assessment identifies a requirement and does not restate it, which is now `extensions.md` section 10.5;
+- Tidewater's assessments now say whether a site was visited, which `exchange-model.md` section 6.4 already asked for and the example had left out;
+- a request may refer to an earlier request and say what further evidence is sought, which is now `extensions.md` section 5.1;
+- evidence that is not enough is kept apart from an organisation that falls short, and only the second calls for a corrective action request.
+
+One question remains open.
+
+An assessment says what it was made for, through its scope and the engagement it names, and that bounds what anyone else can take from it.
+
+Whether a buyer is content for its assessment to be relied on by others, and whether it may say so in the record, is an open point in `extensions.md` section 11.
+
+## 5. Discovery, Keys, and Issuer Binding
+
+The fourth example follows the buyer in section 3 as it checks that the supplier's records come from the supplier.
 
 Issuer binding in `exchange-model.md` section 7.5 is part of the core, and the discovery record in `extensions.md` section 4 is an extension, so the record format shown is a proposal.
 
@@ -1191,9 +1617,9 @@ The supplier's system reads it, puts the buyer's issuer address in the `aud` cla
 
 Neither organisation has joined anything, and the only infrastructure either needed was a domain name.
 
-## 5. What the Examples Share
+## 6. What the Examples Share
 
-The two profile examples use the same record structure, the same envelope, the same file, and the same four-part result, and the third shows the issuer binding that both depend on.
+The two profile examples use the same record structure, the same envelope, the same file, and the same four-part result, the third shows one of those records reused, and the fourth shows the issuer binding that all of them depend on.
 
 They differ where the profiles differ.
 
@@ -1202,5 +1628,7 @@ The competency example identifies a person by a scoped identifier and carries pe
 The prequalification example identifies organisations by a public identifier, keeps personal information to one named declarant, and separates the supplier's evidence from the assessor's opinion of it.
 
 It also carries the buyer's determination, a corrective action request, and its closure as records the supplier holds, so the exchange does not end when documents have moved.
+
+The reuse example shows the supplier presenting only the assessor's current assessment to a second buyer, who decides for itself what it demonstrates.
 
 Phase 4 should demonstrate both exchanges between systems that share nothing but this model.
