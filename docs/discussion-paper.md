@@ -540,7 +540,7 @@ New Zealand's government digital credential ecosystem already demonstrates crypt
 
 The NZ Verify app checks a credential's digital signature against the issuing authority's public key, confirming it is genuine and unaltered, and separately checks validity and acceptability for a stated purpose.[^2] That three-part separation closely resembles the trust flow described in section 7.
 
-Version 2.0 of the Govt.nz app, released on 31 March 2026, introduced a digital wallet, with accredited digital credentials becoming available progressively from late August 2026.[^3]
+The Govt.nz app's digital wallet is now available, with accredited digital credentials expected to become available progressively from October 2026.[^3]
 
 OpenAssurance should build on this work rather than duplicate it.
 
@@ -773,7 +773,7 @@ And:
 
 [^2]: New Zealand Government, "NZ Verify app". https://www.govt.nz/browse/passports-citizenship-and-identity/proving-and-protecting-your-identity/nz-verify-app/
 
-[^3]: New Zealand Government, "Digital credentials" and "About the Govt.nz app". https://www.govt.nz/browse/passports-citizenship-and-identity/proving-and-protecting-your-identity/digital-credentials/
+[^3]: New Zealand Government, "Digital credentials" and "Digital wallet and credentials", Govt.nz app, pages last updated September 2026. https://www.govt.nz/browse/passports-citizenship-and-identity/proving-and-protecting-your-identity/digital-credentials/ and https://www.govt.nz/about/the-govt-nz-app/features-and-releases/digital-wallet-and-credentials/
 
 [^4]: Business Leaders' Health and Safety Forum, "About". https://www.forum.org.nz/about/
 

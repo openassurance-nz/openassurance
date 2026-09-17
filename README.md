@@ -170,6 +170,8 @@ The immediate priorities are:
 6. establish appropriate industry governance;
 7. complete a Privacy Impact Assessment before the first stable specification is finalised.
 
+The standards mapping in priority 3 has a working draft in `docs/standards-map.md`.
+
 ## Domains
 
 - OpenAssurance: https://openassurance.nz

@@ -288,6 +288,8 @@ OpenAssurance should use established standards wherever practical for:
 
 OpenAssurance should focus on the workplace assurance profile and exchange rules that are not already adequately covered elsewhere.
 
+The candidate standards are listed in `standards-landscape.md`, and the assessment of each, with the resulting gap analysis, is recorded in `standards-map.md`.
+
 ## 11. Initial Technical Boundary
 
 OpenAssurance v0.1 should aim to define:

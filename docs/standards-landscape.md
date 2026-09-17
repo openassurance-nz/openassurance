@@ -1,6 +1,6 @@
 # OpenAssurance Standards Landscape
 
-**Status:** First draft
+**Status:** First draft; the Phase 2 assessment of each item is in `standards-map.md`
 
 ## 1. Purpose
 
@@ -230,18 +230,14 @@ Privacy should be treated as an architectural requirement rather than an impleme
 
 ## 16. Next Research
 
-The following should be examined in greater detail before OpenAssurance v0.1 is finalised:
+The items listed here in the first draft have been examined, and the results are recorded in `standards-map.md`.
 
-- W3C Verifiable Credentials 2.0;
-- VC JSON Schema;
-- credential status standards;
-- OpenID4VCI;
-- OpenID4VP;
-- Open Badges 3.0;
-- CredentialSchema.nz;
-- New Zealand Digital Identity Services Trust Framework;
-- New Zealand government credential wallet implementation;
-- NZQA digital qualification and Record of Achievement mechanisms;
-- existing competency and prequalification data models.
+That document states a position on each candidate standard, scheme, register, and legal instrument, and identifies the smallest genuinely new layer OpenAssurance needs to define.
 
-The purpose of this work is to identify the smallest genuinely new layer OpenAssurance needs to define.
+The questions that remain open after that assessment are listed in its section 18.
+
+They concern the licence terms of published New Zealand credential schemas, the formats the government wallet will hold, machine-readable access to qualification and licence registers, and the willingness of insurers, assessors, and scheme operators to issue verifiable records.
+
+This document remains the summary of what should be considered.
+
+The map is where the assessment is kept current.
