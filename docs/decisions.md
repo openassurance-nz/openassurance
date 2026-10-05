@@ -1,7 +1,7 @@
 # OpenAssurance Decisions and Open Questions
 
 **Status:** Working register  
-**Last reviewed:** September 2026
+**Last reviewed:** October 2026
 
 ## 1. Purpose
 
@@ -131,13 +131,13 @@ Applied as a working assumption in `exchange-model.md` section 8.3.
 
 The question is how a record shows that a named person, such as the director who makes a declaration, held the role claimed and approved this exact record, when the organisation's signature proves neither.
 
-Likely path: the record carries authority evidence and approval evidence separately; a check of a public register as at the date of the record, and an approval bound to a digest of the statement, are the floor for v0.1; a verifier reports both apart from the signature and apart from the truth of the statement; approvals signed by the person, or accompanied by a credential of their role, are extensions.
+Likely path: the record carries authority evidence and approval evidence separately; a check of a public register as at the date of the record, and an approval bound to a digest of the statement, are the floor for v0.1; a verifier reports both apart from the signature and apart from the truth of the statement; an authorisation used as authority evidence for a delegation carries the delegate's acceptance, as the government guidance on authority to act recommends; approvals signed by the person, or accompanied by a credential of their role, are extensions.[^idata]
 
 This would change if a credential proving a role in a public register, or delegated authority, became generally available, which the government wallet documentation lists among the credential types it expects, at which point the credentialed method would move into the core.[^wallettech]
 
 Status: open.
 
-Applied as a working assumption in `exchange-model.md` section 5.6, and in `exchange-model/extensions.md` section 9.
+Applied as a working assumption in `exchange-model.md` sections 5.6, 6.3, and 12.2, and in `exchange-model/extensions.md` section 9.
 
 ### D11. Requirements, assessments, and corrective actions
 
@@ -171,11 +171,15 @@ Applied as a working assumption in `exchange-model/extensions.md` section 5, wit
 
 The question is how a record, a presentation, or a request gets from one organisation's system to another's without a person attaching, uploading, or re-entering anything, and without a hub that both must join.
 
-Likely path: each organisation names an HTTPS inbox in a discovery record under its own domain; a sender posts the signed file to it with its registered media type, needs no account, key, or prior arrangement, and is told only that the file was taken; everything an inbox receives is signed, so the inbox authenticates nothing and the receiving system verifies what arrives as it would any file; the pattern is borrowed from W3C Linked Data Notifications, which cannot be used unchanged because it requires a JSON-LD body; a file sent by any other channel remains the floor for a party that has no system, and such a party may give an email address as its inbox.
+Likely path: each organisation names an HTTPS inbox in a discovery record under its own domain; a sender posts the signed file to it with its registered media type, needs no account, key, or prior arrangement, and is told only whether the file was taken; everything an inbox receives is signed, so the inbox authenticates no sender and the receiving system verifies what arrives as it would any file; what the recipient then does with a file is decided on who signed it, checked when it arrives, so it may accept answers to its own requests and files from issuers it recognises, and hold for review or refuse the rest, but never requires a sender to register first; the pattern is borrowed from W3C Linked Data Notifications, which cannot be used unchanged because it requires a JSON-LD body; a file sent by any other channel remains the floor for a party that has no system, and such a party may give an email address as its inbox.
 
 Discovery and the inbox are part of the v0.1 core, because exchange between systems is the purpose of the model and a core that defined only a file could not move a record between two systems without a person carrying it; the signed request, approval for a period, and the interactive protocols remain extensions.
 
-This would change if open inboxes proved unmanageable without knowing the sender, in which case an inbox would accept a file only with a signed request or presentation whose signature it had verified.
+An earlier draft had the inbox take every signed file alike, and that was refined because a recipient, and in particular a government agency under the API Standard, needs to act only on files from senders it recognises.[^apistd]
+
+Requiring senders to register beforehand was set aside, because a supplier answering a new buyer would first have to be onboarded by that buyer, which is the coupling the model exists to remove, and the signer of a file can be checked with no prior arrangement.
+
+This would change if recipients could not operate an inbox on those terms, in which case the core would add authentication of the sender by a key published under its own domain, which also needs no prior arrangement, and would evaluate OAuth without prior client registration.
 
 Status: open.
 
@@ -217,6 +221,9 @@ These could not be settled from published material and should be put to the part
 - to the Government Digital Delivery Agency: whether the Govt.nz wallet is intended to hold native W3C Verifiable Credentials Data Model 2.0 credentials in addition to mdoc, and if so, what trust-list mechanism and credential profile an accredited non-government issuer would need to meet;
 - to the Government Digital Delivery Agency: whether the issuance platform is intentionally restricted to government agencies, or whether accredited private credential providers will become eligible for a hosted issuance tenancy;
 - to New Zealand Government Procurement: whether a common structured form for health and safety prequalification is being developed for use across government agencies, as the Minister's statement of 20 August 2026 anticipated, and whether it will have a defined data structure;[^beehive2026]
+- to the Government Digital Delivery Agency: whether an agency inbox that requires no sender to register, and accepts or refuses each file according to whether it recognises the signer, checked when the file arrives, is consistent with the API Standard's security requirements;
+- to the Government Digital Delivery Agency, as the body responsible for the Identification Standards: whether a record signed by the authoritative source for its claims, verified against that source's published key and checked against its status list, meets the Information Assurance Standard's level 4 description of evidence identified systematically and reached through a trusted channel, and whether a levels-of-assurance expression carried as a claim in a record, with the basis of the declaration, is an acceptable way to declare levels for identity claims;
+- to the Government Digital Delivery Agency, which is responsible for both the Identification Standards and the Trust Framework: whether a facilitation provider can meet the Facilitation Service Standard's presentation logging control by keeping references to what was presented without its values, so that a hosted service does not hold a copy of every presentation;
 - to occupational regulators: whether machine-checkable licence status is available or planned, and on what terms;
 - to the New Zealand Qualifications Authority: whether the mechanism behind its document verification tool can be documented so that a hash-linked copy can be relied on, whether verifiable credential forms of the Record of Achievement and the International Qualification Assessment are planned, and whether standard and qualification identifiers are available as open data;
 - to insurers and brokers: whether a verifiable certificate of currency is feasible;
@@ -252,3 +259,7 @@ References to external organisations, schemes, and government publications are p
 [^distfact]: Digital Identity Services Trust Framework Act 2023, 2023 No 13, sections 3, 8, 10, 15, 18 to 23, 34, 43, and 58. https://www.legislation.govt.nz/act/public/2023/0013/latest/whole.html
 
 [^wallettech]: Government Digital Delivery Agency, "Govt.nz app wallet technical guide". https://github.com/NZ-Digital-Public-Infrastructure/govt-nz-app-wallet
+
+[^apistd]: Government Digital Delivery Agency, "API Standard", version of 1 September 2026, the requirements on OAuth 2.1 and on interface specifications. https://standards.digital.govt.nz/docref/api-standard/2026-09-01/en/
+
+[^idata]: Government Digital Delivery Agency, "Authority to act for another entity", guidance, version of 2 September 2026, "Verifying delegated authorities". https://standards.digital.govt.nz/docref/authority-to-act-for-another-entity/2026-09-02/en/

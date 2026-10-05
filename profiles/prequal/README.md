@@ -264,6 +264,8 @@ Submitting the form                 a presentation, which maps requirements to t
 
 A declaration is a substantial record, in which the organisation is both issuer and subject, a declarant is named, and evidence of that person's approval is carried.
 
+It may also state the consequence of a false statement that the declarant accepted, which is what a relying organisation applying the government Information Assurance Standard grades a statement by, as section 6.6 of the exchange model describes.
+
 Self-asserted information that no other record already represents is therefore grouped, so that related statements make one declaration approved by an authorised person, and a record is not made for each field of a form.
 
 A request is not a questionnaire.
