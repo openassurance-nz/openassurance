@@ -622,9 +622,27 @@ A software company can provide an API, but bilateral integrations between every 
 
 An open standard only becomes useful when multiple parties agree on the exchange boundary.
 
+New Zealand has already agreed one such boundary, in a different sector.
+
+GP2GP transfers a patient's electronic health record from one general practice to another when the patient moves practice, and several hundred thousand records move this way each year.[^7]
+
+The practices involved use different practice management systems, each of which implements the same transfer.[^7]
+
+A clinician at the receiving practice reviews the record that arrives, and the practice keeps its own policy for records coming in and going out.[^8]
+
+That is the arrangement this paper proposes for workplace assurance: competing software products implement one exchange, and acceptance stays with the organisation that receives the record.
+
+GP2GP shows that the arrangement can hold in New Zealand, and it does not show the design.
+
+It does not show the format, because it carries health records and OpenAssurance builds on the credential standards in section 12.
+
+It does not show the trust model, because it runs between general practices, and OpenAssurance must let any organisation verify a signed record without joining anything.
+
+It does not show the shape of the exchange, because it moves the patient's record once, when the patient changes practice, while OpenAssurance presents current, purpose-specific records to many relying organisations, and never the history.
+
 Bodies with an established supply-chain leadership focus already exist. The Business Leaders' Health and Safety Forum, for example, represents more than 440 CEOs, Managing Directors, and Country Heads of New Zealand organisations.[^4]
 
-No organisation named in this paper has been consulted about OpenAssurance or has endorsed it. They are cited as evidence that the problem is recognised, not as supporters of this proposal.
+No organisation named in this paper has been consulted about OpenAssurance or has endorsed it. They are cited as evidence that the problem is recognised, or that an exchange boundary has been agreed before, not as supporters of this proposal.
 
 OpenAssurance may therefore be better developed as an industry conversation than as a product developed by one organisation.
 
@@ -796,9 +814,13 @@ And:
 
 [^6]: WorkSafe New Zealand, "PCBUs working together: advice when contracting". https://www.worksafe.govt.nz/managing-health-and-safety/getting-started/understanding-the-law/overlapping-duties/pcbus-working-together-advice-when-contracting/
 
-All sources were accessed on 11 September 2026.
+[^7]: Health New Zealand | Te Whatu Ora, "GP2GP", page last updated 21 May 2026. https://www.healthnz.govt.nz/health-professionals/guidance-standards/topic/digital-technologies/digital-health-initiatives/gp2gp
 
-References to external organisations, publications, and government initiatives are provided as evidence that the problem described in this paper is recognised. No such reference implies consultation, participation, support, or endorsement.
+[^8]: Royal New Zealand College of General Practitioners, "The Foundation Standard, 2.3 New patient's records". https://www.rnzcgp.org.nz/running-a-practice/the-foundation-standard/turoro-patients/23-newly-enrolled-patient-records/
+
+All sources were accessed on 11 September 2026, except the two on GP2GP, which were accessed on 18 September 2026.
+
+References to external organisations, publications, and government initiatives are provided as evidence that the problem described in this paper is recognised, or that an exchange boundary has been agreed before. No such reference implies consultation, participation, support, or endorsement.
 
 ---
 
