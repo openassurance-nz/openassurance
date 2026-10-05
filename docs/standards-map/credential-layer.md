@@ -2,7 +2,7 @@
 
 **Part of:** `standards-map.md`  
 **Status:** Working draft, Phase 2  
-**Last reviewed:** September 2026
+**Last reviewed:** October 2026
 
 ## 1. Purpose
 
@@ -489,7 +489,7 @@ References to external organisations, schemes, and government publications are p
 
 [^iso23220]: ISO/IEC 23220 series, "Cards and security devices for personal identification — Building blocks for identity management via mobile devices", Part 1 published 2023 as an International Standard, later parts published as Technical Specifications or in draft. https://www.iso.org/standard/74910.html
 
-[^distfrules]: Digital Identity Services Trust Framework Rules 2024, version 2, 24 July 2025, rules 8 and 9, as mirrored on the government standards site; consolidated rules of 29 June 2026 published by the Government Digital Delivery Agency. https://standards.digital.govt.nz/nz/dia-distfr/2/en/ and https://www.publicservice.govt.nz/about-the-commission/government-digital-delivery-agency/trust-framework-for-digital-identity/about-digital-identity-services/trust-framework-legislation/trust-framework-rules
+[^distfrules]: Digital Identity Services Trust Framework Rules 2024, consolidated version in force from 29 June 2026, rules 8 and 9 and the history of amendments, compiled by the Government Digital Delivery Agency as a reference document; the rules as made are notified in the New Zealand Gazette. https://standards.digital.govt.nz/docref/digital-identity-services-trust-framework-rules-2024/2026-06-29/en/ and https://gdda.govt.nz/trust-framework
 
 [^wallettech]: Government Digital Delivery Agency, "Govt.nz app wallet technical guide". https://github.com/NZ-Digital-Public-Infrastructure/govt-nz-app-wallet
 

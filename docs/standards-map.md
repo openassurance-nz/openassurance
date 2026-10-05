@@ -1,7 +1,7 @@
 # OpenAssurance Standards Map
 
 **Status:** Working draft, Phase 2 (map existing standards)  
-**Last reviewed:** September 2026
+**Last reviewed:** October 2026
 
 ## 1. Purpose
 
@@ -148,7 +148,7 @@ The assessment is divided into five parts, so that a reader can go straight to t
 - `standards-map/recognition-and-requirements.md` covers endorsement, trust lists, and requirement expression;
 - `standards-map/people.md` covers Open Badges, New Zealand qualification identifiers, the Record of Achievement, occupational registers, and driver licences;
 - `standards-map/organisations.md` covers WorkSafe New Zealand's position and template, an industry cross-recognition scheme, common questionnaire content, accepted certifications, and insurance;
-- `standards-map/new-zealand-context.md` covers the Privacy Act, the Trust Framework, the government wallet and verifier, and the New Zealand Business Number.
+- `standards-map/new-zealand-context.md` covers the Privacy Act, the Trust Framework, the government wallet and verifier, the New Zealand Business Number, the Identification Standards, and the government API Standard.
 
 Each part carries its own sources.
 
@@ -158,7 +158,7 @@ Section 6 collects every position in one table, section 7 states what remains ge
 
 The table collects every position in this document, ordered by the layers in section 5.
 
-Status is as verified on 16 September 2026.
+Status is as verified on 16 September 2026, and on 6 October 2026 for the Identification Standards and the API Standard.
 
 | Need | Candidate | Status | Position |
 |---|---|---|---|
@@ -224,8 +224,10 @@ Status is as verified on 16 September 2026.
 | Trust framework | Digital Identity Services Trust Framework Act 2023 and Rules | In force, voluntary accreditation | Reference; compatibility target |
 | Government wallet and verifier | Govt.nz app, issuance platform, NZ Verify | Operating, mdoc | Reference; optional mdoc acceptance class |
 | Person name, date, address | mandated government data standards | Mandated for departments | Reference |
+| Identification assurance and levels of assurance | Identification Standards: Information, Binding, and Authentication Assurance, Credential Service, Facilitation Service | Version 3 and version 1, May 2026, voluntary; required for Trust Framework accreditation | Reference; align roles, allow a levels expression for identity claims |
+| Government APIs | API Standard | Published September 2026, applies to government APIs | Reference; publish an OpenAPI description of the inbox |
 
-Fifty-one of the sixty-two rows point at something that already exists.
+Fifty-three of the sixty-four rows point at something that already exists.
 
 Eleven say "Define", and two more, endorsement scope and presentation terms of use, are profiles that add a small vocabulary of their own.
 

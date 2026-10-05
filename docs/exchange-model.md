@@ -1,7 +1,7 @@
 # OpenAssurance Minimum Exchange Model
 
 **Status:** Working draft towards v0.1  
-**Last reviewed:** September 2026
+**Last reviewed:** October 2026
 
 ## 1. Purpose
 
@@ -202,6 +202,14 @@ An employer has usually sighted photo identification when it engaged the worker,
 
 A record about a person SHOULD state how the issuer confirmed the subject's identity, as a short claim such as "photo identification sighted by the issuer", without recording the document's number.
 
+Where the issuer has applied the New Zealand Identification Standards, the record MAY also carry a levels-of-assurance expression for its identity claims, such as `{2,2,0}` for information, binding, and authentication, alongside the words.
+
+An expression MUST state its basis, which is self-assessment, a qualified assessment, or an audited assessment, because the standards require a declaration of levels to say how it was reached.
+
+A verifier reports the expression as the issuer's declaration, and not as something it has checked.
+
+A conforming system MUST NOT require an expression, because most issuers of workplace records have not assessed themselves against those standards, and `standards-map/new-zealand-context.md` section 8.3 gives the reasoning.
+
 A record about a person MUST carry enough claims for a relying organisation to match it to the person in front of it, normally the person's name, and MAY carry a date of birth or the digest of a photograph where the purpose needs them.
 
 Matching the record to a person at the point of reliance is the relying organisation's act, by its own means, which may be sighting photo identification or receiving a government-issued credential alongside the record.
@@ -247,6 +255,10 @@ Only the last two give a verifier something it can check for itself, and their f
 Delegation needs nothing new.
 
 An organisation authorises a person to make declarations or attestations within a scope by issuing an authorisation record under section 6.3, and that record is the authority evidence.
+
+An authorisation used this way SHOULD carry acceptance evidence from the person it is granted to, in the form approval evidence takes, over the authorisation's own statement, so that a delegation cannot be created in a person's name without their knowledge.
+
+A verifier reports a delegation without acceptance evidence as not accepted, and does not treat it as invalid for that reason alone.
 
 None of this bears on whether the statement is true.
 
@@ -309,6 +321,8 @@ Its subject MUST carry:
 It SHOULD carry the prerequisites relied on, as references to the records that satisfied them.
 
 It MAY carry authority evidence and approval evidence for the person who granted it, as section 5.6 describes.
+
+Where it is used as authority evidence for a delegation, it SHOULD also carry the acceptance evidence of the person it is granted to, as section 5.6 describes.
 
 An authorisation MUST carry `credentialStatus`, because an authorisation is withdrawn more often than it expires.
 
@@ -420,6 +434,12 @@ Its issuer and its subject are the same party, and the record MUST say so.
 An organisation's declaration MUST name the declarant and the capacity in which they declare, such as director or officer.
 
 It MUST carry approval evidence and SHOULD carry authority evidence, as section 5.6 describes, because the organisation's signature shows neither that the declarant held that role nor that they approved the statement.
+
+A declaration MAY state the basis on which it was made, which is the consequence of a false statement that the declarant accepted, such as a term of the engagement, or a reference to a witnessed statutory declaration carried as an evidence record, as section 4.2 of the OpenCompetency profile describes.
+
+The basis is part of the statement the declarant approves, so the digest in the approval evidence covers it.
+
+A verifier reports the basis as stated, because nothing in the model can check that the consequence exists.
 
 A self-declaration's value comes from corroboration by other records, and a verifier SHOULD present it as a self-declaration.
 
@@ -718,11 +738,39 @@ A sender delivers a file by an HTTP POST whose body is the file and whose conten
 
 An inbox MUST NOT require the sender to hold an account, a key, or any prior arrangement with it, which is section 11.3 applied to delivery.
 
-Everything an inbox receives is signed, so the inbox authenticates nothing, and the receiving system verifies what arrives as it would any file.
+Everything an inbox receives is signed, so the inbox authenticates no sender, and the receiving system verifies what arrives as it would any file.
 
-An answer from an inbox says only that the file was taken, and MUST NOT say whether the recipient holds records about anyone.
+What the receiving system then does with a file is the recipient's decision, made on who signed it and checked when it arrives, and never on whether the sender registered beforehand.
+
+That is the third trust question of section 12.1, whether the recipient recognises the issuer, asked at the point of delivery.
+
+A receiving system MAY:
+
+- accept without review a file that answers a request the recipient sent, identified by the request's `jti` and `nonce` as `exchange-model/extensions.md` section 5.4 describes;
+- accept a file whose issuer it recognises;
+- hold for review by a person, or refuse, a file that verifies but whose issuer it does not recognise.
+
+A presentation is signed by the holder that assembled it, so for a presentation the recipient MAY judge by the holder, by the issuers of the records inside it, or by both.
+
+A file whose signature does not verify SHOULD be discarded, and nothing in it acted on.
+
+The decision MAY be made before the inbox answers or after it has answered 202.
+
+An inbox that refuses a file answers 403, so that the sender knows to send it by another channel, such as the floor in section 11.1.
+
+An answer from an inbox, whether it takes or refuses a file, says nothing else, and MUST NOT say whether the recipient holds records about anyone.
+
+The recipient's recognition is its own, and it need not publish what it recognises.
+
+A file held for review is a record received like any other, and section 13.2 applies to it.
+
+A file the recipient decides not to accept SHOULD NOT be kept.
 
 An inbox MAY limit the size and the rate of what it accepts.
+
+An inbox address MAY carry a major version in its path, which the government API Standard requires of an agency's API.
+
+v0.1 should include a description of the inbox in the OpenAPI format, so that every inbox, including one a government agency operates under that standard, is described the same way and no operator has to write its own.
 
 The pattern is that of W3C Linked Data Notifications, which cannot be used unchanged because it requires a JSON-LD body.
 
@@ -772,7 +820,7 @@ A system reports a requirement as needing assessment by a person where its objec
 
 Where a record names a person, the result MUST also report two further things, apart from the signature and apart from each other.
 
-- role: confirmed against a named source as at the date of the record, asserted only, or not checked;
+- role: confirmed against a named source as at the date of the record, asserted only, or not checked, and for a delegation whether the person accepted it;
 - approval: signed, credentialed, asserted by the issuer, or absent, and whether its digest matches the statement.
 
 Neither is evidence that the statement is true, and a result MUST NOT present them as if they were.
@@ -931,7 +979,7 @@ Choices between alternatives that the standards map bears on are recorded as dec
 - **Bulk export.** Section 11.1 requires everything to be exportable, and whether that is a set of files, a single presentation, or a Comprehensive Learner Record is undecided;
 - **Replacement and correction terms.** Section 9.3 needs term names, and a decision on whether the link is a claim or a typed related resource;
 - **Algorithm choice.** Section 8.2 is a proposal;
-- **Discovery and the inbox.** Section 11.4 proposes a DNS record, and its format, how an inbox handles abuse beyond limits on size and rate, whether it confirms delivery beyond its answer, and whether a well-known address should be offered as an alternative are undecided;
+- **Discovery and the inbox.** Section 11.4 proposes a DNS record, and its format, how an inbox handles abuse beyond limits on size and rate and acceptance by signer, whether it confirms delivery beyond its answer, and whether a well-known address should be offered as an alternative are undecided, and the OpenAPI description section 11.5 calls for has not been written;
 - **Assessment result structure.** Section 6.4 lists what schemes commonly report, requires a determination for each requirement, requires a statement of whether any corrective action is outstanding, requires a replacement assessment whenever that changes, and keeps recommendations out of what travels, and each needs testing with buyers, assessors, and scheme operators as `decisions.md` section 3 describes;
 - **Verification over time.** What happens when an issuer ceases to exist remains open as decision D9, and `standards-map/credential-layer.md` section 3.4 describes what the standards offer;
 - **Privacy Impact Assessment.** Section 13 is provisional until it is done.
@@ -980,6 +1028,7 @@ Assessment, status, and sources for each of these are in `standards-map.md` and 
 - IETF RFC 9901, Selective Disclosure for JSON Web Tokens, <https://www.rfc-editor.org/rfc/rfc9901.html>;
 - IETF BCP 222, RFC 8552, underscored naming of DNS attribute leaves, <https://www.rfc-editor.org/info/rfc8552>;
 - W3C Linked Data Notifications, for the inbox pattern, <https://www.w3.org/TR/ldn/>;
+- OpenAPI Specification, for the description of the inbox, <https://spec.openapis.org/oas/latest.html>;
 - IETF BCP 14, RFC 2119 and RFC 8174, <https://www.rfc-editor.org/info/bcp14>;
 - IETF RFC 3339, Date and Time on the Internet, <https://www.rfc-editor.org/info/rfc3339>;
 - 1EdTech Open Badges 3.0, <https://www.imsglobal.org/spec/ob/v3p0/>.

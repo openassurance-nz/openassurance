@@ -2,7 +2,7 @@
 
 **Part of:** `exchange-model.md`  
 **Status:** Illustrative, not normative  
-**Last reviewed:** September 2026
+**Last reviewed:** October 2026
 
 ## 1. Purpose
 
@@ -77,6 +77,8 @@ The first example is from food manufacturing, and shows the attestation from sec
 The subject identifier is scoped to the employer and means nothing to anyone else, and the record says how the employer confirmed who the worker is without recording the document's number.
 
 The attestor's authority is another record, the authorisation that made him a workplace assessor, and his approval is asserted by the employer and bound to a digest of the statement, as `exchange-model.md` section 5.6 describes.
+
+That authorisation carries the supervisor's own acceptance of it, so the employer could not have made the supervisor an assessor without the supervisor knowing.
 
 A customer receiving this record in a presentation would see, in the presentation's own claims, that it was addressed to that customer, when it expires, and the purpose for which it was shared.
 
@@ -1870,11 +1872,81 @@ Nothing is lost compared with today, and the digest fixes the supplier's copy.
 
 When the assessor later issues a signed record, it replaces the evidence record and nothing else changes, as `exchange-model.md` section 6.5 describes.
 
-### 5.7 What the certificate case shows
+### 5.7 Where the buyer does not recognise the assessor
+
+Hollowford's system is configured to take two kinds of file without review: answers to requests Hollowford has sent, and records from assessors on its own list.
+
+It refuses anything else that arrives unasked, which `exchange-model.md` section 11.5 allows.
+
+Cobbleway Pumps Limited, which is fictional, services the pumps on Hollowford's irrigation system, and has been assessed by Marramvale Assessments Limited, which is also fictional and is not on Hollowford's list.
+
+Someone at Cobbleway chooses Marramvale's certificate, enters Hollowford's domain name, and approves the sharing, exactly as Ridgeline did in section 5.2.
+
+```text
+POST /openassurance/inbox HTTP/1.1
+Host: hollowfordestate.example
+Content-Type: application/vc+jwt
+
+eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK2p3dCIsImtpZCI6Imh0dHBzOi8vbWFycmFtdmFs...
+
+HTTP/1.1 403 Forbidden
+```
+
+Hollowford's system verified the record before it answered, found it genuine and current, and found its issuer not on Hollowford's list.
+
+It keeps a line saying so, and does not keep the file.
+
+```text
+Inbox            hollowfordestate.example, 14 October 2026, 10:42
+File             application/vc+jwt
+Signer           https://marramvale.example/issuer
+Signature        verified
+Recognised       not recognised
+Action           refused; file not kept
+```
+
+Cobbleway's system shows the person who approved the sharing what happened.
+
+```text
+Sharing with hollowfordestate.example
+
+Marramvale's assessment     not taken by the recipient's inbox
+Next step                   send it by another channel, or ask the recipient what it accepts
+```
+
+The refusal tells Cobbleway only that this file was not taken.
+
+It does not say why, it says nothing about whether Hollowford holds records about Cobbleway or anyone else, and it does not ask Cobbleway to register, apply, or open an account.
+
+Cobbleway sends the same two files to Hollowford's contractor manager by email, a channel the floor in `exchange-model.md` section 11.1 keeps open, which puts the file in front of a person instead of a system.
+
+The contractor manager checks the file with Hollowford's verifier and gets the same answer the inbox did.
+
+```text
+Record                     Signature    Issuer binding   Current      Recognised
+Marramvale's assessment    verified     confirmed        current      not recognised
+```
+
+The record is genuine and current, and the only open question is the third one, which is Hollowford's to answer.
+
+Hollowford reviews Marramvale's published assessment criteria, decides to recognise it, and adds it to its list.
+
+It could as easily have decided not to, and asked Cobbleway for a certificate from an assessor it already recognises, or sent a request stating what it needs, whose answer its inbox would then take without review.
+
+The next time Cobbleway's system sends a Marramvale record, Hollowford's inbox answers 202, and nobody emails anything.
+
+A buyer that would rather see such files without the round trip configures its system to hold them for a person to review instead of refusing them, and the same file would then wait in a queue at Hollowford.
+
+A file whose signature does not verify is never held for review: it is discarded, and nothing in it is acted on.
+
+Who Hollowford recognises is its own list, and it need not publish it.
+
+### 5.8 What the certificate case shows
 
 - the assessor issues one record, once;
 - the supplier's system holds it, and delivers it to as many buyers as the supplier approves;
 - each buyer's system verifies it without joining anything, and the buyer decides for itself;
+- a buyer's system may refuse a record from an assessor it does not recognise, and the refusal sends the supplier to a person at the buyer, never to a registration form;
 - nothing is attached, uploaded, or entered twice.
 
 Everything in this example is in the core, apart from the approval for a period in section 5.4, which is an extension.

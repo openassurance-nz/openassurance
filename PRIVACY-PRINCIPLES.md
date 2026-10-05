@@ -226,6 +226,11 @@ The Privacy Impact Assessment should be updated when material changes are propos
 - retention;
 - third-party integrations.
 
+The first assessment should also examine two government requirements recorded in `docs/standards-map/new-zealand-context.md`.
+
+- the presentation log that the Facilitation Service Standard requires of an accredited facilitation provider, whether references without values satisfy it, and how long it need be kept;
+- the Standard for information sharing with third parties, mandatory for public service agencies, where an agency issues or receives records about people.
+
 ## 17. Core Privacy Test
 
 OpenAssurance should continue to ask:
